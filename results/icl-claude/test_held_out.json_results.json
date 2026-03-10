@@ -1,0 +1,29 @@
+{
+  "model": "claude",
+  "dataset": "data/test_held_out.json",
+  "accuracy": 0.628,
+  "n": 500,
+  "errors": 0,
+  "predictions": [
+    "Reconnaissance",
+    "Analysis",
+    "DoS",
+    "Reconnaissance",
+    "Reconnaissance",
+    "DoS",
+    "Reconnaissance",
+    "DoS",
+    "Fuzzers",
+    "Analysis",
+    "Analysis",
+    "Backdoor",
+    "DoS",
+    "Analysis",
+    "Analysis",
+    "Reconnaissance",
+    "Reconnaissance",
+    "Fuzzers",
+    "Analysis",
+    "Analysis"
+  ]
+}
