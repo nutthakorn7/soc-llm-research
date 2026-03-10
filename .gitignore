@@ -1,0 +1,23 @@
+# Data files (large)
+results/*/generated_predictions.jsonl
+results/*/f1_results.json
+*.safetensors
+*.bin
+*.pt
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+*.tmp
+*.log

@@ -1,0 +1,51 @@
+# LlamaFactory LoRA Fine-tuning Config for SOC Alert Classification
+# Model: Llama 3.1 8B Instruct
+# Method: QLoRA (4-bit quantization)
+
+### Model
+model_name_or_path: meta-llama/Llama-3.1-8B-Instruct
+quantization_bit: 4
+quantization_method: bnb
+
+### Method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 64
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target: all
+
+### Dataset
+dataset_dir: /project/lt200473-ttctvs/soc-finetune/data
+dataset: salad_50k
+eval_dataset: salad_val
+template: llama3
+cutoff_len: 2048
+preprocessing_num_workers: 16
+
+### Output
+output_dir: /project/lt200473-ttctvs/soc-finetune/outputs/llama8b-lora-50k
+logging_dir: /project/lt200473-ttctvs/soc-finetune/outputs/llama8b-lora-50k/logs
+logging_steps: 50
+save_steps: 500
+save_total_limit: 3
+
+### Training Hyperparameters
+per_device_train_batch_size: 4
+per_device_eval_batch_size: 4
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+bf16: true
+ddp_timeout: 180000000
+
+### Evaluation
+eval_strategy: steps
+eval_steps: 500
+
+### Misc
+overwrite_output_dir: true
+report_to: none
