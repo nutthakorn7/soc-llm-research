@@ -55,7 +55,9 @@ def train_bert(texts, labels, output_dir, epochs=5, batch_size=16):
         texts, y, test_size=0.2, random_state=42
     )
     
-    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+    BERT_PATH = "/project/lt200473-ttctvs/soc-finetune/models/bert-base-uncased"
+    
+    tokenizer = BertTokenizer.from_pretrained(BERT_PATH)
     
     class TextDataset(Dataset):
         def __init__(self, texts, labels):
@@ -72,7 +74,7 @@ def train_bert(texts, labels, output_dir, epochs=5, batch_size=16):
     test_ds = TextDataset(X_test, y_test.tolist())
     
     model = BertForSequenceClassification.from_pretrained(
-        "bert-base-uncased", num_labels=num_labels
+        BERT_PATH, num_labels=num_labels, ignore_mismatched_sizes=True
     )
     
     args = TrainingArguments(
@@ -82,7 +84,7 @@ def train_bert(texts, labels, output_dir, epochs=5, batch_size=16):
         per_device_eval_batch_size=batch_size,
         learning_rate=5e-5,
         warmup_ratio=0.1,
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
         metric_for_best_model="f1",

@@ -1,0 +1,19 @@
+{
+  "model": "gemini",
+  "dataset": "data/test_held_out.json",
+  "accuracy": 0.8,
+  "n": 10,
+  "errors": 0,
+  "predictions": [
+    "Reconnaissance",
+    "Reconnaissance",
+    "DoS",
+    "Analysis",
+    "Analysis",
+    "DoS",
+    "Reconnaissance",
+    "DoS",
+    "Fuzzers",
+    "Reconnaissance"
+  ]
+}
