@@ -101,7 +101,7 @@ All models fine-tuned using QLoRA (4-bit NF4, LoRA rank 64, α=128, LR=2e-4, 3 e
 | Mistral-7B-v0.3 | 7B | 100% | 100% | 74.9% | 75.3% |
 | **SVM (TF-IDF)** | — | — | — | — | **90.9%** |
 | **DT** | — | — | — | — | **73.6%** |
-| **BERT-base** | 110M | — | — | — | ⏳ training |
+| **BERT-base** | 110M | — | — | — | **81.4%** |
 
 ### 4.2 Ablation Study
 
