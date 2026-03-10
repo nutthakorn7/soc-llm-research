@@ -1,0 +1,51 @@
+{
+  "title": "SOC Alert Triage Evaluation: LLM vs Traditional ML",
+  "description": "\n    You will be shown 30 SOC alerts with 2 different triage outputs:\n    - System A: Label only (e.g., \"Attack Category: reconnaissance_scan\")\n    - System B: Label + natural language explanation\n    \n    For each alert, please rate both systems on a 1-5 scale for:\n    1. Correctness: Is the triage decision correct?\n    2. Actionability: Can you act on this information immediately?\n    3. Trust: Would you trust this in production?\n    4. Speed: How quickly could you make a decision with this output?\n    ",
+  "demographics": [
+    "Years of SOC experience",
+    "Current role (Tier 1/2/3/Manager)",
+    "Certifications (CISSP, CEH, GCIH, etc.)",
+    "Average daily alert volume"
+  ],
+  "rating_scale": {
+    "1": "Very Poor",
+    "2": "Poor",
+    "3": "Acceptable",
+    "4": "Good",
+    "5": "Excellent"
+  },
+  "metrics": [
+    {
+      "name": "Correctness",
+      "question": "Is the classification/triage decision accurate?"
+    },
+    {
+      "name": "Actionability",
+      "question": "Can you immediately determine what action to take?"
+    },
+    {
+      "name": "Trust",
+      "question": "Would you trust this output in a production SOC?"
+    },
+    {
+      "name": "Completeness",
+      "question": "Does the output provide sufficient context?"
+    },
+    {
+      "name": "Preference",
+      "question": "Which system do you prefer? (A/B/No preference)"
+    }
+  ],
+  "sample_size": {
+    "minimum": 10,
+    "recommended": 20,
+    "alerts_per_analyst": 30,
+    "total_ratings": "20 \u00d7 30 \u00d7 4 metrics = 2,400 data points"
+  },
+  "statistical_tests": [
+    "Paired t-test (System A vs B per metric)",
+    "Wilcoxon signed-rank test (non-parametric)",
+    "Cohen's kappa (inter-rater agreement)",
+    "Fleiss' kappa (multi-rater agreement)"
+  ]
+}

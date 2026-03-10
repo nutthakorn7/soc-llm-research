@@ -1,0 +1,574 @@
+warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+[INFO|configuration_utils.py:668] 2026-03-09 19:08:43,281 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-09 19:08:43,341 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+[INFO|image_processing_base.py:342] 2026-03-09 19:08:44,830 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|processing_utils.py:1093] 2026-03-09 19:08:44,855 >> loading configuration file None
+[INFO|image_processing_base.py:342] 2026-03-09 19:08:44,855 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|image_processing_base.py:342] 2026-03-09 19:08:44,970 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|image_processing_base.py:377] 2026-03-09 19:08:44,971 >> Image processor Qwen2VLImageProcessorFast {
+  "data_format": "channels_first",
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_processor_type": "Qwen2VLImageProcessorFast",
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "merge_size": 2,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 16777216,
+    "shortest_edge": 65536
+  },
+  "temporal_patch_size": 2
+}
+
+[INFO|configuration_utils.py:668] 2026-03-09 19:08:44,972 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-09 19:08:44,973 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+[INFO|video_processing_utils.py:712] 2026-03-09 19:08:46,045 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/video_preprocessor_config.json
+[INFO|video_processing_utils.py:712] 2026-03-09 19:08:46,063 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/video_preprocessor_config.json
+[INFO|video_processing_utils.py:759] 2026-03-09 19:08:46,063 >> Video processor Qwen3VLVideoProcessor {
+  "data_format": "channels_first",
+  "default_to_square": true,
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "do_sample_frames": true,
+  "fps": 2,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "max_frames": 768,
+  "merge_size": 2,
+  "min_frames": 4,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "return_metadata": false,
+  "size": {
+    "longest_edge": 25165824,
+    "shortest_edge": 4096
+  },
+  "temporal_patch_size": 2,
+  "video_processor_type": "Qwen3VLVideoProcessor"
+}
+
+[INFO|processing_utils.py:1170] 2026-03-09 19:08:46,719 >> Processor Qwen3VLProcessor:
+- image_processor: Qwen2VLImageProcessorFast {
+  "data_format": "channels_first",
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_processor_type": "Qwen2VLImageProcessorFast",
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "merge_size": 2,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 16777216,
+    "shortest_edge": 65536
+  },
+  "temporal_patch_size": 2
+}
+
+- tokenizer: TokenizersBackend(name_or_path='/project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B', vocab_size=248044, model_max_length=262144, padding_side='right', truncation_side='right', special_tokens={'eos_token': '<|im_end|>', 'pad_token': '<|endoftext|>', 'audio_bos_token': '<|audio_start|>', 'audio_eos_token': '<|audio_end|>', 'audio_token': '<|audio_pad|>', 'image_token': '<|image_pad|>', 'video_token': '<|video_pad|>', 'vision_bos_token': '<|vision_start|>', 'vision_eos_token': '<|vision_end|>'}, added_tokens_decoder={
+	248044: AddedToken("<|endoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248045: AddedToken("<|im_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248046: AddedToken("<|im_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248047: AddedToken("<|object_ref_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248048: AddedToken("<|object_ref_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248049: AddedToken("<|box_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248050: AddedToken("<|box_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248051: AddedToken("<|quad_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248052: AddedToken("<|quad_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248053: AddedToken("<|vision_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248054: AddedToken("<|vision_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248055: AddedToken("<|vision_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248056: AddedToken("<|image_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248057: AddedToken("<|video_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248058: AddedToken("<tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248059: AddedToken("</tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248060: AddedToken("<|fim_prefix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248061: AddedToken("<|fim_middle|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248062: AddedToken("<|fim_suffix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248063: AddedToken("<|fim_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248064: AddedToken("<|repo_name|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248065: AddedToken("<|file_sep|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248066: AddedToken("<tool_response>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248067: AddedToken("</tool_response>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248068: AddedToken("<think>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248069: AddedToken("</think>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248070: AddedToken("<|audio_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248071: AddedToken("<|audio_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248072: AddedToken("<tts_pad>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248073: AddedToken("<tts_text_bos>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248074: AddedToken("<tts_text_eod>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248075: AddedToken("<tts_text_bos_single>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248076: AddedToken("<|audio_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+}
+)
+- video_processor: Qwen3VLVideoProcessor {
+  "data_format": "channels_first",
+  "default_to_square": true,
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "do_sample_frames": true,
+  "fps": 2,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "max_frames": 768,
+  "merge_size": 2,
+  "min_frames": 4,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "return_metadata": false,
+  "size": {
+    "longest_edge": 25165824,
+    "shortest_edge": 4096
+  },
+  "temporal_patch_size": 2,
+  "video_processor_type": "Qwen3VLVideoProcessor"
+}
+
+
+{
+  "image_processor": {
+    "data_format": "channels_first",
+    "do_convert_rgb": true,
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "image_mean": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "image_processor_type": "Qwen2VLImageProcessorFast",
+    "image_std": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "merge_size": 2,
+    "patch_size": 16,
+    "resample": 3,
+    "rescale_factor": 0.00392156862745098,
+    "size": {
+      "longest_edge": 16777216,
+      "shortest_edge": 65536
+    },
+    "temporal_patch_size": 2
+  },
+  "processor_class": "Qwen3VLProcessor",
+  "video_processor": {
+    "data_format": "channels_first",
+    "default_to_square": true,
+    "do_convert_rgb": true,
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "do_sample_frames": true,
+    "fps": 2,
+    "image_mean": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "image_std": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "max_frames": 768,
+    "merge_size": 2,
+    "min_frames": 4,
+    "patch_size": 16,
+    "resample": 3,
+    "rescale_factor": 0.00392156862745098,
+    "return_metadata": false,
+    "size": {
+      "longest_edge": 25165824,
+      "shortest_edge": 4096
+    },
+    "temporal_patch_size": 2,
+    "video_processor_type": "Qwen3VLVideoProcessor"
+  }
+}
+
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 50000 examples [00:01, 46556.20 examples/s]Generating train split: 50000 examples [00:01, 45173.27 examples/s]
+Converting format of dataset:   0%|          | 0/50000 [00:00<?, ? examples/s]Converting format of dataset:   4%|▍         | 2000/50000 [00:00<00:03, 15154.72 examples/s]Converting format of dataset:   9%|▉         | 4705/50000 [00:00<00:02, 21334.61 examples/s]Converting format of dataset:  15%|█▍        | 7382/50000 [00:00<00:01, 23136.93 examples/s]Converting format of dataset:  20%|█▉        | 9927/50000 [00:00<00:01, 23999.08 examples/s]Converting format of dataset:  27%|██▋       | 13308/50000 [00:00<00:01, 23347.46 examples/s]Converting format of dataset:  34%|███▎      | 16843/50000 [00:00<00:01, 23428.30 examples/s]Converting format of dataset:  40%|████      | 20201/50000 [00:00<00:01, 23013.84 examples/s]Converting format of dataset:  45%|████▌     | 22551/50000 [00:00<00:01, 23133.45 examples/s]Converting format of dataset:  52%|█████▏    | 26000/50000 [00:01<00:01, 22904.51 examples/s]Converting format of dataset:  59%|█████▊    | 29298/50000 [00:01<00:00, 22594.89 examples/s]Converting format of dataset:  63%|██████▎   | 31659/50000 [00:01<00:00, 22837.46 examples/s]Converting format of dataset:  68%|██████▊   | 34000/50000 [00:01<00:00, 22473.02 examples/s]Converting format of dataset:  73%|███████▎  | 36389/50000 [00:01<00:00, 22844.63 examples/s]Converting format of dataset:  77%|███████▋  | 38698/50000 [00:01<00:00, 22909.52 examples/s]Converting format of dataset:  84%|████████▍ | 42010/50000 [00:01<00:00, 22599.58 examples/s]Converting format of dataset:  89%|████████▉ | 44390/50000 [00:01<00:00, 22909.43 examples/s]Converting format of dataset:  96%|█████████▌| 47773/50000 [00:02<00:00, 22778.98 examples/s]Converting format of dataset: 100%|██████████| 50000/50000 [00:02<00:00, 22623.11 examples/s]
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 5000 examples [00:00, 143808.98 examples/s]
+Converting format of dataset:   0%|          | 0/5000 [00:00<?, ? examples/s]Converting format of dataset:  46%|████▌     | 2294/5000 [00:00<00:00, 22841.29 examples/s]Converting format of dataset:  99%|█████████▉| 4960/5000 [00:00<00:00, 25078.59 examples/s]Converting format of dataset: 100%|██████████| 5000/5000 [00:00<00:00, 23447.09 examples/s]
+Running tokenizer on dataset:   0%|          | 0/50000 [00:00<?, ? examples/s]Running tokenizer on dataset:   2%|▏         | 1000/50000 [00:00<00:36, 1343.62 examples/s]Running tokenizer on dataset:   4%|▍         | 2000/50000 [00:01<00:28, 1683.99 examples/s]Running tokenizer on dataset:   6%|▌         | 3000/50000 [00:01<00:25, 1851.54 examples/s]Running tokenizer on dataset:   8%|▊         | 4000/50000 [00:02<00:24, 1857.97 examples/s]Running tokenizer on dataset:  10%|█         | 5000/50000 [00:02<00:24, 1857.48 examples/s]Running tokenizer on dataset:  12%|█▏        | 6000/50000 [00:03<00:23, 1853.36 examples/s]Running tokenizer on dataset:  14%|█▍        | 7000/50000 [00:03<00:22, 1896.20 examples/s]Running tokenizer on dataset:  16%|█▌        | 8000/50000 [00:04<00:21, 1946.14 examples/s]Running tokenizer on dataset:  18%|█▊        | 9000/50000 [00:04<00:20, 1988.82 examples/s]Running tokenizer on dataset:  20%|██        | 10000/50000 [00:05<00:19, 2019.73 examples/s]Running tokenizer on dataset:  22%|██▏       | 11000/50000 [00:05<00:19, 2044.79 examples/s]Running tokenizer on dataset:  24%|██▍       | 12000/50000 [00:06<00:18, 2057.84 examples/s]Running tokenizer on dataset:  26%|██▌       | 13000/50000 [00:06<00:17, 2069.35 examples/s]Running tokenizer on dataset:  28%|██▊       | 14000/50000 [00:07<00:18, 1994.42 examples/s]Running tokenizer on dataset:  30%|███       | 15000/50000 [00:07<00:18, 1937.42 examples/s]Running tokenizer on dataset:  32%|███▏      | 16000/50000 [00:08<00:19, 1763.69 examples/s]Running tokenizer on dataset:  34%|███▍      | 17000/50000 [00:08<00:17, 1838.46 examples/s]Running tokenizer on dataset:  36%|███▌      | 18000/50000 [00:09<00:16, 1905.57 examples/s]Running tokenizer on dataset:  38%|███▊      | 19000/50000 [00:09<00:15, 1955.79 examples/s]Running tokenizer on dataset:  40%|████      | 20000/50000 [00:10<00:15, 1990.49 examples/s]Running tokenizer on dataset:  42%|████▏     | 21000/50000 [00:10<00:14, 2002.56 examples/s]Running tokenizer on dataset:  44%|████▍     | 22000/50000 [00:11<00:13, 2028.85 examples/s]Running tokenizer on dataset:  46%|████▌     | 23000/50000 [00:11<00:13, 2021.93 examples/s]Running tokenizer on dataset:  48%|████▊     | 24000/50000 [00:12<00:13, 1962.24 examples/s]Running tokenizer on dataset:  50%|█████     | 25000/50000 [00:12<00:13, 1922.80 examples/s]Running tokenizer on dataset:  52%|█████▏    | 26000/50000 [00:13<00:12, 1893.14 examples/s]Running tokenizer on dataset:  54%|█████▍    | 27000/50000 [00:13<00:11, 1942.31 examples/s]Running tokenizer on dataset:  56%|█████▌    | 28000/50000 [00:14<00:11, 1980.54 examples/s]Running tokenizer on dataset:  58%|█████▊    | 29000/50000 [00:14<00:10, 2012.39 examples/s]Running tokenizer on dataset:  60%|██████    | 30000/50000 [00:15<00:09, 2033.94 examples/s]Running tokenizer on dataset:  62%|██████▏   | 31000/50000 [00:15<00:09, 2045.62 examples/s]Running tokenizer on dataset:  64%|██████▍   | 32000/50000 [00:16<00:08, 2052.05 examples/s]Running tokenizer on dataset:  66%|██████▌   | 33000/50000 [00:16<00:08, 2058.95 examples/s]Running tokenizer on dataset:  68%|██████▊   | 34000/50000 [00:17<00:07, 2056.59 examples/s]Running tokenizer on dataset:  70%|███████   | 35000/50000 [00:17<00:07, 2063.51 examples/s]Running tokenizer on dataset:  72%|███████▏  | 36000/50000 [00:18<00:06, 2066.63 examples/s]Running tokenizer on dataset:  74%|███████▍  | 37000/50000 [00:18<00:06, 2068.89 examples/s]Running tokenizer on dataset:  76%|███████▌  | 38000/50000 [00:19<00:05, 2066.75 examples/s]Running tokenizer on dataset:  78%|███████▊  | 39000/50000 [00:19<00:05, 2075.90 examples/s]Running tokenizer on dataset:  80%|████████  | 40000/50000 [00:20<00:04, 2067.74 examples/s]Running tokenizer on dataset:  82%|████████▏ | 41000/50000 [00:20<00:04, 2074.92 examples/s]Running tokenizer on dataset:  84%|████████▍ | 42000/50000 [00:21<00:03, 2077.87 examples/s]Running tokenizer on dataset:  86%|████████▌ | 43000/50000 [00:21<00:03, 2080.55 examples/s]Running tokenizer on dataset:  88%|████████▊ | 44000/50000 [00:22<00:03, 1998.57 examples/s]Running tokenizer on dataset:  90%|█████████ | 45000/50000 [00:22<00:02, 1956.06 examples/s]Running tokenizer on dataset:  92%|█████████▏| 46000/50000 [00:23<00:02, 1773.02 examples/s]Running tokenizer on dataset:  94%|█████████▍| 47000/50000 [00:23<00:01, 1829.35 examples/s]Running tokenizer on dataset:  96%|█████████▌| 48000/50000 [00:24<00:01, 1891.95 examples/s]Running tokenizer on dataset:  98%|█████████▊| 49000/50000 [00:24<00:00, 1939.34 examples/s]Running tokenizer on dataset: 100%|██████████| 50000/50000 [00:25<00:00, 1979.49 examples/s]Running tokenizer on dataset: 100%|██████████| 50000/50000 [00:25<00:00, 1965.23 examples/s]
+Running tokenizer on dataset:   0%|          | 0/5000 [00:00<?, ? examples/s]Running tokenizer on dataset:  20%|██        | 1000/5000 [00:00<00:01, 2079.91 examples/s]Running tokenizer on dataset:  40%|████      | 2000/5000 [00:00<00:01, 2074.15 examples/s]Running tokenizer on dataset:  60%|██████    | 3000/5000 [00:01<00:00, 2005.14 examples/s]Running tokenizer on dataset:  80%|████████  | 4000/5000 [00:02<00:00, 1937.29 examples/s]Running tokenizer on dataset: 100%|██████████| 5000/5000 [00:02<00:00, 1898.52 examples/s]Running tokenizer on dataset: 100%|██████████| 5000/5000 [00:02<00:00, 1939.69 examples/s]
+[INFO|configuration_utils.py:668] 2026-03-09 19:09:31,462 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-09 19:09:31,463 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+[INFO|modeling_utils.py:707] 2026-03-09 19:09:43,605 >> loading weights file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/model.safetensors.index.json
+Traceback (most recent call last):
+  File "/home/lm2002/.conda/envs/soc-finetune/bin/llamafactory-cli", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/launcher.py", line 157, in launch
+    run_exp()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 125, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 93, in _training_function
+    run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks)
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/sft/workflow.py", line 53, in run_sft
+    model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/model/loader.py", line 178, in load_model
+    model = load_class.from_pretrained(**init_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 374, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4021, in from_pretrained
+    config, dtype = _get_dtype(
+                    ^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/modeling_utils.py", line 786, in _get_dtype
+    state_dict = load_state_dict(
+                 ^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/modeling_utils.py", line 302, in load_state_dict
+    with safe_open(checkpoint_file, framework="pt") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: No such file or directory: /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/model.safetensors-00001-of-00001.safetensors

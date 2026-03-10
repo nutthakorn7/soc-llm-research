@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SOC-FT Paper Figures</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #0f1117; color: #e4e4e7; padding: 40px; }
+h1 { font-size: 2rem; margin-bottom: 10px; background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.4rem; margin: 40px 0 15px; color: #a5b4fc; border-bottom: 1px solid #27272a; padding-bottom: 8px; }
+h3 { font-size: 1.1rem; margin: 25px 0 10px; color: #c4b5fd; }
+.subtitle { color: #71717a; margin-bottom: 30px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+.card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 24px; }
+.card-full { grid-column: 1 / -1; }
+canvas { max-height: 400px; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.9rem; }
+th { background: #27272a; color: #a5b4fc; padding: 10px 12px; text-align: left; font-weight: 600; }
+td { padding: 8px 12px; border-bottom: 1px solid #1e1e22; }
+tr:hover td { background: #1e1e24; }
+.highlight { color: #34d399; font-weight: 700; }
+.warn { color: #fbbf24; }
+.danger { color: #f87171; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+.stat { background: #1e1e24; border-radius: 10px; padding: 20px; text-align: center; }
+.stat-value { font-size: 2rem; font-weight: 800; }
+.stat-label { font-size: 0.8rem; color: #71717a; margin-top: 4px; }
+.stat-green .stat-value { color: #34d399; }
+.stat-blue .stat-value { color: #60a5fa; }
+.stat-purple .stat-value { color: #c084fc; }
+.stat-yellow .stat-value { color: #fbbf24; }
+</style>
+</head>
+<body>
+<h1>SOC-FT Paper Figures & Tables</h1>
+<p class="subtitle">Auto-generated from analysis results — March 10, 2026</p>
+
+<div class="stat-grid">
+    <div class="stat stat-green"><div class="stat-value">$3.72</div><div class="stat-label">FT Cost (single model)</div></div>
+    <div class="stat stat-blue"><div class="stat-value">27.2h</div><div class="stat-label">Total GPU Hours</div></div>
+    <div class="stat stat-purple"><div class="stat-value">5.4 kg</div><div class="stat-label">CO₂ Footprint</div></div>
+    <div class="stat stat-yellow"><div class="stat-value">149×</div><div class="stat-label">Cheaper than GPT-4o ICL</div></div>
+</div>
+<div class="grid">
+<div class="card">
+<h3>Fig 1: Feature Importance (Mutual Information)</h3>
+<canvas id="fig_fi"></canvas>
+<script>
+new Chart(document.getElementById('fig_fi'), {
+    type: 'bar',
+    data: {
+        labels: ["Alert Type", "Severity", "Protocol", "MITRE Tactic", "MITRE Technique", "Kill Chain Phase", "Network Segment"],
+        datasets: [
+            { label: 'Classification', data: [0.0087, 0.0087, 0.0087, 0.007, 0.007, 0.0087, 0.0], backgroundColor: 'rgba(52, 211, 153, 0.7)', borderColor: '#34d399', borderWidth: 1 },
+            { label: 'Triage', data: [0.7001, 0.7001, 0.6891, 0.6984, 0.6984, 0.7001, 0.0], backgroundColor: 'rgba(96, 165, 250, 0.7)', borderColor: '#60a5fa', borderWidth: 1 },
+            { label: 'Attack Category', data: [0.9986, 0.7803, 0.9752, 0.9859, 0.9969, 0.9156, 0.0], backgroundColor: 'rgba(192, 132, 252, 0.7)', borderColor: '#c084fc', borderWidth: 1 },
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { labels: { color: '#a1a1aa' } } },
+        scales: {
+            x: { title: { display: true, text: 'Mutual Information (bits)', color: '#71717a' }, ticks: { color: '#71717a' }, grid: { color: '#27272a' } },
+            y: { ticks: { color: '#e4e4e7' }, grid: { color: '#27272a' } }
+        }
+    }
+});
+</script>
+</div>
+
+<div class="card">
+<h3>Fig 2: Optimal K Search (Silhouette + ARI)</h3>
+<canvas id="fig_k"></canvas>
+<script>
+new Chart(document.getElementById('fig_k'), {
+    type: 'line',
+    data: {
+        labels: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+        datasets: [
+            { label: 'Silhouette Score', data: [0.864, 0.8757, 0.9092, 0.9053, 0.928, 0.9277, 0.9297, 0.9281, 0.9289, 0.9339, 0.9359, 0.9356, 0.9382, 0.9397, 0.9393, 0.9426, 0.942, 0.9452], borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,0.1)', fill: true, tension: 0.3 },
+            { label: 'ARI (vs Attack Cat)', data: [0.1317, 0.8474, 0.8708, 0.873, 0.904, 0.9099, 0.9103, 0.9109, 0.911, 0.9254, 0.9255, 0.9254, 0.9257, 0.9258, 0.9261, 0.9253, 0.9259, 0.9214], borderColor: '#c084fc', backgroundColor: 'rgba(192,132,252,0.1)', fill: true, tension: 0.3 },
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#a1a1aa' } } },
+        scales: {
+            x: { title: { display: true, text: 'Number of Clusters (K)', color: '#71717a' }, ticks: { color: '#71717a' }, grid: { color: '#27272a' } },
+            y: { title: { display: true, text: 'Score', color: '#71717a' }, ticks: { color: '#71717a' }, grid: { color: '#27272a' }, min: 0, max: 1 }
+        }
+    }
+});
+</script>
+</div>
+
+<div class="card">
+<h3>Fig 3: Training Cost per Model</h3>
+<canvas id="fig_cost"></canvas>
+<script>
+new Chart(document.getElementById('fig_cost'), {
+    type: 'bar',
+    data: {
+        labels: ["Qwen3.5-9B x 1K", "Qwen3.5-9B x 5K", "Qwen3.5-9B x 10K", "DeepSeek-R1 7B x 5K", "Phi-4-mini 3.8B x 5K", "Mistral 7B x 5K", "Qwen3-8B x 5K", "Qwen3.5-0.8B x 5K", "SmolLM2 1.7B x 5K", "Qwen3.5-9B x 5K (seed 123)"],
+        datasets: [
+            { label: 'GPU Hours', data: [0.33, 1.86, 3.61, 0.35, 0.3, 0.42, 0.47, 1.12, 0.3, 1.7], backgroundColor: 'rgba(96, 165, 250, 0.7)', borderColor: '#60a5fa', borderWidth: 1, yAxisID: 'y' },
+            { label: 'Cloud Cost ($)', data: [0.66, 3.72, 7.22, 0.7, 0.6, 0.84, 0.94, 2.24, 0.6, 3.4], backgroundColor: 'rgba(251, 191, 36, 0.7)', borderColor: '#fbbf24', borderWidth: 1, yAxisID: 'y1' },
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#a1a1aa' } } },
+        scales: {
+            x: { ticks: { color: '#71717a', maxRotation: 45 }, grid: { color: '#27272a' } },
+            y: { title: { display: true, text: 'GPU Hours', color: '#60a5fa' }, ticks: { color: '#60a5fa' }, grid: { color: '#27272a' }, position: 'left' },
+            y1: { title: { display: true, text: 'Cost ($)', color: '#fbbf24' }, ticks: { color: '#fbbf24' }, grid: { display: false }, position: 'right' }
+        }
+    }
+});
+</script>
+</div>
+
+<div class="card">
+<h3>Fig 4: Fine-Tuning vs ICL Cost (per 10K alerts)</h3>
+<canvas id="fig_ftvsicl"></canvas>
+<script>
+new Chart(document.getElementById('fig_ftvsicl'), {
+    type: 'bar',
+    data: {
+        labels: ["FT (Qwen3.5-9B)", "GPT-4o (10K alerts)", "Claude Opus (10K alerts)", "GPT-4 Turbo (10K alerts)", "Gemini Pro (10K alerts)"],
+        datasets: [{
+            label: 'Cost ($)',
+            data: [3.72, 556.0, 672.0, 340.0, 40.0],
+            backgroundColor: ['rgba(52,211,153,0.8)','rgba(248,113,113,0.7)','rgba(248,113,113,0.7)','rgba(248,113,113,0.7)','rgba(248,113,113,0.7)'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { ticks: { color: '#71717a' }, grid: { color: '#27272a' } },
+            y: { title: { display: true, text: 'Cost (USD)', color: '#71717a' }, ticks: { color: '#71717a' }, grid: { color: '#27272a' }, type: 'logarithmic' }
+        }
+    }
+});
+</script>
+</div>
+</div><h2>Table 1: Training Cost Summary</h2><div class="card card-full"><table><tr><th>Model</th><th>GPU Hours</th><th>Steps</th><th>Cloud Cost</th><th>Electricity</th><th>CO₂ (kg)</th></tr><tr><td>✅ Qwen3.5-9B × 1K</td><td>0.33h</td><td>189/189</td><td class="highlight">$0.66</td><td>$0.02</td><td>0.07</td></tr><tr><td>✅ Qwen3.5-9B × 5K</td><td>1.86h</td><td>939/939</td><td class="highlight">$3.72</td><td>$0.09</td><td>0.37</td></tr><tr><td>✅ Qwen3.5-9B × 10K</td><td>3.61h</td><td>1875/1875</td><td class="highlight">$7.22</td><td>$0.17</td><td>0.72</td></tr><tr><td>🔄 Qwen3.5-9B × 20K</td><td>7.15h</td><td>2000/3750</td><td class="highlight">$14.30</td><td>$0.34</td><td>1.43</td></tr><tr><td>✅ DeepSeek-R1 7B × 5K</td><td>0.35h</td><td>939/939</td><td class="highlight">$0.70</td><td>$0.02</td><td>0.07</td></tr><tr><td>✅ Phi-4-mini 3.8B × 5K</td><td>0.3h</td><td>939/939</td><td class="highlight">$0.60</td><td>$0.01</td><td>0.06</td></tr><tr><td>✅ Mistral 7B × 5K</td><td>0.42h</td><td>939/939</td><td class="highlight">$0.84</td><td>$0.02</td><td>0.08</td></tr><tr><td>✅ Qwen3-8B × 5K</td><td>0.47h</td><td>939/939</td><td class="highlight">$0.94</td><td>$0.02</td><td>0.09</td></tr><tr><td>✅ Qwen3.5-0.8B × 5K</td><td>1.12h</td><td>939/939</td><td class="highlight">$2.24</td><td>$0.05</td><td>0.22</td></tr><tr><td>✅ SmolLM2 1.7B × 5K</td><td>0.3h</td><td>939/939</td><td class="highlight">$0.60</td><td>$0.01</td><td>0.06</td></tr><tr><td>✅ Qwen3.5-9B × 5K (seed 123)</td><td>1.7h</td><td>939/939</td><td class="highlight">$3.40</td><td>$0.08</td><td>0.34</td></tr><tr><td>✅ Qwen3.5-9B × 5K (seed 2024)</td><td>1.71h</td><td>939/939</td><td class="highlight">$3.42</td><td>$0.08</td><td>0.34</td></tr><tr><td>✅ Ablation: rank 16</td><td>1.5h</td><td>939/939</td><td class="highlight">$3.00</td><td>$0.07</td><td>0.3</td></tr><tr><td>✅ Ablation: rank 32</td><td>1.67h</td><td>939/939</td><td class="highlight">$3.34</td><td>$0.08</td><td>0.33</td></tr><tr><td>✅ Ablation: rank 128</td><td>1.55h</td><td>939/939</td><td class="highlight">$3.10</td><td>$0.07</td><td>0.31</td></tr><tr><td>✅ Ablation: LR 1e-4</td><td>1.66h</td><td>939/939</td><td class="highlight">$3.32</td><td>$0.08</td><td>0.33</td></tr><tr><td>✅ Ablation: LR 5e-4</td><td>1.53h</td><td>939/939</td><td class="highlight">$3.06</td><td>$0.07</td><td>0.31</td></tr><tr style="font-weight:bold;border-top:2px solid #4a4a4a"><td>TOTAL</td><td>27.2h</td><td>—</td><td class="highlight">$54.46</td><td>$1.31</td><td>5.4</td></tr></table></div><h2>Table 2: Feature Importance (Mutual Information)</h2><div class="card card-full"><table><tr><th>Feature</th><th>MI (Classification)</th><th>MI (Triage)</th><th>MI (Attack Category)</th></tr><tr><td>Alert Type</td><td>0.0087</td><td>0.7001</td><td class="highlight">0.9986</td></tr><tr><td>MITRE Technique</td><td>0.0070</td><td>0.6984</td><td class="highlight">0.9969</td></tr><tr><td>MITRE Tactic</td><td>0.0070</td><td>0.6984</td><td class="highlight">0.9859</td></tr><tr><td>Protocol</td><td>0.0087</td><td>0.6891</td><td class="highlight">0.9752</td></tr><tr><td>Kill Chain Phase</td><td>0.0087</td><td>0.7001</td><td class="highlight">0.9156</td></tr><tr><td>Severity</td><td>0.0087</td><td>0.7001</td><td class="warn">0.7803</td></tr><tr><td>Network Segment</td><td>0.0000</td><td>0.0000</td><td class="danger">0.0000</td></tr></table></div><h2>Table 3: Clustering Results (K-Means)</h2><div class="card card-full"><table><tr><th>Task</th><th>K</th><th>ARI</th><th>NMI</th><th>Homogeneity</th><th>Completeness</th><th>Silhouette</th></tr><tr><td>Classification</td><td>2</td><td class="">0.0240</td><td>0.0203</td><td>0.3284</td><td>0.0105</td><td>0.8640</td></tr><tr><td>Triage</td><td>3</td><td class="">0.7631</td><td>0.6724</td><td>0.7694</td><td>0.5971</td><td>0.8757</td></tr><tr><td>Attack Category</td><td>8</td><td class="highlight">0.9103</td><td>0.7461</td><td>0.8041</td><td>0.6959</td><td>0.9297</td></tr></table></div><h2>Table 4: Perturbation Impact Analysis</h2><div class="card card-full"><table><tr><th>Strategy</th><th>Affected Patterns</th><th>% Affected</th></tr><tr><td>typo</td><td>63/87</td><td>72.4%</td></tr><tr><td>case_upper</td><td>87/87</td><td>100.0%</td></tr><tr><td>case_lower</td><td>76/87</td><td>87.4%</td></tr><tr><td>synonym</td><td>64/87</td><td>73.6%</td></tr><tr><td>add_noise</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_alert_type</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_severity</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_protocol</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_mitre_tactic</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_mitre_technique</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_kill_chain_phase</td><td>87/87</td><td>100.0%</td></tr><tr><td>drop_network_segment</td><td>87/87</td><td>100.0%</td></tr></table></div><h2>Table 5: Feature Sensitivity (Drop-one Analysis)</h2><div class="card card-full"><table><tr><th>Feature Removed</th><th>Groups Without</th><th>Ambiguous Groups</th><th>Sensitivity</th><th>Level</th></tr><tr><td>Alert Type</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>Severity</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>Protocol</td><td>8</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>MITRE Tactic</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>MITRE Technique</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>Kill Chain Phase</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr><tr><td>Network Segment</td><td>87</td><td>0</td><td>0.0000</td><td>LOW</td></tr></table></div>
+<p style="margin-top:40px; color:#52525b; text-align:center; font-size:0.85rem">
+    Generated by SOC-FT Analysis Pipeline — SALAD × TRUST-SOC × SOC-FT Research Ecosystem
+</p>
+</body></html>

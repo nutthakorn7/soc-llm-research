@@ -1,0 +1,38 @@
+[
+  {
+    "dataset": "SALAD (Cybersecurity)",
+    "n_classes": 8,
+    "n_train": 5000,
+    "n_test": 9851,
+    "entropy_bits": 2.417,
+    "dt_f1": 87.4,
+    "llm_f1": 100.0
+  },
+  {
+    "dataset": "AG News (4-class)",
+    "n_classes": 4,
+    "n_train": 120000,
+    "n_test": 7600,
+    "entropy_bits": 2.0,
+    "dt_f1": 55.59,
+    "llm_f1": null
+  },
+  {
+    "dataset": "GoEmotions (28-class)",
+    "n_classes": 28,
+    "n_train": 36308,
+    "n_test": 4590,
+    "entropy_bits": 3.7468,
+    "dt_f1": 21.67,
+    "llm_f1": null
+  },
+  {
+    "dataset": "LEDGAR Legal (100-class)",
+    "n_classes": 100,
+    "n_train": 60000,
+    "n_test": 10000,
+    "entropy_bits": 6.2106,
+    "dt_f1": 24.26,
+    "llm_f1": null
+  }
+]

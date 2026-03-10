@@ -1,0 +1,98 @@
+=== Smoke Test: SOC Alert Fine-tuning ===
+Job ID: 4792949
+Node: lanta-g-176
+Start: Mon Mar  9 06:30:39 PM +07 2026
+Mon Mar  9 18:30:43 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.57.01              Driver Version: 565.57.01      CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  |   00000000:C1:00.0 Off |                    0 |
+| N/A   35C    P0             51W /  400W |       1MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Using local model: /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-9B
+Created tiny dataset: 100 samples
+Added salad_tiny to dataset_info.json
+[WARNING|2026-03-09 18:33:12] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 18:33:12] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[WARNING|2026-03-09 18:33:16] llamafactory.data.template:149 >> You are using reasoning template, please add `_nothink` suffix if the model is not a reasoning model. e.g., qwen3_vl_nothink
+[INFO|2026-03-09 18:33:16] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_tiny.json...
+training example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 47564, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 22, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: udp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.07<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 22, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.07<|im_end|>
+
+[INFO|2026-03-09 18:33:30] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 18:33:30] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.visual:144 >> Casting multimodal projector outputs in torch.bfloat16.
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-09 18:34:08] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-09 18:34:08] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.misc:144 >> Found linear modules: in_proj_b,o_proj,out_proj,in_proj_a,k_proj,q_proj,down_proj,in_proj_qkv,v_proj,gate_proj,in_proj_z,up_proj
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.visual:144 >> Set vision model not trainable: ['visual.pos_embed', 'visual.patch_embed', 'visual.blocks'].
+[INFO|2026-03-09 18:34:08] llamafactory.model.model_utils.visual:144 >> Set multi model projector not trainable: model.visual.merger.
+[INFO|2026-03-09 18:34:09] llamafactory.model.loader:144 >> trainable params: 43,278,336 || all params: 9,453,092,080 || trainable%: 0.4578
+{'loss': '0.2757', 'grad_norm': '0.1281', 'learning_rate': '0.000128', 'epoch': '0.4'}
+{'loss': '0.1121', 'grad_norm': '0.3178', 'learning_rate': '4.8e-05', 'epoch': '0.8'}
+{'train_runtime': '89.63', 'train_samples_per_second': '1.116', 'train_steps_per_second': '0.279', 'train_loss': '0.1709', 'epoch': '1'}
+***** train metrics *****
+  epoch                    =        1.0
+  total_flos               =  1286319GF
+  train_loss               =     0.1709
+  train_runtime            = 0:01:29.63
+  train_samples_per_second =      1.116
+  train_steps_per_second   =      0.279
+=== Smoke Test Complete ===
+End: Mon Mar  9 06:35:50 PM +07 2026

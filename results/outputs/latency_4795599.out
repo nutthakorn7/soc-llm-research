@@ -1,0 +1,32 @@
+============================================================
+  SOC-FT LATENCY BENCHMARK
+  GPU: NVIDIA A100-SXM4-40GB
+============================================================
+
+============================================================
+Benchmarking: Qwen3.5-0.8B + q-Qwen3.5-0.8B-1k
+============================================================
+  Load time: 8.0s
+  Warmup (3 runs)...
+  Benchmarking (20 runs)...
+
+  Results:
+    Params: 0.55B
+    GPU Memory: 1.44 GB
+    Avg Latency: 23.196s (P50=23.25s, P95=23.358s)
+    Throughput: 12.9 tok/s
+    Alerts/min: 2.6
+    Alerts/day: 3,724
+
+============================================================
+Benchmarking: Qwen3.5-9B + clean-qwen35-5k
+============================================================
+  Error: Can't find 'adapter_config.json' at '/project/lt200473-ttctvs/soc-finetune/outputs/clean-qwen35-5k'
+
+Saved to /project/lt200473-ttctvs/soc-finetune/outputs/paper_results/latency_benchmark.json
+
+============================================================
+  SUMMARY
+============================================================
+  Model                  Params   Mem GB   ms/alert   alerts/day
+  Qwen3.5-0.8B            0.55B    1.44     23196       3,724

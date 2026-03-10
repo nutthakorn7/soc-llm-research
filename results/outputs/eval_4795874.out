@@ -1,0 +1,98 @@
+=== SOC-FT Evaluation ===
+Model: models/Qwen3.5-9B
+Adapter: outputs/clean-qwen35-5k
+Template: qwen3_5
+Output: clean-qwen35-5k
+Start: Tue Mar 10 08:01:32 AM +07 2026
+[WARNING|2026-03-10 08:03:00] llamafactory.hparams.parser:149 >> Evaluating model in 4/8-bit mode may cause lower scores.
+[INFO|2026-03-10 08:03:00] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[WARNING|2026-03-10 08:03:03] llamafactory.data.template:149 >> You are using reasoning template, please add `_nothink` suffix if the model is not a reasoning model. e.g., qwen3_vl_nothink
+[INFO|2026-03-10 08:03:03] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/test_held_out.json...
+[INFO|2026-03-10 08:03:21] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/test_held_out.json...
+training example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 84489, 27915, 198, 63380, 25, 3238, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 80117, 43694, 198, 17785, 762, 74963, 25, 345, 16, 20, 24, 20, 198, 51932, 27593, 26679, 25, 84489, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 8134, 9340, 198, 51, 8510, 39087, 25, 18730, 198, 27668, 9757, 25, 80117, 43694, 198, 19930, 17576, 25, 220, 15, 13, 19, 17, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: reconnaissance_scan
+Severity: low
+Protocol: tcp
+MITRE Tactic: Reconnaissance
+MITRE Technique: T1595
+Kill Chain Phase: reconnaissance
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 8134, 9340, 198, 51, 8510, 39087, 25, 18730, 198, 27668, 9757, 25, 80117, 43694, 198, 19930, 17576, 25, 220, 15, 13, 19, 17, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+eval example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 84489, 27915, 198, 63380, 25, 3238, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 80117, 43694, 198, 17785, 762, 74963, 25, 345, 16, 20, 24, 20, 198, 51932, 27593, 26679, 25, 84489, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: reconnaissance_scan
+Severity: low
+Protocol: tcp
+MITRE Tactic: Reconnaissance
+MITRE Technique: T1595
+Kill Chain Phase: reconnaissance
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+
+label_ids:
+[248068, 271, 248069, 271, 82105, 25, 8134, 9340, 198, 51, 8510, 39087, 25, 18730, 198, 27668, 9757, 25, 80117, 43694, 198, 19930, 17576, 25, 220, 15, 13, 19, 17, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+[INFO|2026-03-10 08:03:39] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-10 08:03:39] llamafactory.model.model_utils.kv_cache:144 >> KV cache is enabled for faster generation.
+[INFO|2026-03-10 08:05:04] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-10 08:05:08] llamafactory.model.adapter:144 >> Loaded adapter(s): /project/lt200473-ttctvs/soc-finetune/outputs/clean-qwen35-5k
+[INFO|2026-03-10 08:05:08] llamafactory.model.loader:144 >> all params: 9,582,927,088
+[WARNING|2026-03-10 08:05:08] llamafactory.train.callbacks:155 >> Previous trainer log in this folder will be deleted.
+[WARNING|2026-03-10 08:05:08] llamafactory.train.sft.workflow:155 >> Batch generation can be very slow. Consider using `scripts/vllm_infer.py` instead.

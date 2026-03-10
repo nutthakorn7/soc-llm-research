@@ -1,0 +1,204 @@
+{
+  "kmeans_vs_classification": {
+    "k": 2,
+    "ari": 0.024,
+    "nmi": 0.0203,
+    "homogeneity": 0.3284,
+    "completeness": 0.0105,
+    "v_measure": 0.0203,
+    "silhouette": 0.864
+  },
+  "kmeans_vs_attack_category": {
+    "k": 8,
+    "ari": 0.9103,
+    "nmi": 0.7461,
+    "homogeneity": 0.8041,
+    "completeness": 0.6959,
+    "v_measure": 0.7461,
+    "silhouette": 0.9297
+  },
+  "kmeans_vs_triage": {
+    "k": 3,
+    "ari": 0.7631,
+    "nmi": 0.6724,
+    "homogeneity": 0.7694,
+    "completeness": 0.5971,
+    "v_measure": 0.6724,
+    "silhouette": 0.8757
+  },
+  "optimal_k_search": [
+    {
+      "k": 2,
+      "inertia": 304079.83,
+      "silhouette": 0.864,
+      "ari_atk": 0.1317
+    },
+    {
+      "k": 3,
+      "inertia": 172266.43,
+      "silhouette": 0.8757,
+      "ari_atk": 0.8474
+    },
+    {
+      "k": 4,
+      "inertia": 58101.95,
+      "silhouette": 0.9092,
+      "ari_atk": 0.8708
+    },
+    {
+      "k": 5,
+      "inertia": 39532.54,
+      "silhouette": 0.9053,
+      "ari_atk": 0.873
+    },
+    {
+      "k": 6,
+      "inertia": 25683.14,
+      "silhouette": 0.928,
+      "ari_atk": 0.904
+    },
+    {
+      "k": 7,
+      "inertia": 20063.94,
+      "silhouette": 0.9277,
+      "ari_atk": 0.9099
+    },
+    {
+      "k": 8,
+      "inertia": 17167.48,
+      "silhouette": 0.9297,
+      "ari_atk": 0.9103
+    },
+    {
+      "k": 9,
+      "inertia": 15034.64,
+      "silhouette": 0.9281,
+      "ari_atk": 0.9109
+    },
+    {
+      "k": 10,
+      "inertia": 13257.1,
+      "silhouette": 0.9289,
+      "ari_atk": 0.911
+    },
+    {
+      "k": 11,
+      "inertia": 11508.05,
+      "silhouette": 0.9339,
+      "ari_atk": 0.9254
+    },
+    {
+      "k": 12,
+      "inertia": 10528.19,
+      "silhouette": 0.9359,
+      "ari_atk": 0.9255
+    },
+    {
+      "k": 13,
+      "inertia": 9849.9,
+      "silhouette": 0.9356,
+      "ari_atk": 0.9254
+    },
+    {
+      "k": 14,
+      "inertia": 9233.02,
+      "silhouette": 0.9382,
+      "ari_atk": 0.9257
+    },
+    {
+      "k": 15,
+      "inertia": 8265.11,
+      "silhouette": 0.9397,
+      "ari_atk": 0.9258
+    },
+    {
+      "k": 16,
+      "inertia": 7941.11,
+      "silhouette": 0.9393,
+      "ari_atk": 0.9261
+    },
+    {
+      "k": 17,
+      "inertia": 7266.75,
+      "silhouette": 0.9426,
+      "ari_atk": 0.9253
+    },
+    {
+      "k": 18,
+      "inertia": 6846.08,
+      "silhouette": 0.942,
+      "ari_atk": 0.9259
+    },
+    {
+      "k": 19,
+      "inertia": 6441.87,
+      "silhouette": 0.9452,
+      "ari_atk": 0.9214
+    }
+  ],
+  "agglom_ward_vs_atk": {
+    "ari": 0.9102,
+    "nmi": 0.7497,
+    "silhouette": 0.925
+  },
+  "agglom_complete_vs_atk": {
+    "ari": 0.8703,
+    "nmi": 0.6944,
+    "silhouette": 0.8969
+  },
+  "agglom_average_vs_atk": {
+    "ari": 0.2067,
+    "nmi": 0.2694,
+    "silhouette": 0.5298
+  },
+  "pca": {
+    "explained_variance": [
+      0.9277,
+      0.0684
+    ],
+    "total_variance": 0.996
+  },
+  "feature_importance": {
+    "Alert Type": {
+      "mi_classification": 0.0087,
+      "mi_triage": 0.7001,
+      "mi_attack_category": 0.9986
+    },
+    "Severity": {
+      "mi_classification": 0.0087,
+      "mi_triage": 0.7001,
+      "mi_attack_category": 0.7803
+    },
+    "Protocol": {
+      "mi_classification": 0.0087,
+      "mi_triage": 0.6891,
+      "mi_attack_category": 0.9752
+    },
+    "MITRE Tactic": {
+      "mi_classification": 0.007,
+      "mi_triage": 0.6984,
+      "mi_attack_category": 0.9859
+    },
+    "MITRE Technique": {
+      "mi_classification": 0.007,
+      "mi_triage": 0.6984,
+      "mi_attack_category": 0.9969
+    },
+    "Kill Chain Phase": {
+      "mi_classification": 0.0087,
+      "mi_triage": 0.7001,
+      "mi_attack_category": 0.9156
+    },
+    "Network Segment": {
+      "mi_classification": 0.0,
+      "mi_triage": 0.0,
+      "mi_attack_category": 0.0
+    }
+  },
+  "pattern_analysis": {
+    "total_unique_patterns": 87,
+    "ambiguous_patterns": 0,
+    "unambiguous_patterns": 87,
+    "total_samples": 9851
+  }
+}

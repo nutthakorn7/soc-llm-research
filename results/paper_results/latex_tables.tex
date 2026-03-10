@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{booktabs,multirow,graphicx}
+\begin{document}
+
+% ===================== TABLE 1: Training Cost =====================
+\begin{table}[t]
+\centering
+\caption{Training Cost Comparison Across Models}
+\label{tab:training_cost}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Model} & \textbf{GPU Hours} & \textbf{Steps} & \textbf{Cost (\$)} & \textbf{CO$_2$ (kg)} \\
+\midrule
+Qwen3.5-9B $\times$ 1K & 0.33 & 189/189 & 0.66 & 0.07 \\
+Qwen3.5-9B $\times$ 5K & 1.86 & 939/939 & 3.72 & 0.37 \\
+Qwen3.5-9B $\times$ 10K & 3.61 & 1875/1875 & 7.22 & 0.72 \\
+DeepSeek-R1 7B $\times$ 5K & 0.35 & 939/939 & 0.70 & 0.07 \\
+Phi-4-mini 3.8B $\times$ 5K & 0.3 & 939/939 & 0.60 & 0.06 \\
+Mistral 7B $\times$ 5K & 0.42 & 939/939 & 0.84 & 0.08 \\
+Qwen3-8B $\times$ 5K & 0.47 & 939/939 & 0.94 & 0.09 \\
+Qwen3.5-0.8B $\times$ 5K & 1.12 & 939/939 & 2.24 & 0.22 \\
+SmolLM2 1.7B $\times$ 5K & 0.3 & 939/939 & 0.60 & 0.06 \\
+Qwen3.5-9B $\times$ 5K (seed 123) & 1.7 & 939/939 & 3.40 & 0.34 \\
+Qwen3.5-9B $\times$ 5K (seed 2024) & 1.71 & 939/939 & 3.42 & 0.34 \\
+Ablation: rank 16 & 1.5 & 939/939 & 3.00 & 0.3 \\
+Ablation: rank 32 & 1.67 & 939/939 & 3.34 & 0.33 \\
+Ablation: rank 128 & 1.55 & 939/939 & 3.10 & 0.31 \\
+Ablation: LR 1e-4 & 1.66 & 939/939 & 3.32 & 0.33 \\
+Ablation: LR 5e-4 & 1.53 & 939/939 & 3.06 & 0.31 \\
+\midrule
+\textbf{Total} & \textbf{27.2} & -- & \textbf{\$54.46} & \textbf{5.4} \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+% ===================== TABLE 2: FT vs ICL Cost =====================
+\begin{table}[t]
+\centering
+\caption{Fine-Tuning vs In-Context Learning Cost (per 10K alerts)}
+\label{tab:ft_vs_icl}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Method} & \textbf{Cost (\$)} & \textbf{Ratio} \\
+\midrule
+SOC-FT (Qwen3.5-9B, one-time) & 3.72 & 1$\times$ \\
+GPT-4o (10K alerts) & 556.00 & 149$\times$ \\
+Claude Opus (10K alerts) & 672.00 & 180$\times$ \\
+GPT-4 Turbo (10K alerts) & 340.00 & 91$\times$ \\
+Gemini Pro (10K alerts) & 40.00 & 10$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ===================== TABLE 3: Feature Importance =====================
+\begin{table}[t]
+\centering
+\caption{Feature Importance via Mutual Information (bits)}
+\label{tab:feature_importance}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Feature} & \textbf{MI(Cls)} & \textbf{MI(Tri)} & \textbf{MI(Atk)} \\
+\midrule
+Alert Type & 0.0087 & 0.7001 & 0.9986 \\
+MITRE Technique & 0.0070 & 0.6984 & 0.9969 \\
+MITRE Tactic & 0.0070 & 0.6984 & 0.9859 \\
+Protocol & 0.0087 & 0.6891 & 0.9752 \\
+Kill Chain Phase & 0.0087 & 0.7001 & 0.9156 \\
+Severity & 0.0087 & 0.7001 & 0.7803 \\
+Network Segment & 0.0000 & 0.0000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ===================== TABLE 4: Clustering =====================
+\begin{table}[t]
+\centering
+\caption{K-Means Clustering vs Ground Truth Labels}
+\label{tab:clustering}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Task} & \textbf{K} & \textbf{ARI} & \textbf{NMI} & \textbf{Homog.} & \textbf{Silh.} \\
+\midrule
+Classification & 2 & 0.0240 & 0.0203 & 0.3284 & 0.8640 \\
+Triage & 3 & 0.7631 & 0.6724 & 0.7694 & 0.8757 \\
+Attack Category & 8 & 0.9103 & 0.7461 & 0.8041 & 0.9297 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ===================== TABLE 5: Task Complexity =====================
+\begin{table}[t]
+\centering
+\caption{Task Complexity and Optimal Method Selection}
+\label{tab:task_complexity}
+\begin{tabular}{lrrll}
+\toprule
+\textbf{Task} & \textbf{Classes} & \textbf{Entropy} & \textbf{DT F1} & \textbf{LLM F1} \\
+\midrule
+Classification & 2 & 0.083 bits & 100\% & 100\% \\
+Triage & 3 & 0.914 bits & 100\% & 100\% \\
+Attack Category & 8 & 2.417 bits & 87.4\% & \textbf{100\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

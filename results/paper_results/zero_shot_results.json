@@ -1,0 +1,100 @@
+{
+  "experiment": "P18_Zero-Shot_Transfer",
+  "method": "Leave-One-Category-Out",
+  "categories": [
+    "Analysis",
+    "Backdoor",
+    "Benign",
+    "DoS",
+    "Exploits",
+    "Fuzzers",
+    "Generic",
+    "Reconnaissance"
+  ],
+  "category_counts": {
+    "Reconnaissance": 4970,
+    "DoS": 4066,
+    "Fuzzers": 91,
+    "Backdoor": 51,
+    "Exploits": 581,
+    "Analysis": 68,
+    "Benign": 11,
+    "Generic": 13
+  },
+  "dt_results": [
+    {
+      "held_out": "Analysis",
+      "n_test": 68,
+      "n_train": 9783,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Backdoor": 68
+      }
+    },
+    {
+      "held_out": "Backdoor",
+      "n_test": 51,
+      "n_train": 9800,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Benign": 51
+      }
+    },
+    {
+      "held_out": "Benign",
+      "n_test": 11,
+      "n_train": 9840,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "DoS": 11
+      }
+    },
+    {
+      "held_out": "DoS",
+      "n_test": 4066,
+      "n_train": 5785,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Benign": 4066
+      }
+    },
+    {
+      "held_out": "Exploits",
+      "n_test": 581,
+      "n_train": 9270,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Benign": 581
+      }
+    },
+    {
+      "held_out": "Fuzzers",
+      "n_test": 91,
+      "n_train": 9760,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Backdoor": 91
+      }
+    },
+    {
+      "held_out": "Generic",
+      "n_test": 13,
+      "n_train": 9838,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Fuzzers": 13
+      }
+    },
+    {
+      "held_out": "Reconnaissance",
+      "n_test": 4970,
+      "n_train": 4881,
+      "dt_accuracy": 0.0,
+      "predicted_as": {
+        "Backdoor": 4970
+      }
+    }
+  ],
+  "dt_avg_accuracy": 0.0,
+  "llm_results": "pending \u2014 submit Lanta jobs"
+}

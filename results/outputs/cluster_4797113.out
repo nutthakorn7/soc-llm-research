@@ -1,0 +1,113 @@
+======================================================================
+  SALAD CLUSTERING ANALYSIS
+======================================================================
+
+Loading /project/lt200473-ttctvs/soc-finetune/data/test_held_out.json...
+  Total samples: 9851
+  Parsed: 9851 samples
+  Feature matrix: (9851, 7)
+
+  Ground truth classes:
+    Classification: 2 (Counter({'Malicious': 9840, 'Benign': 11}))
+    Triage: 3 (Counter({'investigate': 5142, 'escalate': 4698, 'suppress': 11}))
+    Attack Category: 8 (Counter({'Reconnaissance': 4970, 'DoS': 4066, 'Exploits': 581, 'Fuzzers': 91, 'Analysis': 68, 'Backdoor': 51, 'Generic': 13, 'Benign': 11}))
+
+======================================================================
+  1. K-MEANS CLUSTERING
+======================================================================
+
+  K-Means (k=2) vs Classification:
+    ARI: 0.0240 | NMI: 0.0203 | V-measure: 0.0203
+    Homogeneity: 0.3284 | Completeness: 0.0105
+    Silhouette: 0.8640
+
+  K-Means (k=8) vs Attack Category:
+    ARI: 0.9103 | NMI: 0.7461 | V-measure: 0.7461
+    Homogeneity: 0.8041 | Completeness: 0.6959
+    Silhouette: 0.9297
+
+  K-Means (k=3) vs Triage:
+    ARI: 0.7631 | NMI: 0.6724 | V-measure: 0.6724
+    Homogeneity: 0.7694 | Completeness: 0.5971
+    Silhouette: 0.8757
+
+======================================================================
+  2. OPTIMAL K SEARCH
+======================================================================
+  k= 2: Inertia=    304080 | Silhouette=0.8640 | ARI(atk)=0.1317
+  k= 3: Inertia=    172266 | Silhouette=0.8757 | ARI(atk)=0.8474
+  k= 4: Inertia=     58102 | Silhouette=0.9092 | ARI(atk)=0.8708
+  k= 5: Inertia=     39533 | Silhouette=0.9053 | ARI(atk)=0.8730
+  k= 6: Inertia=     25683 | Silhouette=0.9280 | ARI(atk)=0.9040
+  k= 7: Inertia=     20064 | Silhouette=0.9277 | ARI(atk)=0.9099
+  k= 8: Inertia=     17167 | Silhouette=0.9297 | ARI(atk)=0.9103
+  k= 9: Inertia=     15035 | Silhouette=0.9281 | ARI(atk)=0.9109
+  k=10: Inertia=     13257 | Silhouette=0.9289 | ARI(atk)=0.9110
+  k=11: Inertia=     11508 | Silhouette=0.9339 | ARI(atk)=0.9254
+  k=12: Inertia=     10528 | Silhouette=0.9359 | ARI(atk)=0.9255
+  k=13: Inertia=      9850 | Silhouette=0.9356 | ARI(atk)=0.9254
+  k=14: Inertia=      9233 | Silhouette=0.9382 | ARI(atk)=0.9257
+  k=15: Inertia=      8265 | Silhouette=0.9397 | ARI(atk)=0.9258
+  k=16: Inertia=      7941 | Silhouette=0.9393 | ARI(atk)=0.9261
+  k=17: Inertia=      7267 | Silhouette=0.9426 | ARI(atk)=0.9253
+  k=18: Inertia=      6846 | Silhouette=0.9420 | ARI(atk)=0.9259
+  k=19: Inertia=      6442 | Silhouette=0.9452 | ARI(atk)=0.9214
+
+======================================================================
+  3. AGGLOMERATIVE CLUSTERING
+======================================================================
+  Agglom (ward, k=8) vs Attack Category: ARI=0.9102 NMI=0.7497 Sil=0.9250
+  Agglom (complete, k=8) vs Attack Category: ARI=0.8703 NMI=0.6944 Sil=0.8969
+  Agglom (average, k=8) vs Attack Category: ARI=0.2067 NMI=0.2694 Sil=0.5298
+
+======================================================================
+  4. DBSCAN
+======================================================================
+  eps=0.5 min=5: 66 clusters, 49 noise | ARI=0.9210 Sil=1.0000
+  eps=0.5 min=10: 29 clusters, 278 noise | ARI=0.9319 Sil=1.0000
+  eps=1.0 min=5: 61 clusters, 40 noise | ARI=0.9217 Sil=0.9957
+  eps=1.0 min=10: 31 clusters, 222 noise | ARI=0.9302 Sil=0.9961
+  eps=1.5 min=5: 61 clusters, 40 noise | ARI=0.9217 Sil=0.9957
+  eps=1.5 min=10: 31 clusters, 222 noise | ARI=0.9302 Sil=0.9961
+  eps=2.0 min=5: 50 clusters, 30 noise | ARI=0.9282 Sil=0.9783
+  eps=2.0 min=10: 28 clusters, 163 noise | ARI=0.9357 Sil=0.9795
+  eps=3.0 min=5: 36 clusters, 6 noise | ARI=0.9302 Sil=0.9401
+  eps=3.0 min=10: 21 clusters, 92 noise | ARI=0.9380 Sil=0.9430
+
+======================================================================
+  5. DIMENSIONALITY REDUCTION
+======================================================================
+  PCA explained variance: [0.92765078 0.06835589]
+  t-SNE computed on 5000 samples
+
+======================================================================
+  6. FEATURE IMPORTANCE (Mutual Information)
+======================================================================
+
+  Feature                    MI(Cls)  MI(Tri)  MI(Atk)
+  -------------------------------------------------------
+  Alert Type                  0.0087   0.7001   0.9986
+  Severity                    0.0087   0.7001   0.7803
+  Protocol                    0.0087   0.6891   0.9752
+  MITRE Tactic                0.0070   0.6984   0.9859
+  MITRE Technique             0.0070   0.6984   0.9969
+  Kill Chain Phase            0.0087   0.7001   0.9156
+  Network Segment             0.0000   0.0000   0.0000
+
+======================================================================
+  7. UNIQUE PATTERN ANALYSIS
+======================================================================
+  Total unique patterns: 87
+  Ambiguous patterns (multiple attack cats): 0
+  Unambiguous patterns: 87
+
+  ✅ Results saved to /project/lt200473-ttctvs/soc-finetune/outputs/paper_results/clustering_analysis.json
+
+======================================================================
+  📊 SUMMARY
+======================================================================
+  Best K-Means ARI (vs Attack Category): 0.9103
+  Best K-Means NMI (vs Attack Category): 0.7461
+  Optimal K (by Silhouette): 19 (sil=0.9452)
+  Unique patterns: 87 | Ambiguous: 0
+  Most important feature for Attack Category: Alert Type

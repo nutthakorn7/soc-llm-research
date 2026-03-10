@@ -1,0 +1,27 @@
+{
+  "random": {
+    "Classification": 0.3355690385574841,
+    "Triage": 0.2649230321628859,
+    "Attack Category": 0.025777427370199574
+  },
+  "majority": {
+    "Classification": 0.0011153924153315758,
+    "Triage": 0.0007435949435543838,
+    "Attack Category": 0.00027884810383289394
+  },
+  "decision_tree": {
+    "Classification": 1.0,
+    "Triage": 1.0,
+    "Attack Category": 0.8742209458633753
+  },
+  "random_forest": {
+    "Classification": 1.0,
+    "Triage": 1.0,
+    "Attack Category": 0.8742209458633753
+  },
+  "lookup": {
+    "Classification": 0.0011153924153315758,
+    "Triage": 0.0007435949435543838,
+    "Attack Category": 0.00027884810383289394
+  }
+}

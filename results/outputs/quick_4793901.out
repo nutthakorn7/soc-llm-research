@@ -1,0 +1,74 @@
+=== Quick: Mistral-7B × 5K ===
+[WARNING|2026-03-09 20:58:56] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 20:58:56] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[INFO|2026-03-09 20:58:57] llamafactory.data.template:144 >> Add pad token: </s>
+[INFO|2026-03-09 20:58:57] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_5k.json...
+training example:
+input_ids:
+[1, 3, 1763, 1228, 1164, 8351, 7414, 29511, 1093, 11785, 25660, 6832, 29499, 23043, 29491, 13396, 1032, 5676, 11745, 1163, 4449, 1072, 6251, 11663, 4930, 29493, 3852, 29515, 781, 29508, 29491, 5718, 3268, 29515, 5148, 11341, 1210, 4889, 1371, 781, 29518, 29491, 1088, 6929, 7480, 2290, 29515, 14499, 1050, 1148, 29493, 12374, 12358, 29493, 1210, 12093, 1406, 781, 29538, 29491, 6056, 1236, 19095, 29515, 1183, 3716, 1980, 1070, 4285, 1093, 29474, 29491, 29489, 2831, 3146, 29503, 29493, 2066, 1282, 25712, 29493, 7563, 10173, 29493, 5113, 3742, 781, 29549, 29491, 1135, 12441, 19296, 29515, 1098, 8188, 1245, 29473, 29502, 29491, 29502, 29502, 1093, 10149, 1142, 29499, 1066, 29473, 29508, 29491, 29502, 29502, 1093, 29484, 1094, 7194, 29499, 781, 781, 1914, 20339, 3846, 12741, 1163, 1633, 1040, 3076, 5848, 3515, 29491, 781, 781, 28322, 2142, 1224, 7414, 29511, 11745, 29515, 781, 781, 19620, 6475, 29515, 4891, 29498, 2715, 22301, 781, 29503, 2316, 1240, 29515, 7315, 781, 12494, 29515, 26166, 781, 25559, 1664, 1088, 20353, 29515, 1155, 781, 25559, 1664, 7540, 2419, 29515, 1155, 781, 29564, 1193, 29222, 27074, 29515, 1155, 781, 9421, 10362, 1234, 29515, 1539, 20617, 4, 5718, 3268, 29515, 4889, 1371, 781, 29506, 6929, 7480, 2290, 29515, 23323, 781, 3285, 1236, 19095, 29515, 4889, 1371, 781, 21844, 19296, 29515, 29473, 29502, 29491, 29502, 29550, 2]
+inputs:
+<s>[INST] You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.
+
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation[/INST] Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05</s>
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 5718, 3268, 29515, 4889, 1371, 781, 29506, 6929, 7480, 2290, 29515, 23323, 781, 3285, 1236, 19095, 29515, 4889, 1371, 781, 21844, 19296, 29515, 29473, 29502, 29491, 29502, 29550, 2]
+labels:
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05</s>
+[INFO|2026-03-09 20:59:10] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 20:59:10] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 20:59:52] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-09 20:59:52] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-09 20:59:52] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-09 20:59:52] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-09 20:59:52] llamafactory.model.model_utils.misc:144 >> Found linear modules: q_proj,down_proj,gate_proj,k_proj,up_proj,o_proj,v_proj
+[INFO|2026-03-09 20:59:54] llamafactory.model.loader:144 >> trainable params: 167,772,160 || all params: 7,415,795,712 || trainable%: 2.2624
+{'loss': '0.2231', 'grad_norm': '0.1222', 'learning_rate': '0.0001043', 'epoch': '0.16'}
+{'loss': '0.07066', 'grad_norm': '0.1301', 'learning_rate': '0.0002', 'epoch': '0.32'}
+{'loss': '0.07169', 'grad_norm': '0.08282', 'learning_rate': '0.0001979', 'epoch': '0.48'}
+{'loss': '1.319', 'grad_norm': '3.509', 'learning_rate': '0.0001925', 'epoch': '0.64'}
+{'loss': '0.7637', 'grad_norm': '10.85', 'learning_rate': '0.0001839', 'epoch': '0.8'}
+{'loss': '0.5541', 'grad_norm': '1.606', 'learning_rate': '0.0001723', 'epoch': '0.96'}
+{'loss': '0.3904', 'grad_norm': '15.89', 'learning_rate': '0.0001583', 'epoch': '1.118'}
+{'loss': '0.2176', 'grad_norm': '0.8017', 'learning_rate': '0.0001423', 'epoch': '1.278'}
+{'loss': '0.1152', 'grad_norm': '0.5168', 'learning_rate': '0.0001248', 'epoch': '1.438'}
+{'loss': '0.08174', 'grad_norm': '0.1154', 'learning_rate': '0.0001065', 'epoch': '1.598'}
+{'loss': '0.08352', 'grad_norm': '0.1034', 'learning_rate': '8.795e-05', 'epoch': '1.758'}
+{'loss': '0.0756', 'grad_norm': '0.1139', 'learning_rate': '6.981e-05', 'epoch': '1.918'}
+{'loss': '0.07619', 'grad_norm': '0.2458', 'learning_rate': '5.271e-05', 'epoch': '2.077'}
+{'loss': '0.07064', 'grad_norm': '0.08597', 'learning_rate': '3.724e-05', 'epoch': '2.237'}
+{'loss': '0.06841', 'grad_norm': '0.08947', 'learning_rate': '2.393e-05', 'epoch': '2.397'}
+{'loss': '0.06704', 'grad_norm': '0.08399', 'learning_rate': '1.324e-05', 'epoch': '2.557'}
+{'loss': '0.06824', 'grad_norm': '0.07987', 'learning_rate': '5.546e-06', 'epoch': '2.717'}
+{'loss': '0.07021', 'grad_norm': '0.06352', 'learning_rate': '1.104e-06', 'epoch': '2.877'}
+{'train_runtime': '1531', 'train_samples_per_second': '9.8', 'train_steps_per_second': '0.613', 'train_loss': '0.2363', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =         3.0
+  total_flos               = 136769684GF
+  train_loss               =      0.2363
+  train_runtime            =  0:25:30.56
+  train_samples_per_second =         9.8
+  train_steps_per_second   =       0.613
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/quick-mistral-7b/training_loss.png
+[WARNING|2026-03-09 21:25:26] llamafactory.extras.ploting:149 >> No metric eval_loss to plot.
+[WARNING|2026-03-09 21:25:26] llamafactory.extras.ploting:149 >> No metric eval_accuracy to plot.
+=== Done === Mon Mar  9 09:25:28 PM +07 2026

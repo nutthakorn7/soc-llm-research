@@ -1,0 +1,121 @@
+=== SOC-FT Evaluation ===
+Model: models/SmolLM2-1.7B-Instruct
+Adapter: outputs/mm-smol-5k
+Template: smollm
+Output: mm-smol-5k
+Start: Tue Mar 10 02:58:59 AM +07 2026
+[WARNING|2026-03-10 03:02:06] llamafactory.hparams.parser:149 >> Evaluating model in 4/8-bit mode may cause lower scores.
+[INFO|2026-03-10 03:02:06] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[INFO|2026-03-10 03:02:07] llamafactory.data.template:144 >> Add <|im_end|> to stop words.
+[INFO|2026-03-10 03:02:07] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/test_held_out.json...
+[INFO|2026-03-10 03:02:15] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/test_held_out.json...
+training example:
+input_ids:
+[1, 9690, 198, 2683, 359, 354, 4507, 39296, 365, 32746, 19058, 3644, 25, 27311, 30, 10887, 253, 3292, 9170, 351, 3082, 284, 2896, 5290, 3841, 28, 1538, 42, 198, 33, 30, 23384, 42, 5149, 5564, 355, 5465, 545, 198, 34, 30, 312, 5319, 20310, 42, 19077, 272, 368, 28, 34004, 28, 355, 5237, 560, 198, 35, 30, 31628, 23926, 42, 378, 1678, 1502, 282, 3414, 365, 85, 30, 87, 1143, 3315, 67, 28, 39354, 20323, 28, 8279, 8240, 28, 2686, 2677, 198, 36, 30, 48179, 29360, 42, 330, 6581, 429, 216, 32, 30, 32, 32, 365, 683, 381, 25, 288, 216, 33, 30, 32, 32, 365, 44389, 25, 198, 198, 10598, 847, 1700, 9182, 351, 805, 260, 1876, 3705, 2120, 30, 2, 198, 1, 4093, 198, 24499, 2404, 451, 39296, 9170, 42, 198, 198, 42539, 7090, 42, 31685, 79, 24689, 198, 67, 872, 383, 42, 1642, 198, 24139, 42, 252, 15766, 198, 28845, 3256, 312, 11848, 42, 39354, 20323, 198, 28845, 3256, 29374, 42, 312, 33, 37, 41, 37, 198, 59, 388, 27291, 19395, 42, 31685, 198, 21974, 21053, 358, 42, 746, 19727, 2, 198, 1, 520, 9531, 198, 40541, 42, 5149, 5564, 198, 68, 5319, 20310, 42, 8657, 198, 10595, 580, 23926, 42, 39354, 20323, 198, 23885, 383, 29360, 42, 216, 32, 30, 36, 34, 2, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: reconnaissance_scan
+Severity: low
+Protocol: tcp
+MITRE Tactic: Reconnaissance
+MITRE Technique: T1595
+Kill Chain Phase: reconnaissance
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 40541, 42, 5149, 5564, 198, 68, 5319, 20310, 42, 8657, 198, 10595, 580, 23926, 42, 39354, 20323, 198, 23885, 383, 29360, 42, 216, 32, 30, 36, 34, 2, 198]
+labels:
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+eval example:
+input_ids:
+[1, 9690, 198, 2683, 359, 354, 4507, 39296, 365, 32746, 19058, 3644, 25, 27311, 30, 10887, 253, 3292, 9170, 351, 3082, 284, 2896, 5290, 3841, 28, 1538, 42, 198, 33, 30, 23384, 42, 5149, 5564, 355, 5465, 545, 198, 34, 30, 312, 5319, 20310, 42, 19077, 272, 368, 28, 34004, 28, 355, 5237, 560, 198, 35, 30, 31628, 23926, 42, 378, 1678, 1502, 282, 3414, 365, 85, 30, 87, 1143, 3315, 67, 28, 39354, 20323, 28, 8279, 8240, 28, 2686, 2677, 198, 36, 30, 48179, 29360, 42, 330, 6581, 429, 216, 32, 30, 32, 32, 365, 683, 381, 25, 288, 216, 33, 30, 32, 32, 365, 44389, 25, 198, 198, 10598, 847, 1700, 9182, 351, 805, 260, 1876, 3705, 2120, 30, 2, 198, 1, 4093, 198, 24499, 2404, 451, 39296, 9170, 42, 198, 198, 42539, 7090, 42, 31685, 79, 24689, 198, 67, 872, 383, 42, 1642, 198, 24139, 42, 252, 15766, 198, 28845, 3256, 312, 11848, 42, 39354, 20323, 198, 28845, 3256, 29374, 42, 312, 33, 37, 41, 37, 198, 59, 388, 27291, 19395, 42, 31685, 198, 21974, 21053, 358, 42, 746, 19727, 2, 198, 1, 520, 9531, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: reconnaissance_scan
+Severity: low
+Protocol: tcp
+MITRE Tactic: Reconnaissance
+MITRE Technique: T1595
+Kill Chain Phase: reconnaissance
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+
+label_ids:
+[40541, 42, 5149, 5564, 198, 68, 5319, 20310, 42, 8657, 198, 10595, 580, 23926, 42, 39354, 20323, 198, 23885, 383, 29360, 42, 216, 32, 30, 36, 34, 2, 198]
+labels:
+Classification: Malicious
+Triage Decision: investigate
+Attack Category: Reconnaissance
+Priority Score: 0.42<|im_end|>
+
+[INFO|2026-03-10 03:02:43] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-10 03:02:43] llamafactory.model.model_utils.kv_cache:144 >> KV cache is enabled for faster generation.
+[INFO|2026-03-10 03:03:06] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-10 03:03:08] llamafactory.model.adapter:144 >> Loaded adapter(s): /project/lt200473-ttctvs/soc-finetune/outputs/mm-smol-5k
+[INFO|2026-03-10 03:03:08] llamafactory.model.loader:144 >> all params: 1,783,728,128
+[WARNING|2026-03-10 03:03:08] llamafactory.train.sft.workflow:155 >> Batch generation can be very slow. Consider using `scripts/vllm_infer.py` instead.
+***** predict metrics *****
+  predict_bleu-4                 =     98.235
+  predict_model_preparation_time =      0.017
+  predict_rouge-1                =    93.6573
+  predict_rouge-2                =    94.5265
+  predict_rouge-l                =    94.9264
+  predict_runtime                = 1:30:30.08
+  predict_samples_per_second     =      1.814
+  predict_steps_per_second       =      0.454
+[INFO|2026-03-10 04:33:39] llamafactory.train.sft.trainer:144 >> Saving prediction results to /project/lt200473-ttctvs/soc-finetune/outputs/eval-mm-smol-5k/generated_predictions.jsonl
+=== Prediction files ===
+total 110
+drwxr-sr-x  2 lm2002 lt200473    4096 Mar 10 04:33 .
+drwxr-sr-x 47 lm2002 lt200473   20480 Mar 10 04:28 ..
+-rw-r--r--  1 lm2002 lt200473     326 Mar 10 04:33 all_results.json
+-rw-r--r--  1 lm2002 lt200473 9722714 Mar 10 04:33 generated_predictions.jsonl
+-rw-r--r--  1 lm2002 lt200473     326 Mar 10 04:33 predict_results.json
+-rw-r--r--  1 lm2002 lt200473   80405 Mar 10 04:33 trainer_log.jsonl
+=== Generated files ===
+/project/lt200473-ttctvs/soc-finetune/outputs/eval-mm-smol-5k/predict_results.json: 9 lines
+{
+    "predict_bleu-4": 98.23499244746726,
+...
+/project/lt200473-ttctvs/soc-finetune/outputs/eval-mm-smol-5k/generated_predictions.jsonl: 9851 lines
+{"prompt": "<|im_start|>system\nYou are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:\n1. Classification: Malicious or Benign\n2. Triage Decision: Escalate, Investigate, or Suppress\n3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)\n4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)\n\nRespond concisely with only the four fields above.<|im_end|>\n<|im_start|>user\nAnalyze this SOC alert:\n\nAlert Type: reconnaissance_scan\nSeverity: low\nProtocol: tcp\nMITRE Tactic: Reconnaissance\nMITRE Technique: T1595\nKill Chain Phase: reconnaissance\nNetwork Segment: workstation<|im_end|>\n<|im_start|>assistant\n", "predict": "Classification: Malicious\nTriage Decision: investigate\nAttack Category: Reconnaissance\nPriority Score: 0.42", "label": "Classification: Malicious\nTriage Decision: investigate\nAttack Category: Reconnaissance\nPriority Score: 0.42\n"}
+{"prompt": "<|im_start|>system\nYou are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:\n1. Classification: Malicious or Benign\n2. Triage Decision: Escalate, Investigate, or Suppress\n3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)\n4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)\n\nRespond concisely with only the four fields above.<|im_end|>\n<|im_start|>user\nAnalyze this SOC alert:\n\nAlert Type: reconnaissance_scan\nSeverity: low\nProtocol: tcp\nMITRE Tactic: Reconnaissance\nMITRE Technique: T1595\nKill Chain Phase: reconnaissance\nNetwork Segment: workstation<|im_end|>\n<|im_start|>assistant\n", "predict": "Classification: Malicious\nTriage Decision: investigate\nAttack Category: Reconnaissance\nPriority Score: 0.43", "label": "Classification: Malicious\nTriage Decision: investigate\nAttack Category: Reconnaissance\nPriority Score: 0.41\n"}
+...
+/project/lt200473-ttctvs/soc-finetune/outputs/eval-mm-smol-5k/all_results.json: 9 lines
+{
+    "predict_bleu-4": 98.23499244746726,
+...
+/project/lt200473-ttctvs/soc-finetune/outputs/eval-mm-smol-5k/trainer_log.jsonl: 662 lines
+{"current_steps": 860, "total_steps": 2463, "percentage": 34.92, "elapsed_time": "0:31:38", "remaining_time": "0:58:59"}
+{"current_steps": 865, "total_steps": 2463, "percentage": 35.12, "elapsed_time": "0:31:49", "remaining_time": "0:58:47"}
+...
+=== Evaluation Complete === | End: Tue Mar 10 04:33:52 AM +07 2026

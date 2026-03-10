@@ -1,0 +1,63 @@
+{
+  "scenarios": [
+    {
+      "name": "Small SOC (Startup)",
+      "alerts_day": 1000,
+      "budget_month": 500
+    },
+    {
+      "name": "Medium SOC (Enterprise)",
+      "alerts_day": 10000,
+      "budget_month": 5000
+    },
+    {
+      "name": "Large SOC (MSSP)",
+      "alerts_day": 100000,
+      "budget_month": 50000
+    },
+    {
+      "name": "Mega SOC (Telco/Gov)",
+      "alerts_day": 1000000,
+      "budget_month": 200000
+    }
+  ],
+  "methods": {
+    "Decision Tree": {
+      "latency_ms": 0.01,
+      "gpu_required": false,
+      "cost_per_10k": 0,
+      "explanation": false,
+      "multi_task": false
+    },
+    "Qwen3.5-0.8B FT (QLoRA)": {
+      "latency_ms": 500,
+      "gpu_required": true,
+      "gpu_mem_gb": 2.5,
+      "cost_per_10k": 0.08,
+      "explanation": true,
+      "multi_task": true
+    },
+    "Qwen3.5-9B FT (QLoRA)": {
+      "latency_ms": 3000,
+      "gpu_required": true,
+      "gpu_mem_gb": 8.0,
+      "cost_per_10k": 0.5,
+      "explanation": true,
+      "multi_task": true
+    },
+    "Claude Opus 4.6 ICL": {
+      "latency_ms": 2000,
+      "gpu_required": false,
+      "cost_per_10k": 672,
+      "explanation": true,
+      "multi_task": true
+    },
+    "GPT-5.2 ICL": {
+      "latency_ms": 1500,
+      "gpu_required": false,
+      "cost_per_10k": 75,
+      "explanation": true,
+      "multi_task": true
+    }
+  }
+}

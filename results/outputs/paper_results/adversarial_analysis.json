@@ -1,0 +1,739 @@
+{
+  "determinism": {
+    "total_patterns": 87,
+    "ambiguous": 0,
+    "deterministic": true
+  },
+  "feature_sensitivity": {
+    "Alert Type": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "Severity": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "Protocol": {
+      "unique_groups_without_feature": 8,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "MITRE Tactic": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "MITRE Technique": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "Kill Chain Phase": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    },
+    "Network Segment": {
+      "unique_groups_without_feature": 87,
+      "groups_with_multiple_labels": 0,
+      "sensitivity_ratio": 0.0,
+      "interpretation": "LOW"
+    }
+  },
+  "perturbation_analysis": {
+    "typo": {
+      "affected_patterns": 63,
+      "total_patterns": 87,
+      "affected_pct": 72.4,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "recon_scan",
+            "Severity": "LOW",
+            "Protocol": "TCP",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Alert Type: 'reconnaissance_scan' \u2192 'recon_scan'",
+            "Severity: 'low' \u2192 'LOW'",
+            "Protocol: 'tcp' \u2192 'TCP'"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "HIGH",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Severity: 'high' \u2192 'HIGH'"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "case_upper": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "RECONNAISSANCE_SCAN",
+            "Severity": "LOW",
+            "Protocol": "TCP",
+            "MITRE Tactic": "RECONNAISSANCE",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "RECONNAISSANCE",
+            "Network Segment": "WORKSTATION"
+          },
+          "changes": [
+            "Alert Type: 'reconnaissance_scan' \u2192 'RECONNAISSANCE_SCAN'",
+            "Severity: 'low' \u2192 'LOW'",
+            "Protocol: 'tcp' \u2192 'TCP'",
+            "MITRE Tactic: 'Reconnaissance' \u2192 'RECONNAISSANCE'",
+            "Kill Chain Phase: 'reconnaissance' \u2192 'RECONNAISSANCE'",
+            "Network Segment: 'workstation' \u2192 'WORKSTATION'"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "DENIAL_OF_SERVICE",
+            "Severity": "HIGH",
+            "Protocol": "UNAS",
+            "MITRE Tactic": "IMPACT",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "ACTIONS_ON_OBJECTIVES",
+            "Network Segment": "WORKSTATION"
+          },
+          "changes": [
+            "Alert Type: 'denial_of_service' \u2192 'DENIAL_OF_SERVICE'",
+            "Severity: 'high' \u2192 'HIGH'",
+            "Protocol: 'unas' \u2192 'UNAS'",
+            "MITRE Tactic: 'Impact' \u2192 'IMPACT'",
+            "Kill Chain Phase: 'actions_on_objectives' \u2192 'ACTIONS_ON_OBJECTIVES'",
+            "Network Segment: 'workstation' \u2192 'WORKSTATION'"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "case_lower": {
+      "affected_patterns": 76,
+      "total_patterns": 87,
+      "affected_pct": 87.4,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "reconnaissance",
+            "MITRE Technique": "t1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "MITRE Tactic: 'Reconnaissance' \u2192 'reconnaissance'",
+            "MITRE Technique: 'T1595' \u2192 't1595'"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "impact",
+            "MITRE Technique": "t1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "MITRE Tactic: 'Impact' \u2192 'impact'",
+            "MITRE Technique: 'T1499' \u2192 't1499'"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "synonym": {
+      "affected_patterns": 64,
+      "total_patterns": 87,
+      "affected_pct": 73.6,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "minor",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Severity: 'low' \u2192 'minor'"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "elevated",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Severity: 'high' \u2192 'elevated'"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "add_noise": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation",
+            "Source IP": "192.168.1.100",
+            "Destination IP": "10.0.0.1",
+            "Payload Size": "1024 bytes"
+          },
+          "changes": [
+            "Added: Source IP, Destination IP, Payload Size"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation",
+            "Source IP": "192.168.1.100",
+            "Destination IP": "10.0.0.1",
+            "Payload Size": "1024 bytes"
+          },
+          "changes": [
+            "Added: Source IP, Destination IP, Payload Size"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_alert_type": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "-",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Alert Type=reconnaissance_scan"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "-",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Alert Type=denial_of_service"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_severity": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "-",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Severity=low"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "-",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Severity=high"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_protocol": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "-",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Protocol=tcp"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "-",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Protocol=unas"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_mitre_tactic": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "-",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: MITRE Tactic=Reconnaissance"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "-",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: MITRE Tactic=Impact"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_mitre_technique": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "-",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: MITRE Technique=T1595"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "-",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: MITRE Technique=T1499"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_kill_chain_phase": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "-",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Kill Chain Phase=reconnaissance"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "-",
+            "Network Segment": "workstation"
+          },
+          "changes": [
+            "Dropped: Kill Chain Phase=actions_on_objectives"
+          ],
+          "label": "DoS"
+        }
+      ]
+    },
+    "drop_network_segment": {
+      "affected_patterns": 87,
+      "total_patterns": 87,
+      "affected_pct": 100.0,
+      "examples": [
+        {
+          "original": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "reconnaissance_scan",
+            "Severity": "low",
+            "Protocol": "tcp",
+            "MITRE Tactic": "Reconnaissance",
+            "MITRE Technique": "T1595",
+            "Kill Chain Phase": "reconnaissance",
+            "Network Segment": "-"
+          },
+          "changes": [
+            "Dropped: Network Segment=workstation"
+          ],
+          "label": "Reconnaissance"
+        },
+        {
+          "original": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "workstation"
+          },
+          "perturbed": {
+            "Alert Type": "denial_of_service",
+            "Severity": "high",
+            "Protocol": "unas",
+            "MITRE Tactic": "Impact",
+            "MITRE Technique": "T1499",
+            "Kill Chain Phase": "actions_on_objectives",
+            "Network Segment": "-"
+          },
+          "changes": [
+            "Dropped: Network Segment=workstation"
+          ],
+          "label": "DoS"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "deterministic": true,
+    "high_sensitivity_features": [],
+    "most_robust_feature": "Network Segment",
+    "least_robust_feature": "Alert Type"
+  }
+}

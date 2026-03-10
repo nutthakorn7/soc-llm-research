@@ -34,16 +34,15 @@
 
 ## Methods Comparison
 
-| Method | Train Cost | Inference Cost | Atk F1 |
-|---|---|---|---|
-| DT (TF-IDF) | ~$0 | ~$0 | 73.6% |
-| SVM (TF-IDF) | ~$0 | ~$0 | 90.9% |
-| BERT-base | ~$1 | $0.001/sample | ⏳ |
-| ICL GPT-4o | $0 | $0.01/sample | 51-92% |
-| **QLoRA 0.8B** | **$2.24** | **$0.0001/sample** | **100%** |
-| QLoRA 7B | $0.70 | $0.001/sample | 100% |
+| Method | Train Cost | Inference Cost | SALAD F1 | AG News | GoEmo | LEDGAR |
+|---|---|---|---|---|---|---|
+| DT (TF-IDF) | ~$0 | ~$0 | 73.6% | 57.9% | 16.9% | 18.0% |
+| SVM (TF-IDF) | ~$0 | ~$0 | 90.9% | 88.4% | 23.8% | 65.0% |
+| **BERT-base** | **~$0.20** | **$0.001/s** | **81.4%** | **92.0%** | **34.0%** | **61.5%** |
+| ICL GPT-4o-mini | $0 | $0.01/sample | ⏳ | — | — | — |
+| **QLoRA 0.8B** | **$2.24** | **$0.0001/s** | **100%** | ⏳ | ⏳ | ⏳ |
+| QLoRA 7B | $0.70 | $0.001/sample | 100% | — | — | — |
 
 ### Recommendation
-> For SOC deployment: **QLoRA 0.8B** = best cost/performance.
-> Train once ($2.24), run forever at $0.0001/sample.
-> vs ICL: breakeven at **~224 samples** then QLoRA is cheaper.
+> **BERT wins on cost** ($0.20 vs $2.24) but loses on F1 (81% vs 100%)
+> For SOC: **QLoRA 0.8B** = best F1/cost. For low-budget: **SVM** (free, 90.9%!)

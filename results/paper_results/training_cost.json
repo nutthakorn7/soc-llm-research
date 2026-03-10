@@ -1,0 +1,223 @@
+{
+  "training_runs": [
+    {
+      "name": "Qwen3.5-9B \u00d7 1K",
+      "adapter": "clean-qwen35-1k",
+      "gpu_hours": 0.33,
+      "steps": "189/189",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.13,
+      "electricity_cost_usd": 0.02,
+      "cloud_equivalent_usd": 0.66,
+      "co2_kg": 0.07
+    },
+    {
+      "name": "Qwen3.5-9B \u00d7 5K",
+      "adapter": "clean-qwen35-5k",
+      "gpu_hours": 1.86,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.74,
+      "electricity_cost_usd": 0.09,
+      "cloud_equivalent_usd": 3.72,
+      "co2_kg": 0.37
+    },
+    {
+      "name": "Qwen3.5-9B \u00d7 10K",
+      "adapter": "clean-qwen35-10k",
+      "gpu_hours": 3.61,
+      "steps": "1875/1875",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 1.44,
+      "electricity_cost_usd": 0.17,
+      "cloud_equivalent_usd": 7.22,
+      "co2_kg": 0.72
+    },
+    {
+      "name": "Qwen3.5-9B \u00d7 20K",
+      "adapter": "clean-qwen35-20k",
+      "gpu_hours": 7.15,
+      "steps": "2000/3750",
+      "final_loss": 0.05821333885192871,
+      "completed": false,
+      "electricity_kwh": 2.86,
+      "electricity_cost_usd": 0.34,
+      "cloud_equivalent_usd": 14.3,
+      "co2_kg": 1.43
+    },
+    {
+      "name": "DeepSeek-R1 7B \u00d7 5K",
+      "adapter": "mm-dsk-5k",
+      "gpu_hours": 0.35,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.14,
+      "electricity_cost_usd": 0.02,
+      "cloud_equivalent_usd": 0.7,
+      "co2_kg": 0.07
+    },
+    {
+      "name": "Phi-4-mini 3.8B \u00d7 5K",
+      "adapter": "mm-phi4-5k",
+      "gpu_hours": 0.3,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.12,
+      "electricity_cost_usd": 0.01,
+      "cloud_equivalent_usd": 0.6,
+      "co2_kg": 0.06
+    },
+    {
+      "name": "Mistral 7B \u00d7 5K",
+      "adapter": "mm-mis-5k",
+      "gpu_hours": 0.42,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.17,
+      "electricity_cost_usd": 0.02,
+      "cloud_equivalent_usd": 0.84,
+      "co2_kg": 0.08
+    },
+    {
+      "name": "Qwen3-8B \u00d7 5K",
+      "adapter": "mm-q3-5k",
+      "gpu_hours": 0.47,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.19,
+      "electricity_cost_usd": 0.02,
+      "cloud_equivalent_usd": 0.94,
+      "co2_kg": 0.09
+    },
+    {
+      "name": "Qwen3.5-0.8B \u00d7 5K",
+      "adapter": "mm-q08-5k",
+      "gpu_hours": 1.12,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.45,
+      "electricity_cost_usd": 0.05,
+      "cloud_equivalent_usd": 2.24,
+      "co2_kg": 0.22
+    },
+    {
+      "name": "SmolLM2 1.7B \u00d7 5K",
+      "adapter": "mm-smol-5k",
+      "gpu_hours": 0.3,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.12,
+      "electricity_cost_usd": 0.01,
+      "cloud_equivalent_usd": 0.6,
+      "co2_kg": 0.06
+    },
+    {
+      "name": "Qwen3.5-9B \u00d7 5K (seed 123)",
+      "adapter": "seed-123-q35-5k",
+      "gpu_hours": 1.7,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.68,
+      "electricity_cost_usd": 0.08,
+      "cloud_equivalent_usd": 3.4,
+      "co2_kg": 0.34
+    },
+    {
+      "name": "Qwen3.5-9B \u00d7 5K (seed 2024)",
+      "adapter": "seed-2024-q35-5k",
+      "gpu_hours": 1.71,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.68,
+      "electricity_cost_usd": 0.08,
+      "cloud_equivalent_usd": 3.42,
+      "co2_kg": 0.34
+    },
+    {
+      "name": "Ablation: rank 16",
+      "adapter": "abl-rank16",
+      "gpu_hours": 1.5,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.6,
+      "electricity_cost_usd": 0.07,
+      "cloud_equivalent_usd": 3.0,
+      "co2_kg": 0.3
+    },
+    {
+      "name": "Ablation: rank 32",
+      "adapter": "abl-rank32",
+      "gpu_hours": 1.67,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.67,
+      "electricity_cost_usd": 0.08,
+      "cloud_equivalent_usd": 3.34,
+      "co2_kg": 0.33
+    },
+    {
+      "name": "Ablation: rank 128",
+      "adapter": "abl-rank128",
+      "gpu_hours": 1.55,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.62,
+      "electricity_cost_usd": 0.07,
+      "cloud_equivalent_usd": 3.1,
+      "co2_kg": 0.31
+    },
+    {
+      "name": "Ablation: LR 1e-4",
+      "adapter": "abl-lr1e-4",
+      "gpu_hours": 1.66,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.66,
+      "electricity_cost_usd": 0.08,
+      "cloud_equivalent_usd": 3.32,
+      "co2_kg": 0.33
+    },
+    {
+      "name": "Ablation: LR 5e-4",
+      "adapter": "abl-lr5e-4",
+      "gpu_hours": 1.53,
+      "steps": "939/939",
+      "final_loss": null,
+      "completed": true,
+      "electricity_kwh": 0.61,
+      "electricity_cost_usd": 0.07,
+      "cloud_equivalent_usd": 3.06,
+      "co2_kg": 0.31
+    }
+  ],
+  "totals": {
+    "gpu_hours": 27.2,
+    "electricity_kwh": 10.9,
+    "electricity_cost_usd": 1.31,
+    "cloud_equivalent_usd": 54.46,
+    "co2_kg": 5.4
+  },
+  "icl_comparison": {
+    "GPT-4o (10K alerts)": 556.0,
+    "Claude Opus (10K alerts)": 672.0,
+    "GPT-4 Turbo (10K alerts)": 340.0,
+    "Gemini Pro (10K alerts)": 40.0
+  },
+  "hardware": "NVIDIA A100 40GB (Lanta HPC)",
+  "gpu_tdp_watts": 400
+}

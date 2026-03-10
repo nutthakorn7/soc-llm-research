@@ -1,0 +1,195 @@
+=== SOC-FT: Qwen3.5-0.8B Full Training ===
+Job ID: 4793805 | Node: lanta-g-003 | GPUs: 1
+Start: Mon Mar  9 07:36:46 PM +07 2026
+Mon Mar  9 19:36:46 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.57.01              Driver Version: 565.57.01      CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  |   00000000:03:00.0 Off |                    0 |
+| N/A   36C    P0             54W /  400W |       1MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+[WARNING|2026-03-09 19:36:55] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 19:36:55] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[WARNING|2026-03-09 19:36:58] llamafactory.data.template:149 >> You are using reasoning template, please add `_nothink` suffix if the model is not a reasoning model. e.g., qwen3_vl_nothink
+[INFO|2026-03-09 19:36:58] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_50k.json...
+[INFO|2026-03-09 19:37:08] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/val_5k.json...
+training example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 47564, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 22, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: udp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.07<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 22, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.07<|im_end|>
+
+eval example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 21, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 21, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+
+[INFO|2026-03-09 19:37:24] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 19:37:24] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.visual:144 >> Casting multimodal projector outputs in torch.bfloat16.
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-09 19:37:34] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-09 19:37:34] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.misc:144 >> Found linear modules: in_proj_z,out_proj,q_proj,o_proj,k_proj,v_proj,up_proj,in_proj_a,down_proj,gate_proj,in_proj_b,in_proj_qkv
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.visual:144 >> Set vision model not trainable: ['visual.pos_embed', 'visual.patch_embed', 'visual.blocks'].
+[INFO|2026-03-09 19:37:34] llamafactory.model.model_utils.visual:144 >> Set multi model projector not trainable: model.visual.merger.
+[INFO|2026-03-09 19:37:35] llamafactory.model.loader:144 >> trainable params: 43,290,624 || all params: 896,276,544 || trainable%: 4.8301
+{'loss': '0.2435', 'grad_norm': '0.1855', 'learning_rate': '4.17e-05', 'epoch': '0.064'}
+{'loss': '0.06402', 'grad_norm': '0.03471', 'learning_rate': '8.426e-05', 'epoch': '0.128'}
+{'loss': '0.06126', 'grad_norm': '0.01911', 'learning_rate': '0.0001268', 'epoch': '0.192'}
+{'loss': '0.0612', 'grad_norm': '0.01884', 'learning_rate': '0.0001694', 'epoch': '0.256'}
+{'loss': '0.05997', 'grad_norm': '0.009534', 'learning_rate': '0.0002', 'epoch': '0.32'}
+{'loss': '0.05975', 'grad_norm': '0.01019', 'learning_rate': '0.0001995', 'epoch': '0.384'}
+{'loss': '0.06036', 'grad_norm': '0.009021', 'learning_rate': '0.0001986', 'epoch': '0.448'}
+{'loss': '0.06065', 'grad_norm': '0.009627', 'learning_rate': '0.000197', 'epoch': '0.512'}
+{'loss': '0.05933', 'grad_norm': '0.0101', 'learning_rate': '0.000195', 'epoch': '0.576'}
+{'loss': '0.05987', 'grad_norm': '0.007028', 'learning_rate': '0.0001924', 'epoch': '0.64'}
+{'eval_loss': '0.05946', 'eval_runtime': '197.2', 'eval_samples_per_second': '25.36', 'eval_steps_per_second': '3.17', 'epoch': '0.64'}
+{'loss': '0.05929', 'grad_norm': '0.00769', 'learning_rate': '0.0001893', 'epoch': '0.704'}
+{'loss': '0.05948', 'grad_norm': '0.006813', 'learning_rate': '0.0001857', 'epoch': '0.768'}
+{'loss': '0.05988', 'grad_norm': '0.005116', 'learning_rate': '0.0001816', 'epoch': '0.832'}
+{'loss': '0.05925', 'grad_norm': '0.006725', 'learning_rate': '0.0001771', 'epoch': '0.896'}
+{'loss': '0.05915', 'grad_norm': '0.004286', 'learning_rate': '0.0001721', 'epoch': '0.96'}
+{'loss': '0.05982', 'grad_norm': '0.008889', 'learning_rate': '0.0001668', 'epoch': '1.023'}
+{'loss': '0.05965', 'grad_norm': '0.00968', 'learning_rate': '0.0001611', 'epoch': '1.087'}
+{'loss': '0.06022', 'grad_norm': '0.01033', 'learning_rate': '0.000155', 'epoch': '1.151'}
+{'loss': '0.05937', 'grad_norm': '0.007584', 'learning_rate': '0.0001487', 'epoch': '1.215'}
+{'loss': '0.05945', 'grad_norm': '0.005123', 'learning_rate': '0.000142', 'epoch': '1.279'}
+{'eval_loss': '0.05904', 'eval_runtime': '222.5', 'eval_samples_per_second': '22.47', 'eval_steps_per_second': '2.809', 'epoch': '1.279'}
+{'loss': '0.05927', 'grad_norm': '0.007169', 'learning_rate': '0.0001352', 'epoch': '1.343'}
+{'loss': '0.05932', 'grad_norm': '0.003983', 'learning_rate': '0.0001281', 'epoch': '1.407'}
+{'loss': '0.05994', 'grad_norm': '0.00593', 'learning_rate': '0.0001209', 'epoch': '1.471'}
+{'loss': '0.05954', 'grad_norm': '0.00468', 'learning_rate': '0.0001136', 'epoch': '1.535'}
+{'loss': '0.059', 'grad_norm': '0.003999', 'learning_rate': '0.0001062', 'epoch': '1.599'}
+{'loss': '0.05859', 'grad_norm': '0.006124', 'learning_rate': '9.874e-05', 'epoch': '1.663'}
+{'loss': '0.05873', 'grad_norm': '0.008898', 'learning_rate': '9.131e-05', 'epoch': '1.727'}
+{'loss': '0.05934', 'grad_norm': '0.005651', 'learning_rate': '8.392e-05', 'epoch': '1.791'}
+{'loss': '0.05931', 'grad_norm': '0.0036', 'learning_rate': '7.663e-05', 'epoch': '1.855'}
+{'loss': '0.05876', 'grad_norm': '0.004883', 'learning_rate': '6.947e-05', 'epoch': '1.919'}
+{'eval_loss': '0.05889', 'eval_runtime': '190', 'eval_samples_per_second': '26.32', 'eval_steps_per_second': '3.289', 'epoch': '1.919'}
+{'loss': '0.0765', 'grad_norm': '0.02557', 'learning_rate': '6.247e-05', 'epoch': '1.983'}
+{'loss': '0.05938', 'grad_norm': '0.004483', 'learning_rate': '5.568e-05', 'epoch': '2.046'}
+{'loss': '0.05908', 'grad_norm': '0.004733', 'learning_rate': '4.914e-05', 'epoch': '2.11'}
+{'loss': '0.05872', 'grad_norm': '0.007395', 'learning_rate': '4.288e-05', 'epoch': '2.174'}
+{'loss': '0.05931', 'grad_norm': '0.004677', 'learning_rate': '3.694e-05', 'epoch': '2.238'}
+{'loss': '0.05894', 'grad_norm': '0.004212', 'learning_rate': '3.134e-05', 'epoch': '2.302'}
+{'loss': '0.05865', 'grad_norm': '0.005609', 'learning_rate': '2.613e-05', 'epoch': '2.366'}
+{'loss': '0.05906', 'grad_norm': '0.006322', 'learning_rate': '2.132e-05', 'epoch': '2.43'}
+{'loss': '0.05884', 'grad_norm': '0.007734', 'learning_rate': '1.695e-05', 'epoch': '2.494'}
+{'loss': '0.05858', 'grad_norm': '0.005282', 'learning_rate': '1.304e-05', 'epoch': '2.558'}
+{'eval_loss': '0.05868', 'eval_runtime': '189.3', 'eval_samples_per_second': '26.42', 'eval_steps_per_second': '3.302', 'epoch': '2.558'}
+{'loss': '0.05884', 'grad_norm': '0.00587', 'learning_rate': '9.61e-06', 'epoch': '2.622'}
+{'loss': '0.05876', 'grad_norm': '0.004596', 'learning_rate': '6.68e-06', 'epoch': '2.686'}
+{'loss': '0.05901', 'grad_norm': '0.007869', 'learning_rate': '4.267e-06', 'epoch': '2.75'}
+{'loss': '0.059', 'grad_norm': '0.005993', 'learning_rate': '2.383e-06', 'epoch': '2.814'}
+{'loss': '0.05893', 'grad_norm': '0.006923', 'learning_rate': '1.04e-06', 'epoch': '2.878'}
+{'loss': '0.05878', 'grad_norm': '0.006156', 'learning_rate': '2.445e-07', 'epoch': '2.942'}
+{'train_runtime': '2.198e+04', 'train_samples_per_second': '6.824', 'train_steps_per_second': '0.107', 'train_loss': '0.06378', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =         3.0
+  total_flos               = 146772939GF
+  train_loss               =      0.0638
+  train_runtime            =  6:06:21.47
+  train_samples_per_second =       6.824
+  train_steps_per_second   =       0.107
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/qwen35-08b-lora/training_loss.png
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/qwen35-08b-lora/training_eval_loss.png
+[WARNING|2026-03-10 01:44:09] llamafactory.extras.ploting:149 >> No metric eval_accuracy to plot.
+***** eval metrics *****
+  epoch                   =        3.0
+  eval_loss               =     0.0586
+  eval_runtime            = 0:03:09.09
+  eval_samples_per_second =     26.442
+  eval_steps_per_second   =      3.305
+=== Training Complete === | End: Tue Mar 10 01:47:48 AM +07 2026

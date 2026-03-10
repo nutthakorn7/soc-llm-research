@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/lm2002/.conda/envs/soc-finetune/bin/llamafactory-cli", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/launcher.py", line 157, in launch
+    run_exp()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 125, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 60, in _training_function
+    model_args, data_args, training_args, finetuning_args, generating_args = get_train_args(args)
+                                                                             ^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/hparams/parser.py", line 347, in get_train_args
+    raise ValueError("Please make sure eval_dataset be provided or val_size >1e-6")
+ValueError: Please make sure eval_dataset be provided or val_size >1e-6
+ls: cannot access '/project/lt200473-ttctvs/soc-finetune/outputs/eval-test-q35-5k/': No such file or directory
+find: ‘/project/lt200473-ttctvs/soc-finetune/outputs/eval-test-q35-5k/’: No such file or directory

@@ -1,0 +1,73 @@
+[WARNING|2026-03-09 21:02:42] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 21:02:42] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[WARNING|2026-03-09 21:02:46] llamafactory.data.template:149 >> You are using reasoning template, please add `_nothink` suffix if the model is not a reasoning model. e.g., qwen3_vl_nothink
+[INFO|2026-03-09 21:02:46] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_1k.json...
+training example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 20, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 20, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<|im_end|>
+
+[INFO|2026-03-09 21:03:00] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 21:03:00] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.visual:144 >> Casting multimodal projector outputs in torch.bfloat16.
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-09 21:03:42] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-09 21:03:42] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.misc:144 >> Found linear modules: down_proj,in_proj_z,up_proj,in_proj_b,v_proj,q_proj,gate_proj,o_proj,out_proj,in_proj_a,k_proj,in_proj_qkv
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.visual:144 >> Set vision model not trainable: ['visual.pos_embed', 'visual.patch_embed', 'visual.blocks'].
+[INFO|2026-03-09 21:03:42] llamafactory.model.model_utils.visual:144 >> Set multi model projector not trainable: model.visual.merger.
+[INFO|2026-03-09 21:03:51] llamafactory.model.loader:144 >> trainable params: 173,113,344 || all params: 9,582,927,088 || trainable%: 1.8065
+{'loss': '0.1563', 'grad_norm': '0.0361', 'learning_rate': '0.000185', 'epoch': '0.8'}
+{'loss': '0.06353', 'grad_norm': '0.01716', 'learning_rate': '0.0001092', 'epoch': '1.592'}
+{'loss': '0.05859', 'grad_norm': '0.02455', 'learning_rate': '2.61e-05', 'epoch': '2.384'}
+{'train_runtime': '1204', 'train_samples_per_second': '2.492', 'train_steps_per_second': '0.157', 'train_loss': '0.08578', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =        3.0
+  total_flos               = 39284756GF
+  train_loss               =     0.0858
+  train_runtime            = 0:20:03.62
+  train_samples_per_second =      2.492
+  train_steps_per_second   =      0.157
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/q-Qwen3.5-9B-1k/training_loss.png
+[WARNING|2026-03-09 21:23:59] llamafactory.extras.ploting:149 >> No metric eval_loss to plot.
+[WARNING|2026-03-09 21:23:59] llamafactory.extras.ploting:149 >> No metric eval_accuracy to plot.

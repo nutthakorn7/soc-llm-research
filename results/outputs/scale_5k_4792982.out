@@ -1,0 +1,134 @@
+=== Scaling Law: Qwen3.5-9B × 5k ===
+Job ID: 4792982 | Node: lanta-g-059
+Start: Mon Mar  9 07:12:58 PM +07 2026
+[INFO|2026-03-09 19:14:39] llamafactory.launcher:144 >> Initializing 4 distributed tasks at: 127.0.0.1:56839
+[WARNING|2026-03-09 19:15:05] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 19:15:05] llamafactory.hparams.parser:144 >> Set `ddp_find_unused_parameters` to False in DDP training since LoRA is enabled.
+[INFO|2026-03-09 19:15:05] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 4, device: cuda:0, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-03-09 19:15:06] llamafactory.hparams.parser:508 >> Process rank: 1, world size: 4, device: cuda:1, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-03-09 19:15:06] llamafactory.hparams.parser:508 >> Process rank: 2, world size: 4, device: cuda:2, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2026-03-09 19:15:06] llamafactory.hparams.parser:508 >> Process rank: 3, world size: 4, device: cuda:3, distributed training: True, compute dtype: torch.bfloat16
+[WARNING|2026-03-09 19:15:09] llamafactory.data.template:149 >> You are using reasoning template, please add `_nothink` suffix if the model is not a reasoning model. e.g., qwen3_vl_nothink
+[INFO|2026-03-09 19:15:09] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_5k.json...
+[INFO|2026-03-09 19:15:18] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/val_5k.json...
+training example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 20, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 20, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<|im_end|>
+
+eval example:
+input_ids:
+[248045, 8678, 198, 2523, 513, 449, 6009, 36403, 318, 14906, 24093, 5651, 8, 17695, 13, 15767, 264, 4610, 4953, 440, 3790, 321, 5716, 10903, 3447, 11, 3300, 25, 198, 16, 13, 53037, 25, 8134, 9340, 466, 7124, 607, 198, 17, 13, 345, 8510, 39087, 25, 15090, 278, 344, 11, 31023, 344, 11, 466, 83800, 198, 18, 13, 20156, 9757, 25, 561, 3050, 913, 314, 3250, 318, 68, 1257, 2487, 3054, 50, 11, 80117, 43694, 11, 6627, 10470, 11, 4831, 5946, 198, 19, 13, 30871, 17576, 25, 357, 5284, 494, 220, 15, 13, 15, 15, 318, 86806, 8, 310, 220, 16, 13, 15, 15, 318, 71633, 8, 271, 63148, 3413, 284, 943, 440, 1132, 279, 2943, 4881, 3294, 13, 248046, 198, 248045, 846, 198, 2014, 53983, 411, 36403, 4953, 25, 271, 9388, 3856, 25, 4472, 86915, 198, 63380, 25, 6643, 198, 20063, 25, 27143, 198, 17785, 762, 345, 22447, 25, 471, 198, 17785, 762, 74963, 25, 471, 198, 51932, 27593, 26679, 25, 471, 198, 11967, 35873, 25, 92576, 248046, 198, 248045, 74455, 198, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 21, 248046, 198]
+inputs:
+<|im_start|>system
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|>
+<|im_start|>user
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 248068, 271, 248069, 271, 82105, 25, 7124, 607, 198, 51, 8510, 39087, 25, 26344, 198, 27668, 9757, 25, 7124, 607, 198, 19930, 17576, 25, 220, 15, 13, 15, 21, 248046, 198]
+labels:
+<think>
+
+</think>
+
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+
+[INFO|2026-03-09 19:16:10] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 19:16:10] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.visual:144 >> Casting multimodal projector outputs in torch.bfloat16.
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-09 19:19:03] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-09 19:19:03] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.misc:144 >> Found linear modules: v_proj,in_proj_a,q_proj,out_proj,k_proj,gate_proj,down_proj,in_proj_b,in_proj_z,up_proj,o_proj,in_proj_qkv
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.visual:144 >> Set vision model not trainable: ['visual.pos_embed', 'visual.patch_embed', 'visual.blocks'].
+[INFO|2026-03-09 19:19:03] llamafactory.model.model_utils.visual:144 >> Set multi model projector not trainable: model.visual.merger.
+[INFO|2026-03-09 19:19:05] llamafactory.model.loader:144 >> trainable params: 173,113,344 || all params: 9,582,927,088 || trainable%: 1.8065
+{'loss': '0.1596', 'grad_norm': '0.02749', 'learning_rate': '0.0001933', 'epoch': '0.639'}
+{'loss': '0.06065', 'grad_norm': '0.01001', 'learning_rate': '0.0001448', 'epoch': '1.268'}
+{'loss': '0.06069', 'grad_norm': '0.007031', 'learning_rate': '7.305e-05', 'epoch': '1.907'}
+{'loss': '0.05936', 'grad_norm': '0.009914', 'learning_rate': '1.53e-05', 'epoch': '2.537'}
+{'train_runtime': '1408', 'train_samples_per_second': '10.65', 'train_steps_per_second': '0.168', 'train_loss': '0.0809', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =         3.0
+  total_flos               = 196648872GF
+  train_loss               =      0.0809
+  train_runtime            =  0:23:28.01
+  train_samples_per_second =      10.653
+  train_steps_per_second   =       0.168
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/scale-qwen35-5k/training_loss.png
+[WARNING|2026-03-09 19:42:37] llamafactory.extras.ploting:149 >> No metric eval_loss to plot.
+[WARNING|2026-03-09 19:42:37] llamafactory.extras.ploting:149 >> No metric eval_accuracy to plot.
+***** eval metrics *****
+  epoch                   =        3.0
+  eval_loss               =      0.059
+  eval_runtime            = 0:01:25.65
+  eval_samples_per_second =     58.375
+  eval_steps_per_second   =      1.833
+=== Done === | End: Mon Mar  9 07:44:15 PM +07 2026

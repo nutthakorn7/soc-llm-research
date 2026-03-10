@@ -1,0 +1,68 @@
+[
+  {
+    "alert": {
+      "alert_type": "exploit_attempt",
+      "severity": "High",
+      "protocol": "TCP",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "T1190",
+      "network_segment": "DMZ"
+    },
+    "system_a": {
+      "classification": "Malicious",
+      "triage": "Escalate",
+      "attack_category": "web_application_attack"
+    },
+    "system_b": {
+      "classification": "Malicious",
+      "triage": "Escalate",
+      "attack_category": "web_application_attack",
+      "priority_score": 8.5,
+      "explanation": "High-severity exploit attempt targeting DMZ via TCP. MITRE T1190 (Exploit Public-Facing Application) indicates active exploitation of web services. Immediate investigation of DMZ web servers recommended. Check WAF logs and application access logs for payload analysis."
+    }
+  },
+  {
+    "alert": {
+      "alert_type": "normal_traffic",
+      "severity": "Low",
+      "protocol": "UDP",
+      "mitre_tactic": "N/A",
+      "mitre_technique": "N/A",
+      "network_segment": "Internal"
+    },
+    "system_a": {
+      "classification": "Benign",
+      "triage": "Suppress",
+      "attack_category": "none"
+    },
+    "system_b": {
+      "classification": "Benign",
+      "triage": "Suppress",
+      "attack_category": "none",
+      "priority_score": 1.0,
+      "explanation": "Routine internal UDP traffic with no MITRE mapping. Low severity, consistent with normal network operations. No action required. Safe to auto-suppress."
+    }
+  },
+  {
+    "alert": {
+      "alert_type": "reconnaissance_scan",
+      "severity": "Medium",
+      "protocol": "TCP",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "T1046",
+      "network_segment": "External"
+    },
+    "system_a": {
+      "classification": "Malicious",
+      "triage": "Investigate",
+      "attack_category": "network_scan"
+    },
+    "system_b": {
+      "classification": "Malicious",
+      "triage": "Investigate",
+      "attack_category": "network_scan",
+      "priority_score": 5.5,
+      "explanation": "TCP port scan from external source. MITRE T1046 (Network Service Discovery) suggests adversary reconnaissance. Medium priority \u2014 may be automated scanning or targeted recon. Check if source IP appears in threat intel feeds. Block if targeting critical services."
+    }
+  }
+]

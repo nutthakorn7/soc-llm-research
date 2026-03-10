@@ -1,0 +1,98 @@
+[WARNING|2026-03-10 02:28:49] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-10 02:28:49] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[INFO|2026-03-10 02:28:52] llamafactory.data.template:144 >> Replace eos token: <|im_end|>.
+[WARNING|2026-03-10 02:28:52] llamafactory.data.template:149 >> New tokens have been added, make sure `resize_vocab` is True.
+[INFO|2026-03-10 02:28:52] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_5k_clean.json...
+[INFO|2026-03-10 02:29:02] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/val_held_out.json...
+training example:
+input_ids:
+[27, 91, 321, 10949, 91, 29, 17360, 27, 91, 321, 145582, 91, 29, 3575, 553, 448, 8333, 54842, 350, 19264, 40467, 7249, 8, 29489, 13, 29844, 261, 7203, 8524, 483, 5402, 326, 11948, 22990, 4878, 11, 3587, 734, 16, 13, 98892, 25, 7825, 12682, 503, 8462, 733, 198, 17, 13, 353, 13436, 70837, 25, 19126, 280, 379, 11, 47497, 379, 11, 503, 20631, 799, 198, 18, 13, 55008, 17015, 25, 623, 4857, 1490, 328, 10192, 350, 68, 1940, 4213, 3756, 50, 11, 105903, 1503, 17968, 11, 9793, 10306, 11, 5178, 32616, 19, 13, 54625, 30731, 25, 355, 8429, 591, 220, 15, 13, 504, 350, 183722, 8, 316, 220, 16, 13, 504, 350, 145680, 1029, 100813, 4468, 276, 1151, 483, 1606, 290, 4242, 8532, 5151, 13, 200029, 27, 91, 321, 10949, 91, 29, 1428, 27, 91, 321, 145582, 91, 29, 107202, 495, 54842, 8524, 1402, 14076, 7003, 25, 6078, 62, 84674, 198, 94915, 25, 12698, 198, 19824, 25, 64171, 198, 34515, 1099, 353, 37247, 25, 27418, 34515, 1099, 122314, 25, 27418, 70074, 43814, 42027, 25, 27418, 14022, 64922, 25, 157099, 200029, 27, 91, 321, 10949, 91, 29, 173781, 27, 91, 321, 145582, 91, 29, 77991, 25, 8462, 733, 198, 51, 13436, 70837, 25, 36382, 198, 33183, 17015, 25, 8462, 733, 198, 29032, 30731, 25, 220, 15, 13, 3218, 200029]
+inputs:
+<|im_start|>system<|im_sep|>You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|><|im_start|>user<|im_sep|>Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<|im_end|><|im_start|>assistant<|im_sep|>Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 77991, 25, 8462, 733, 198, 51, 13436, 70837, 25, 36382, 198, 33183, 17015, 25, 8462, 733, 198, 29032, 30731, 25, 220, 15, 13, 3218, 200029]
+labels:
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.06<|im_end|>
+eval example:
+input_ids:
+[27, 91, 321, 10949, 91, 29, 17360, 27, 91, 321, 145582, 91, 29, 3575, 553, 448, 8333, 54842, 350, 19264, 40467, 7249, 8, 29489, 13, 29844, 261, 7203, 8524, 483, 5402, 326, 11948, 22990, 4878, 11, 3587, 734, 16, 13, 98892, 25, 7825, 12682, 503, 8462, 733, 198, 17, 13, 353, 13436, 70837, 25, 19126, 280, 379, 11, 47497, 379, 11, 503, 20631, 799, 198, 18, 13, 55008, 17015, 25, 623, 4857, 1490, 328, 10192, 350, 68, 1940, 4213, 3756, 50, 11, 105903, 1503, 17968, 11, 9793, 10306, 11, 5178, 32616, 19, 13, 54625, 30731, 25, 355, 8429, 591, 220, 15, 13, 504, 350, 183722, 8, 316, 220, 16, 13, 504, 350, 145680, 1029, 100813, 4468, 276, 1151, 483, 1606, 290, 4242, 8532, 5151, 13, 200029, 27, 91, 321, 10949, 91, 29, 1428, 27, 91, 321, 145582, 91, 29, 107202, 495, 54842, 8524, 1402, 14076, 7003, 25, 128602, 101637, 135860, 198, 94915, 25, 1932, 198, 19824, 25, 64171, 198, 34515, 1099, 353, 37247, 25, 157359, 12993, 198, 34515, 1099, 122314, 25, 353, 8780, 15, 198, 70074, 43814, 42027, 25, 26856, 2860, 198, 14022, 64922, 25, 157099, 200029, 27, 91, 321, 10949, 91, 29, 173781, 27, 91, 321, 145582, 91, 29, 77991, 25, 7825, 12682, 198, 51, 13436, 70837, 25, 194121, 198, 33183, 17015, 25, 2866, 1331, 22357, 198, 29032, 30731, 25, 220, 15, 13, 3618, 200029]
+inputs:
+<|im_start|>system<|im_sep|>You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.<|im_end|><|im_start|>user<|im_sep|>Analyze this SOC alert:
+
+Alert Type: brute_force_attempt
+Severity: high
+Protocol: tcp
+MITRE Tactic: Credential Access
+MITRE Technique: T1110
+Kill Chain Phase: weaponization
+Network Segment: workstation<|im_end|><|im_start|>assistant<|im_sep|>Classification: Malicious
+Triage Decision: escalate
+Attack Category: Brute Force
+Priority Score: 0.66<|im_end|>
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 77991, 25, 7825, 12682, 198, 51, 13436, 70837, 25, 194121, 198, 33183, 17015, 25, 2866, 1331, 22357, 198, 29032, 30731, 25, 220, 15, 13, 3618, 200029]
+labels:
+Classification: Malicious
+Triage Decision: escalate
+Attack Category: Brute Force
+Priority Score: 0.66<|im_end|>
+[INFO|2026-03-10 02:29:23] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-10 02:29:23] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-10 02:29:53] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.
+[INFO|2026-03-10 02:29:53] llamafactory.model.model_utils.attention:144 >> Using torch SDPA for faster training and inference.
+[INFO|2026-03-10 02:29:53] llamafactory.model.adapter:144 >> Upcasting trainable params to float32.
+[INFO|2026-03-10 02:29:53] llamafactory.model.adapter:144 >> Fine-tuning method: LoRA
+[INFO|2026-03-10 02:29:53] llamafactory.model.model_utils.misc:144 >> Found linear modules: down_proj,o_proj,qkv_proj,gate_up_proj
+[INFO|2026-03-10 02:29:55] llamafactory.model.loader:144 >> trainable params: 92,274,688 || all params: 3,928,296,448 || trainable%: 2.3490
+{'loss': '0.9484', 'grad_norm': '0.05325', 'learning_rate': '0.0001043', 'epoch': '0.16'}
+{'loss': '0.4111', 'grad_norm': '0.1171', 'learning_rate': '0.0002', 'epoch': '0.32'}
+{'loss': '0.3898', 'grad_norm': '0.03098', 'learning_rate': '0.0001979', 'epoch': '0.48'}
+{'loss': '0.3869', 'grad_norm': '0.0211', 'learning_rate': '0.0001925', 'epoch': '0.64'}
+{'loss': '0.3874', 'grad_norm': '0.02865', 'learning_rate': '0.0001839', 'epoch': '0.8'}
+{'loss': '0.3854', 'grad_norm': '0.02025', 'learning_rate': '0.0001723', 'epoch': '0.96'}
+{'loss': '0.3871', 'grad_norm': '0.02779', 'learning_rate': '0.0001583', 'epoch': '1.118'}
+{'loss': '0.3851', 'grad_norm': '0.014', 'learning_rate': '0.0001423', 'epoch': '1.278'}
+{'loss': '0.3853', 'grad_norm': '0.009726', 'learning_rate': '0.0001248', 'epoch': '1.438'}
+{'loss': '0.3837', 'grad_norm': '0.01618', 'learning_rate': '0.0001065', 'epoch': '1.598'}
+{'loss': '0.3859', 'grad_norm': '0.01739', 'learning_rate': '8.795e-05', 'epoch': '1.758'}
+{'loss': '0.3859', 'grad_norm': '0.01504', 'learning_rate': '6.981e-05', 'epoch': '1.918'}
+{'loss': '0.3869', 'grad_norm': '0.01187', 'learning_rate': '5.271e-05', 'epoch': '2.077'}
+{'loss': '0.3846', 'grad_norm': '0.01693', 'learning_rate': '3.724e-05', 'epoch': '2.237'}
+{'loss': '0.3845', 'grad_norm': '0.01377', 'learning_rate': '2.393e-05', 'epoch': '2.397'}
+{'loss': '0.3843', 'grad_norm': '0.01529', 'learning_rate': '1.324e-05', 'epoch': '2.557'}
+{'loss': '0.3849', 'grad_norm': '0.01616', 'learning_rate': '5.546e-06', 'epoch': '2.717'}
+{'loss': '0.3836', 'grad_norm': '0.01613', 'learning_rate': '1.104e-06', 'epoch': '2.877'}
+{'train_runtime': '1084', 'train_samples_per_second': '13.84', 'train_steps_per_second': '0.866', 'train_loss': '0.417', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =        3.0
+  total_flos               = 63155418GF
+  train_loss               =      0.417
+  train_runtime            = 0:18:03.70
+  train_samples_per_second =     13.841
+  train_steps_per_second   =      0.866

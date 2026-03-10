@@ -1,0 +1,32 @@
+[
+  {
+    "model": "Qwen3.5-0.8B",
+    "adapter": "q-Qwen3.5-0.8B-1k",
+    "params_B": 0.55,
+    "gpu_mem_gb": 1.46,
+    "load_time_s": 15.6,
+    "input_tokens": 114,
+    "avg_output_tokens": 300.0,
+    "avg_latency_s": 21.191,
+    "p50_latency_s": 21.404,
+    "p95_latency_s": 22.534,
+    "tokens_per_sec": 14.2,
+    "alerts_per_min": 2.8,
+    "alerts_per_day": 4077
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "adapter": "clean-qwen35-5k",
+    "params_B": 5.67,
+    "gpu_mem_gb": 17.37,
+    "load_time_s": 28.6,
+    "input_tokens": 112,
+    "avg_output_tokens": 300.0,
+    "avg_latency_s": 30.653,
+    "p50_latency_s": 30.646,
+    "p95_latency_s": 30.913,
+    "tokens_per_sec": 9.8,
+    "alerts_per_min": 2.0,
+    "alerts_per_day": 2818
+  }
+]

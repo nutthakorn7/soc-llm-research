@@ -1,0 +1,6 @@
+=== SOC-FT Evaluation ===
+Model: models/Qwen3.5-9B
+Adapter: outputs/scale-qwen35-10k
+Template: qwen3_5
+Output: q35-9b-10k
+Start: Tue Mar 10 01:07:33 AM +07 2026

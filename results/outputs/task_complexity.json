@@ -1,0 +1,20 @@
+{
+  "classification": {
+    "n_classes": 2,
+    "entropy": 0.083,
+    "max_entropy": 1.0,
+    "norm_entropy": 0.083
+  },
+  "triage": {
+    "n_classes": 3,
+    "entropy": 0.911,
+    "max_entropy": 1.585,
+    "norm_entropy": 0.575
+  },
+  "attack_category": {
+    "n_classes": 9,
+    "entropy": 2.417,
+    "max_entropy": 3.17,
+    "norm_entropy": 0.762
+  }
+}

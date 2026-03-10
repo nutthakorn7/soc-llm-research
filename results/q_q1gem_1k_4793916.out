@@ -1,0 +1,43 @@
+[WARNING|2026-03-09 21:02:43] llamafactory.hparams.parser:149 >> We recommend enable `upcast_layernorm` in quantized training.
+[INFO|2026-03-09 21:02:43] llamafactory.hparams.parser:508 >> Process rank: 0, world size: 1, device: cuda:0, distributed training: False, compute dtype: torch.bfloat16
+[INFO|2026-03-09 21:02:49] llamafactory.data.template:144 >> Replace eos token: <end_of_turn>.
+[INFO|2026-03-09 21:02:49] llamafactory.data.loader:144 >> Loading dataset /project/lt200473-ttctvs/soc-finetune/data/train_1k.json...
+training example:
+input_ids:
+[2, 105, 2364, 107, 3048, 659, 614, 7710, 38436, 568, 19120, 27194, 6022, 236768, 34799, 236761, 17770, 496, 5052, 9690, 607, 3707, 532, 7492, 14020, 4889, 236764, 2847, 236787, 107, 236770, 236761, 41173, 236787, 6134, 8795, 653, 5947, 796, 107, 236778, 236761, 558, 9502, 40954, 236787, 20295, 94286, 236764, 10703, 11870, 236764, 653, 9191, 852, 107, 236800, 236761, 42800, 23223, 236787, 669, 3530, 1722, 529, 4657, 568, 236744, 236761, 236759, 1126, 3574, 236773, 236764, 117838, 80827, 236764, 7429, 8310, 236764, 4044, 2907, 107, 236812, 236761, 59193, 27242, 236787, 562, 6317, 699, 236743, 236771, 236761, 236771, 236771, 568, 117835, 236768, 531, 236743, 236770, 236761, 236771, 236771, 568, 78353, 236768, 108, 118904, 214219, 607, 1186, 506, 2390, 6192, 2787, 236761, 108, 115863, 672, 38436, 9690, 236787, 108, 17961, 9250, 236787, 3867, 236779, 47340, 107, 122726, 236787, 7293, 107, 38399, 236787, 44009, 107, 36320, 1357, 558, 25860, 236787, 753, 107, 36320, 1357, 82068, 236787, 753, 107, 54395, 35211, 25348, 236787, 753, 107, 22218, 66056, 236787, 99851, 106, 107, 105, 4368, 107, 76490, 236787, 5947, 796, 107, 236774, 9502, 40954, 236787, 26140, 107, 51452, 23223, 236787, 5947, 796, 107, 53058, 27242, 236787, 236743, 236771, 236761, 236771, 236810, 106, 107]
+inputs:
+<bos><start_of_turn>user
+You are an expert SOC (Security Operations Center) analyst. Given a security alert with network and threat intelligence details, provide:
+1. Classification: Malicious or Benign
+2. Triage Decision: Escalate, Investigate, or Suppress
+3. Attack Category: The specific type of attack (e.g., DoS, Reconnaissance, Backdoor, etc.)
+4. Priority Score: A score from 0.00 (lowest) to 1.00 (highest)
+
+Respond concisely with only the four fields above.
+
+Analyze this SOC alert:
+
+Alert Type: normal_traffic
+Severity: none
+Protocol: tcp
+MITRE Tactic: -
+MITRE Technique: -
+Kill Chain Phase: -
+Network Segment: workstation<end_of_turn>
+<start_of_turn>model
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<end_of_turn>
+
+label_ids:
+[-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 76490, 236787, 5947, 796, 107, 236774, 9502, 40954, 236787, 26140, 107, 51452, 23223, 236787, 5947, 796, 107, 53058, 27242, 236787, 236743, 236771, 236761, 236771, 236810, 106, 107]
+labels:
+Classification: Benign
+Triage Decision: suppress
+Attack Category: Benign
+Priority Score: 0.05<end_of_turn>
+
+[INFO|2026-03-09 21:03:06] llamafactory.model.model_utils.quantization:144 >> Quantizing model to 4 bit with bitsandbytes.
+[INFO|2026-03-09 21:03:06] llamafactory.model.model_utils.kv_cache:144 >> KV cache is disabled during training.
+[INFO|2026-03-09 21:03:30] llamafactory.model.model_utils.checkpointing:144 >> Gradient checkpointing enabled.

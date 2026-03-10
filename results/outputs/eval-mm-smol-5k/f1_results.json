@@ -1,0 +1,36 @@
+
+======================================================================
+  SOC-FT EVALUATION: Fine-tuned
+======================================================================
+  Total samples: 9851
+  Exact match:   99.5%
+
+  Per-Task Macro-F1:
+  Task                            F1     Prec      Rec  Classes
+  ---------------------------------------------------------
+  classification              1.0000   1.0000   1.0000        2
+  triage                      1.0000   1.0000   1.0000        3
+  attack_category             0.7778   0.7778   0.7778        9
+  priority (MAE)              0.0116
+
+  📊 Average Macro-F1: 0.9259
+
+  ======================================================================
+  COMPARISON WITH TRUST-SOC ICL BASELINES
+  ======================================================================
+  Model                          Method           Cost     Avg F1
+  -----------------------------------------------------------------
+  ** Fine-tuned **               Fine-tuned         $0      92.6%
+  -----------------------------------------------------------------
+  Claude Opus 4.6 (5S)           ICL              $672      90.7% ✅
+  Claude Opus 4.6 (AVG)          ICL              $672      81.5% ✅
+  Kimi K2 (AVG)                  ICL              Free      72.9% ✅
+  Llama 4 Maverick (AVG)         ICL                $7      72.1% ✅
+  DeepSeek V3.2 (AVG)            ICL                $9      70.9% ✅
+  Grok 4.1 Fast (AVG)            ICL                $5      60.3% ✅
+  GPT-5.2 (AVG)                  ICL               $75      60.2% ✅
+  ======================================================================
+
+  🏆 Beats 7/7 baselines!
+
+  Results saved to outputs/eval-mm-smol-5k/f1_results.json

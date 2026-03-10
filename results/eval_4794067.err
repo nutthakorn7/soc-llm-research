@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/home/lm2002/.conda/envs/soc-finetune/bin/llamafactory-cli", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/launcher.py", line 157, in launch
+    run_exp()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 125, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 60, in _training_function
+    model_args, data_args, training_args, finetuning_args, generating_args = get_train_args(args)
+                                                                             ^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/hparams/parser.py", line 290, in get_train_args
+    model_args, data_args, training_args, finetuning_args, generating_args = _parse_train_args(args)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/hparams/parser.py", line 244, in _parse_train_args
+    return _parse_args(parser, args, allow_extra_keys=allow_extra_keys)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/hparams/parser.py", line 93, in _parse_args
+    (*parsed_args, unknown_args) = parser.parse_args_into_dataclasses(args=args, return_remaining_strings=True)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/hf_argparser.py", line 345, in parse_args_into_dataclasses
+    obj = dtype(**inputs)
+          ^^^^^^^^^^^^^^^
+  File "<string>", line 30, in __init__
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/hparams/data_args.py", line 159, in __post_init__
+    raise ValueError("Cannot specify `val_size` if `eval_dataset` is not None.")
+ValueError: Cannot specify `val_size` if `eval_dataset` is not None.
+ls: cannot access '/project/lt200473-ttctvs/soc-finetune/outputs/eval-test2-q35-5k/': No such file or directory
+find: ‘/project/lt200473-ttctvs/soc-finetune/outputs/eval-test2-q35-5k/’: No such file or directory

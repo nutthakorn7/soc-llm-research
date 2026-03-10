@@ -1,0 +1,142 @@
+======================================================================
+  SOC-FT TRAINING COST ANALYSIS
+======================================================================
+
+  Model                                Hours      Steps     Loss   Cost $   CO2 kg
+  --------------------------------------------------------------------------------
+  ✅ Qwen3.5-9B × 1K                     0.3h   189/189       N/A $  0.66   0.07
+  ✅ Qwen3.5-9B × 5K                     1.9h   939/939       N/A $  3.72   0.37
+  ✅ Qwen3.5-9B × 10K                    3.6h  1875/1875      N/A $  7.22   0.72
+  🔄 Qwen3.5-9B × 20K                    7.2h  2000/3750   0.0582 $ 14.30   1.43
+  ✅ DeepSeek-R1 7B × 5K                 0.3h   939/939       N/A $  0.70   0.07
+  ✅ Phi-4-mini 3.8B × 5K                0.3h   939/939       N/A $  0.60   0.06
+  ✅ Mistral 7B × 5K                     0.4h   939/939       N/A $  0.84   0.08
+  ✅ Qwen3-8B × 5K                       0.5h   939/939       N/A $  0.94   0.09
+  ✅ Qwen3.5-0.8B × 5K                   1.1h   939/939       N/A $  2.24   0.22
+  ✅ SmolLM2 1.7B × 5K                   0.3h   939/939       N/A $  0.60   0.06
+  ✅ Qwen3.5-9B × 5K (seed 123)          1.7h   939/939       N/A $  3.40   0.34
+  ✅ Qwen3.5-9B × 5K (seed 2024)         1.7h   939/939       N/A $  3.42   0.34
+  ✅ Ablation: rank 16                   1.5h   939/939       N/A $  3.00   0.30
+  ✅ Ablation: rank 32                   1.7h   939/939       N/A $  3.34   0.33
+  ✅ Ablation: rank 128                  1.6h   939/939       N/A $  3.10   0.31
+  ✅ Ablation: LR 1e-4                   1.7h   939/939       N/A $  3.32   0.33
+  ✅ Ablation: LR 5e-4                   1.5h   939/939       N/A $  3.06   0.31
+
+======================================================================
+  📊 TOTALS
+======================================================================
+  Total GPU hours:    27.2 hours
+  Total electricity:  10.9 kWh
+  Electricity cost:   $1.31
+  Cloud equivalent:   $54.46
+  CO2 footprint:      5.4 kg
+
+======================================================================
+  💰 COST COMPARISON: Fine-Tuning vs ICL
+======================================================================
+  Fine-tuning (all experiments): $54.46
+  Fine-tuning (single 5K model): $3.72
+
+  GPT-4o (10K alerts): $556.00 → 149× more expensive
+  Claude Opus (10K alerts): $672.00 → 181× more expensive
+  GPT-4 Turbo (10K alerts): $340.00 → 91× more expensive
+  Gemini Pro (10K alerts): $40.00 → 11× more expensive
+
+  ✅ Saved to /project/lt200473-ttctvs/soc-finetune/outputs/paper_results/training_cost.json
+======================================================================
+  SOC-FT ADVERSARIAL ROBUSTNESS ANALYSIS
+======================================================================
+  Loaded 9851 samples from test set
+
+======================================================================
+  1. LABEL DETERMINISM CHECK
+======================================================================
+  Total patterns: 87
+  Ambiguous: 0
+  Deterministic: ✅ YES
+
+======================================================================
+  2. FEATURE SENSITIVITY ANALYSIS
+======================================================================
+  If we remove feature X, how many patterns become ambiguous?
+
+  Feature                     Groups  Ambiguous  Sensitivity Level
+  ----------------------------------------------------------------------
+  Alert Type                      87          0      0.0000 LOW
+  Severity                        87          0      0.0000 LOW
+  Protocol                         8          0      0.0000 LOW
+  MITRE Tactic                    87          0      0.0000 LOW
+  MITRE Technique                 87          0      0.0000 LOW
+  Kill Chain Phase                87          0      0.0000 LOW
+  Network Segment                 87          0      0.0000 LOW
+
+======================================================================
+  3. PERTURBATION IMPACT ANALYSIS
+======================================================================
+
+  Strategy: typo
+    Affected patterns: 63/87 (72.4%)
+    Example: Alert Type: 'reconnaissance_scan' → 'recon_scan'
+    Example: Severity: 'low' → 'LOW'
+
+  Strategy: case_upper
+    Affected patterns: 87/87 (100.0%)
+    Example: Alert Type: 'reconnaissance_scan' → 'RECONNAISSANCE_SCAN'
+    Example: Severity: 'low' → 'LOW'
+
+  Strategy: case_lower
+    Affected patterns: 76/87 (87.4%)
+    Example: MITRE Tactic: 'Reconnaissance' → 'reconnaissance'
+    Example: MITRE Technique: 'T1595' → 't1595'
+
+  Strategy: synonym
+    Affected patterns: 64/87 (73.6%)
+    Example: Severity: 'low' → 'minor'
+
+  Strategy: add_noise
+    Affected patterns: 87/87 (100.0%)
+    Example: Added: Source IP, Destination IP, Payload Size
+
+  Strategy: drop_alert_type
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: Alert Type=reconnaissance_scan
+
+  Strategy: drop_severity
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: Severity=low
+
+  Strategy: drop_protocol
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: Protocol=tcp
+
+  Strategy: drop_mitre_tactic
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: MITRE Tactic=Reconnaissance
+
+  Strategy: drop_mitre_technique
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: MITRE Technique=T1595
+
+  Strategy: drop_kill_chain_phase
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: Kill Chain Phase=reconnaissance
+
+  Strategy: drop_network_segment
+    Affected patterns: 87/87 (100.0%)
+    Example: Dropped: Network Segment=workstation
+
+======================================================================
+  📊 SUMMARY
+======================================================================
+
+  Most sensitive features (if removed, causes ambiguity):
+    Alert Type: 0 groups become ambiguous (LOW)
+    Severity: 0 groups become ambiguous (LOW)
+    Protocol: 0 groups become ambiguous (LOW)
+
+  Key findings:
+    - Dataset is deterministic
+    - 0 features have HIGH sensitivity
+    - Perturbations affect 986 patterns across 5 strategies
+
+  ✅ Saved to /project/lt200473-ttctvs/soc-finetune/outputs/paper_results/adversarial_analysis.json

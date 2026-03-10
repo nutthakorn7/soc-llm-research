@@ -1,0 +1,9 @@
+=== SOC-FT Evaluation ===
+Model: models/Qwen3.5-9B
+Adapter: outputs/scale-qwen35-5k
+Template: qwen3_5
+Output: test3-q35-5k
+Start: Mon Mar  9 10:03:12 PM +07 2026
+=== Prediction files ===
+=== Generated files ===
+=== Evaluation Complete === | End: Mon Mar  9 10:03:21 PM +07 2026

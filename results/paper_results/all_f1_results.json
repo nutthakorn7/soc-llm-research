@@ -1,0 +1,32 @@
+[
+  {
+    "eval": "eval-final-q35-5k",
+    "n_samples": 5000,
+    "f1_classification": 17.35,
+    "f1_triage": 100.0,
+    "f1_attack_category": 2.19,
+    "f1_attack_category_fuzzy": 2.19,
+    "priority_mae": 0.4215,
+    "avg_f1_fuzzy": 39.85
+  },
+  {
+    "eval": "eval-mm-dsk-5k",
+    "n_samples": 9851,
+    "f1_classification": 100.0,
+    "f1_triage": 100.0,
+    "f1_attack_category": 100.0,
+    "f1_attack_category_fuzzy": 100.0,
+    "priority_mae": 0.0118,
+    "avg_f1_fuzzy": 100.0
+  },
+  {
+    "eval": "eval-mm-smol-5k",
+    "n_samples": 9851,
+    "f1_classification": 100.0,
+    "f1_triage": 100.0,
+    "f1_attack_category": 87.5,
+    "f1_attack_category_fuzzy": 100.0,
+    "priority_mae": 0.0116,
+    "avg_f1_fuzzy": 100.0
+  }
+]
