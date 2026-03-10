@@ -8,7 +8,7 @@
 
 This repository contains code, data, and reproducibility materials for our multi-paper research program on applying LLMs to SOC alert analysis, built on the [SALAD dataset](https://github.com/your-org/salad-dataset).
 
-## Papers (20)
+## Papers (21)
 
 | # | Title | Status |
 |---|---|---|
@@ -27,6 +27,7 @@ This repository contains code, data, and reproducibility materials for our multi
 | P21 | Sub-1B is All You Need: Small LLMs for Domain Tasks | 📊 Analysis |
 | P22 | LoRA Rank Sensitivity Across Model Sizes | ⏳ Training |
 | P23 | Quantization-Aware Fine-Tuning for Edge SOC | ⏳ Training |
+| P24 | Cybersecurity NLP Resources: A Comparative Dataset Study | 📊 Analysis |
 
 ## Repository Structure
 
