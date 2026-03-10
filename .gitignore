@@ -22,3 +22,4 @@ Thumbs.db
 *.tmp
 *.log
 CLAUDE.md
+!results/icl-*/
