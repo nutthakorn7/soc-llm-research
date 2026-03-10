@@ -1,8 +1,8 @@
 {
   "model": "gpt4o-mini",
   "dataset": "data/test_held_out.json",
-  "accuracy": 1.0,
-  "n": 10,
+  "accuracy": 0.994,
+  "n": 500,
   "errors": 0,
   "predictions": [
     "Reconnaissance",
@@ -14,6 +14,16 @@
     "Reconnaissance",
     "DoS",
     "Fuzzers",
+    "Reconnaissance",
+    "Reconnaissance",
+    "Backdoor",
+    "DoS",
+    "Reconnaissance",
+    "DoS",
+    "Reconnaissance",
+    "Reconnaissance",
+    "Fuzzers",
+    "Reconnaissance",
     "Reconnaissance"
   ]
 }

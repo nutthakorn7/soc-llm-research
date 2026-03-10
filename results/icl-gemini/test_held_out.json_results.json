@@ -5,7 +5,7 @@
   "n": 500,
   "errors": 0,
   "predictions": [
-    "Analysis",
+    "Reconnaissance",
     "Reconnaissance",
     "DoS",
     "Reconnaissance",
@@ -14,16 +14,16 @@
     "Reconnaissance",
     "DoS",
     "Fuzzers",
-    "Analysis",
+    "Reconnaissance",
     "Reconnaissance",
     "Backdoor",
     "DoS",
-    "Reconnaissance",
-    "DoS",
     "Analysis",
+    "DoS",
+    "Reconnaissance",
     "Reconnaissance",
     "Fuzzers",
-    "Reconnaissance",
-    "Reconnaissance"
+    "Analysis",
+    "Analysis"
   ]
 }
