@@ -93,15 +93,15 @@ All models fine-tuned using QLoRA (4-bit NF4, LoRA rank 64, α=128, LR=2e-4, 3 e
 
 | Model | Size | Cls F1 | Tri F1 | Atk F1 (strict) | Atk F1 (norm) |
 |---|---|---|---|---|---|
-| DeepSeek-R1-7B | 7B | 100% | 100% | 100% | 100% |
-| SmolLM2-1.7B | 1.7B | 100% | 100% | 100% | 100% |
-| Qwen3.5-0.8B | 0.8B | 100% | 100% | 77.8% | 100% |
-| Qwen3-8B | 8B | 100% | 100% | 86.7% | 99.97% |
-| Phi-4-mini-3.8B | 3.8B | 100% | 100% | TBD | TBD |
-| Mistral-7B-v0.3 | 7B | 100% | 100% | 46.1% | 75.3% |
+| DeepSeek-R1-7B | 7B | 100% | 100% | **100.0%** | 100.0% |
+| SmolLM2-1.7B | 1.7B | 100% | 100% | 87.5% | 100.0% |
+| Qwen3.5-0.8B | 0.8B | 100% | 100% | 87.5% | 100.0% |
+| Qwen3-8B | 8B | 100% | 100% | 75.3% | 99.97% |
+| Phi-4-mini-3.8B | 3.8B | 100% | 100% | ⏳ eval running | ⏳ |
+| Mistral-7B-v0.3 | 7B | 100% | 100% | 74.9% | 75.3% |
 | **SVM (TF-IDF)** | — | — | — | — | **90.9%** |
 | **DT** | — | — | — | — | **73.6%** |
-| **BERT-base** | 110M | — | — | — | TBD |
+| **BERT-base** | 110M | — | — | — | ⏳ training |
 
 ### 4.2 Ablation Study
 
