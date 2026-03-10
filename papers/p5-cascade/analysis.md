@@ -10,39 +10,28 @@ Alert → DT Classifier
          └─ Low confidence (<0.95) → LLM fine-tuned model ($)
 ```
 
-## Expected Savings (from P3 + P7 data)
+## Actual Cascade Results (SALAD)
 
-| Task | DT F1 | DT Coverage* | Alerts to LLM | Cost Reduction |
+| Threshold | LR handles | LLM handles | Cascade F1 | Cost Savings |
 |---|---|---|---|---|
-| Classification | 100% | 100% | 0% | **100% saved** |
-| Triage | 100% | 100% | 0% | **100% saved** |
-| Attack Category | 73.6% | ~70% | ~30% | **70% saved** |
+| 0.50 | 99.9% | 0.1% | 100.0% | 99.9% |
+| 0.80 | 99.7% | 0.3% | 100.0% | 99.7% |
+| 0.90 | 98.9% | 1.1% | 100.0% | 98.9% |
+| 0.95 | 91.8% | 8.2% | 100.0% | 91.8% |
 
-*Coverage = % of alerts where DT confidence > 0.95
+### Key Finding
+> **SALAD is too easy for cascade benefit!** LR confidence is >99.7% for almost all samples.
+> Cascade shines on **high-entropy datasets** (GoEmotions H=3.75, LEDGAR H=6.16).
+> → Must run cascade experiment on cross-domain data to show value.
 
-## Key Experiment (TODO)
-1. Train DT on SALAD → get confidence scores per sample
-2. Set threshold sweep (0.5, 0.7, 0.8, 0.9, 0.95, 0.99)
-3. Route low-confidence to QLoRA-0.8B
-4. Measure: overall F1 vs % routed to LLM
+## Cross-Domain Cascade (TODO — need P20 eval results)
 
-## Expected Figure
-```
-F1 ↑
-100% │──────────────────●  (100% LLM)
-     │           ●────/
-     │        ●─/
- 90% │     ●─/
-     │  SVM
- 74% │●                     (DT only)
-     └──────────────────── % sent to LLM →
-      0%   10%  20%  50%  100%
-```
-
-## Cost Model
-- DT inference: ~0.001ms/sample ($0)
-- LLM inference: ~100ms/sample ($0.0001)
-- Cascade: DT cost + (1-coverage) × LLM cost
+| Domain | H(Y) | Traditional ML | Expected LLM% routed |
+|---|---|---|---|
+| SALAD | 1.24 | 90.9% | ~0% (cascade useless) |
+| AG News | 2.00 | 88.4% | ~5-10% |
+| GoEmotions | 3.75 | 23.8% | ~60-80% |
+| LEDGAR | 6.16 | 65.0% | ~30-50% |
 
 ## Novelty
 First paper to propose **entropy-aware cascade** for SOC:
