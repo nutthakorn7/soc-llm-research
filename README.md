@@ -10,19 +10,19 @@ This repository contains code, data, and reproducibility materials for our multi
 
 ## Papers
 
-| # | Title | Target | Status |
-|---|---|---|---|
-| P1 | SALAD: A Labeled Dataset for SOC Alert Analysis | Data in Brief | Submitted |
-| P2 | TRUST-SOC: In-Context Learning for SOC Alerts | ETRI Journal | Submitted |
-| P3 | SOC-FT: Fine-Tuning LLMs for SOC Alert Triage | IEEE Access (Q1) | In Progress |
-| P5 | Cascade DT→LLM for Cost-Efficient SOC | IEEE TIFS | Planned |
-| P6 | Scaling Laws for SOC Alert Classification | SaTML | In Progress |
-| P7 | Cost-Efficient LLM Deployment for SOC | IEEE IoT | In Progress |
-| P14 | OFT vs LoRA for Security Domain Adaptation | EMNLP | In Progress |
-| P15 | Multi-Task vs Single-Task SOC Learning | IEEE TDSC | Planned |
-| P18 | Zero-Shot Transfer Across Attack Categories | AsiaCCS | In Progress |
-| P19 | Beyond Accuracy: A Reproducibility Checklist for LLM Evaluation | ACM CSUR | Planned |
-| P20 | When, How, and How Big: A Framework for LLM Deployment | ESWA (Q1) | In Progress |
+| # | Title | Status |
+|---|---|---|
+| P1 | SALAD: A Labeled Dataset for SOC Alert Analysis | Submitted |
+| P2 | TRUST-SOC: In-Context Learning for SOC Alerts | Submitted |
+| P3 | SOC-FT: Fine-Tuning LLMs for SOC Alert Triage | In Progress |
+| P5 | Cascade DT→LLM for Cost-Efficient SOC | Planned |
+| P6 | Scaling Laws for SOC Alert Classification | In Progress |
+| P7 | Cost-Efficient LLM Deployment for SOC | In Progress |
+| P14 | OFT vs LoRA for Security Domain Adaptation | In Progress |
+| P15 | Multi-Task vs Single-Task SOC Learning | Planned |
+| P18 | Zero-Shot Transfer Across Attack Categories | In Progress |
+| P19 | Beyond Accuracy: A Reproducibility Checklist for LLM Evaluation | Planned |
+| P20 | When, How, and How Big: A Framework for LLM Deployment | In Progress |
 
 ## Repository Structure
 
