@@ -122,14 +122,16 @@ The 7B model outperforms 0.5B by 2.4 F1 points (91.1\% vs.\ 88.7\%), but at 8.4$
 
 \begin{table}[h]
 \centering
-\caption{Cross-Domain: AG News $\to$ GoEmotions (0.5B)}
+\caption{Full Cross-Domain Transfer Matrix (Qwen2.5-0.5B)}
 \label{tab:cross}
-\begin{tabular}{lccc}
+\begin{tabular}{llccc}
 \toprule
-\textbf{Condition} & \textbf{F1} & \textbf{Acc} & \textbf{Valid Labels} \\
+\textbf{Train} & \textbf{Test} & \textbf{F1} & \textbf{Acc} & \textbf{Type} \\
 \midrule
-In-domain (AG$\to$AG) & 0.887 & 0.886 & 4/4 \\
-Cross-domain (AG$\to$GoEmo) & \textbf{0.000} & \textbf{0.000} & 0/28 \\
+AG News & AG News & 0.887 & 0.886 & In-domain \\
+AG News & GoEmotions & \textbf{0.000} & \textbf{0.000} & Cross \\
+GoEmotions & GoEmotions & 0.453 & 0.522 & In-domain \\
+GoEmotions & AG News & \textbf{0.000} & \textbf{0.000} & Cross \\
 \bottomrule
 \end{tabular}
 \end{table}

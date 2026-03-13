@@ -1,0 +1,19 @@
+{
+  "paper": "P20",
+  "train_domain": "ag_news",
+  "test_domain": "ag_news",
+  "is_cross_domain": false,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "f1": 0.8872,
+  "f1_lenient": 0.8872,
+  "accuracy": 0.886,
+  "accuracy_lenient": 0.886,
+  "train_time_min": 10.6,
+  "seed": 42,
+  "top_predictions": {
+    "Sci/Tech": 142,
+    "Business": 127,
+    "Sports": 125,
+    "World": 106
+  }
+}

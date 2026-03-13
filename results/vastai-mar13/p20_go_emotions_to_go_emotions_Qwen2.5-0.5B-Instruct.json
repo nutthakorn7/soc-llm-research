@@ -1,0 +1,25 @@
+{
+  "paper": "P20",
+  "train_domain": "go_emotions",
+  "test_domain": "go_emotions",
+  "is_cross_domain": false,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "f1": 0.4527,
+  "f1_lenient": 0.4527,
+  "accuracy": 0.522,
+  "accuracy_lenient": 0.522,
+  "train_time_min": 10.7,
+  "seed": 42,
+  "top_predictions": {
+    "surprise": 191,
+    "admiration": 49,
+    "amusement": 25,
+    "love": 24,
+    "gratitude": 23,
+    "approval": 23,
+    "disapproval": 22,
+    "annoyance": 16,
+    "joy": 14,
+    "disappointment": 13
+  }
+}

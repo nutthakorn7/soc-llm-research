@@ -1,0 +1,25 @@
+{
+  "paper": "P20",
+  "train_domain": "ag_news",
+  "test_domain": "go_emotions",
+  "is_cross_domain": true,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "f1": 0.0,
+  "f1_lenient": 0.0106,
+  "accuracy": 0.0,
+  "accuracy_lenient": 0.01,
+  "train_time_min": 10.7,
+  "seed": 42,
+  "top_predictions": {
+    "Sports": 199,
+    "Disgusted": 47,
+    "Anger": 28,
+    "Sad": 26,
+    "Sci/Tech": 25,
+    "World": 20,
+    "Joy": 19,
+    "Angry": 18,
+    "Happy": 17,
+    "Positive": 14
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "domain": "go_emotions",
+  "seed": 42,
+  "entropy": 3.9,
+  "strict_macro_f1": 0.4751,
+  "accuracy": 0.559,
+  "train_samples": 5000,
+  "test_samples": 1000,
+  "num_classes": 28,
+  "train_time_min": 84.3,
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "lora_rank": 64
+}

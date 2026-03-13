@@ -1,0 +1,25 @@
+{
+  "paper": "P20",
+  "train_domain": "go_emotions",
+  "test_domain": "ag_news",
+  "is_cross_domain": true,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "f1": 0.0,
+  "f1_lenient": 0.0021,
+  "accuracy": 0.0,
+  "accuracy_lenient": 0.012,
+  "train_time_min": 10.7,
+  "seed": 42,
+  "top_predictions": {
+    "surprise": 347,
+    "annoyance": 29,
+    "excitement": 16,
+    "news": 13,
+    "disappointment": 12,
+    "disapproval": 11,
+    "approval": 8,
+    "sports": 7,
+    "admiration": 6,
+    "acquisition": 5
+  }
+}
