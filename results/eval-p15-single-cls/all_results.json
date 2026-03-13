@@ -1,0 +1,10 @@
+{
+    "predict_bleu-4": 17.772733225053294,
+    "predict_model_preparation_time": 0.0242,
+    "predict_rouge-1": 64.00297773830069,
+    "predict_rouge-2": 60.002310323825,
+    "predict_rouge-l": 66.6667,
+    "predict_runtime": 2846.5388,
+    "predict_samples_per_second": 3.461,
+    "predict_steps_per_second": 0.865
+}

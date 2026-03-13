@@ -1,0 +1,11 @@
+{
+  "macro_f1": 0.9233173481341751,
+  "accuracy": 0.923,
+  "num_classes": 4,
+  "classes": [
+    "Business",
+    "Sci/Tech",
+    "Sports",
+    "World"
+  ]
+}

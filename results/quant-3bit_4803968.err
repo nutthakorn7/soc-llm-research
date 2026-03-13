@@ -1,0 +1,558 @@
+warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+[INFO|configuration_utils.py:668] 2026-03-11 01:43:39,318 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 01:43:39,322 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+[INFO|image_processing_base.py:342] 2026-03-11 01:43:40,310 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|processing_utils.py:1093] 2026-03-11 01:43:40,317 >> loading configuration file None
+[INFO|image_processing_base.py:342] 2026-03-11 01:43:40,318 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|image_processing_base.py:342] 2026-03-11 01:43:40,330 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/preprocessor_config.json
+[INFO|image_processing_base.py:377] 2026-03-11 01:43:40,330 >> Image processor Qwen2VLImageProcessorFast {
+  "data_format": "channels_first",
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_processor_type": "Qwen2VLImageProcessorFast",
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "merge_size": 2,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 16777216,
+    "shortest_edge": 65536
+  },
+  "temporal_patch_size": 2
+}
+
+[INFO|configuration_utils.py:668] 2026-03-11 01:43:40,330 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 01:43:40,332 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+[INFO|video_processing_utils.py:712] 2026-03-11 01:43:41,383 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/video_preprocessor_config.json
+[INFO|video_processing_utils.py:712] 2026-03-11 01:43:41,389 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/video_preprocessor_config.json
+[INFO|video_processing_utils.py:759] 2026-03-11 01:43:41,390 >> Video processor Qwen3VLVideoProcessor {
+  "data_format": "channels_first",
+  "default_to_square": true,
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "do_sample_frames": true,
+  "fps": 2,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "max_frames": 768,
+  "merge_size": 2,
+  "min_frames": 4,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "return_metadata": false,
+  "size": {
+    "longest_edge": 25165824,
+    "shortest_edge": 4096
+  },
+  "temporal_patch_size": 2,
+  "video_processor_type": "Qwen3VLVideoProcessor"
+}
+
+[INFO|processing_utils.py:1170] 2026-03-11 01:43:42,034 >> Processor Qwen3VLProcessor:
+- image_processor: Qwen2VLImageProcessorFast {
+  "data_format": "channels_first",
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_processor_type": "Qwen2VLImageProcessorFast",
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "merge_size": 2,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "size": {
+    "longest_edge": 16777216,
+    "shortest_edge": 65536
+  },
+  "temporal_patch_size": 2
+}
+
+- tokenizer: TokenizersBackend(name_or_path='/project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B', vocab_size=248044, model_max_length=262144, padding_side='right', truncation_side='right', special_tokens={'eos_token': '<|im_end|>', 'pad_token': '<|endoftext|>', 'audio_bos_token': '<|audio_start|>', 'audio_eos_token': '<|audio_end|>', 'audio_token': '<|audio_pad|>', 'image_token': '<|image_pad|>', 'video_token': '<|video_pad|>', 'vision_bos_token': '<|vision_start|>', 'vision_eos_token': '<|vision_end|>'}, added_tokens_decoder={
+	248044: AddedToken("<|endoftext|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248045: AddedToken("<|im_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248046: AddedToken("<|im_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248047: AddedToken("<|object_ref_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248048: AddedToken("<|object_ref_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248049: AddedToken("<|box_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248050: AddedToken("<|box_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248051: AddedToken("<|quad_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248052: AddedToken("<|quad_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248053: AddedToken("<|vision_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248054: AddedToken("<|vision_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248055: AddedToken("<|vision_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248056: AddedToken("<|image_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248057: AddedToken("<|video_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248058: AddedToken("<tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248059: AddedToken("</tool_call>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248060: AddedToken("<|fim_prefix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248061: AddedToken("<|fim_middle|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248062: AddedToken("<|fim_suffix|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248063: AddedToken("<|fim_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248064: AddedToken("<|repo_name|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248065: AddedToken("<|file_sep|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248066: AddedToken("<tool_response>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248067: AddedToken("</tool_response>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248068: AddedToken("<think>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248069: AddedToken("</think>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=False),
+	248070: AddedToken("<|audio_start|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248071: AddedToken("<|audio_end|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248072: AddedToken("<tts_pad>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248073: AddedToken("<tts_text_bos>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248074: AddedToken("<tts_text_eod>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248075: AddedToken("<tts_text_bos_single>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+	248076: AddedToken("<|audio_pad|>", rstrip=False, lstrip=False, single_word=False, normalized=False, special=True),
+}
+)
+- video_processor: Qwen3VLVideoProcessor {
+  "data_format": "channels_first",
+  "default_to_square": true,
+  "do_convert_rgb": true,
+  "do_normalize": true,
+  "do_rescale": true,
+  "do_resize": true,
+  "do_sample_frames": true,
+  "fps": 2,
+  "image_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "image_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "max_frames": 768,
+  "merge_size": 2,
+  "min_frames": 4,
+  "patch_size": 16,
+  "resample": 3,
+  "rescale_factor": 0.00392156862745098,
+  "return_metadata": false,
+  "size": {
+    "longest_edge": 25165824,
+    "shortest_edge": 4096
+  },
+  "temporal_patch_size": 2,
+  "video_processor_type": "Qwen3VLVideoProcessor"
+}
+
+
+{
+  "image_processor": {
+    "data_format": "channels_first",
+    "do_convert_rgb": true,
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "image_mean": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "image_processor_type": "Qwen2VLImageProcessorFast",
+    "image_std": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "merge_size": 2,
+    "patch_size": 16,
+    "resample": 3,
+    "rescale_factor": 0.00392156862745098,
+    "size": {
+      "longest_edge": 16777216,
+      "shortest_edge": 65536
+    },
+    "temporal_patch_size": 2
+  },
+  "processor_class": "Qwen3VLProcessor",
+  "video_processor": {
+    "data_format": "channels_first",
+    "default_to_square": true,
+    "do_convert_rgb": true,
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "do_sample_frames": true,
+    "fps": 2,
+    "image_mean": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "image_std": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "max_frames": 768,
+    "merge_size": 2,
+    "min_frames": 4,
+    "patch_size": 16,
+    "resample": 3,
+    "rescale_factor": 0.00392156862745098,
+    "return_metadata": false,
+    "size": {
+      "longest_edge": 25165824,
+      "shortest_edge": 4096
+    },
+    "temporal_patch_size": 2,
+    "video_processor_type": "Qwen3VLVideoProcessor"
+  }
+}
+
+[INFO|configuration_utils.py:668] 2026-03-11 01:43:51,242 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/Qwen3.5-0.8B/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 01:43:51,243 >> Model config Qwen3_5Config {
+  "architectures": [
+    "Qwen3_5ForConditionalGeneration"
+  ],
+  "image_token_id": 248056,
+  "model_type": "qwen3_5",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "attn_output_gate": true,
+    "bos_token_id": null,
+    "dtype": "bfloat16",
+    "eos_token_id": 248044,
+    "full_attention_interval": 4,
+    "head_dim": 256,
+    "hidden_act": "silu",
+    "hidden_size": 1024,
+    "initializer_range": 0.02,
+    "intermediate_size": 3584,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 16,
+    "linear_value_head_dim": 128,
+    "mamba_ssm_dtype": "float32",
+    "max_position_embeddings": 262144,
+    "mlp_only_layers": [],
+    "model_type": "qwen3_5_text",
+    "mtp_num_hidden_layers": 1,
+    "mtp_use_dedicated_embeddings": false,
+    "num_attention_heads": 8,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "partial_rotary_factor": 0.25,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "mrope_interleaved": true,
+      "mrope_section": [
+        11,
+        11,
+        10
+      ],
+      "partial_rotary_factor": 0.25,
+      "rope_theta": 10000000,
+      "rope_type": "default"
+    },
+    "tie_word_embeddings": true,
+    "use_cache": true,
+    "vocab_size": 248320
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "video_token_id": 248057,
+  "vision_config": {
+    "deepstack_visual_indexes": [],
+    "depth": 12,
+    "hidden_act": "gelu_pytorch_tanh",
+    "hidden_size": 768,
+    "in_channels": 3,
+    "initializer_range": 0.02,
+    "intermediate_size": 3072,
+    "model_type": "qwen3_5",
+    "num_heads": 12,
+    "num_position_embeddings": 2304,
+    "out_hidden_size": 1024,
+    "patch_size": 16,
+    "spatial_merge_size": 2,
+    "temporal_patch_size": 2
+  },
+  "vision_end_token_id": 248054,
+  "vision_start_token_id": 248053
+}
+
+Traceback (most recent call last):
+  File "/home/lm2002/.conda/envs/soc-finetune/bin/llamafactory-cli", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/launcher.py", line 157, in launch
+    run_exp()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 125, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 93, in _training_function
+    run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks)
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/sft/workflow.py", line 53, in run_sft
+    model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/model/loader.py", line 142, in load_model
+    patch_config(config, tokenizer, model_args, init_kwargs, is_trainable)
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/model/patcher.py", line 142, in patch_config
+    configure_quantization(config, tokenizer, model_args, is_trainable, init_kwargs)
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/model/model_utils/quantization.py", line 181, in configure_quantization
+    raise ValueError("Bitsandbytes only accepts 4-bit or 8-bit quantization.")
+ValueError: Bitsandbytes only accepts 4-bit or 8-bit quantization.

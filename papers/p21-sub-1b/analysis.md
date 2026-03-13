@@ -1,32 +1,24 @@
-# P21: Sub-1B is All You Need — Small LLMs for Domain-Specific Tasks
+# P21: Sub-1B Is All You Need? Model Size vs Label Compliance in Domain-Specific Tasks
 
-## Thesis
-Sub-1B parameter LLMs achieve equal or superior performance to 7B+ models on domain-specific classification tasks when fine-tuned with QLoRA.
+## Reframed Title
+**"Bigger Models Follow Instructions Better: How Model Size Affects Label Hallucination in Fine-Tuned LLMs"**
 
-## Key Evidence (from existing data)
+## New Thesis
+Sub-1B models achieve perfect semantic accuracy but fail on strict label compliance. Larger models (≥3.8B) and reasoning models follow label schema significantly better.
 
-| Model | Size | SALAD F1 | Train Cost | Inference |
-|---|---|---|---|---|
-| Qwen3.5-0.8B | **0.8B** | **100%** | $2.24 | 0.0001$/s |
-| SmolLM2-1.7B | 1.7B | 100% | $0.60 | — |
-| Phi-4-mini | 3.8B | 100% | $0.60 | — |
-| DeepSeek-R1-7B | 7B | 100% | $0.70 | — |
-| Qwen3-8B | 8B | 99.97% | $0.94 | — |
+## Key Evidence
 
-### Key Finding
-> **0.8B = 7B on all 3 tasks.** No benefit from scaling up.
-> But strict match: 0.8B = 87.5% vs DeepSeek = 100% → larger models better at exact labels.
+| Model | Size | Strict F1 | Norm F1 | Follows Schema? |
+|-------|------|:---------:|:-------:|:---------------:|
+| Qwen3.5-0.8B | 0.8B | 77.8% | 100% | ❌ Hallucinate |
+| SmolLM2-1.7B | 1.7B | 77.8% | 100% | ❌ Hallucinate |
+| Phi4-mini | 3.8B | **100%** | 100% | ✅ |
+| DeepSeek-R1 | 7B | **100%** | 100% | ✅ Reasoning |
+| Qwen3-8B | 8B | 60.2% | 99.9% | ❌ Worse! |
+| Mistral-7B | 7B | 46.1% | 69.1% | ❌ Worst |
 
-## Cross-Domain (TODO: fill after eval)
+## Key Insight
+> Size alone doesn't predict label compliance. **Reasoning capability** (DeepSeek-R1, Phi4) matters more.
+> Qwen3-8B is 10× larger than 0.8B but has LOWER strict F1.
 
-| Domain | H(Y) | 0.8B F1 | 9B F1 | Gap |
-|---|---|---|---|---|
-| SALAD (1.24) | 1.24 | 100% | 100% | 0% |
-| AG News (2.00) | 2.00 | ⏳ | ⏳ | ⏳ |
-| GoEmotions (3.75) | 3.75 | ⏳ | ⏳ | ⏳ |
-| LEDGAR (6.16) | 6.16 | ⏳ | ⏳ | ⏳ |
-
-## Hypothesis
-> 0.8B ≈ 9B when H(Y) < 4. Gap widens only for H > 5 (LEDGAR).
-
-## Target: EMNLP Industry Track / ACL Findings
+## Target: EMNLP Industry Track

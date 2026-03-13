@@ -56,6 +56,9 @@ with open(TEST_FILE) as f:
     test_data = json.load(f)
 
 def parse_labels(text):
+    import re
+    # Strip <think>...</think> tags (Qwen3.5 thinking mode)
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
     labels = {}
     for line in text.split("\n"):
         if "Classification:" in line: labels["cls"] = line.split("Classification:")[1].strip()
@@ -76,11 +79,12 @@ for item in test_data:
 # Fuzzy match for known variations
 FUZZY = {
     "backdoors": "Backdoor", "backdoor": "Backdoor",
-    "dos": "DoS", "denial of service": "DoS",
+    "dos": "DoS", "denial of service": "DoS", "ddos": "DoS",
     "exploits": "Exploits", "exploit": "Exploits",
     "reconnaissance": "Reconnaissance", "recon": "Reconnaissance",
     "fuzzers": "Fuzzers", "fuzzer": "Fuzzers",
     "generic": "Generic", "analysis": "Analysis", "benign": "Benign",
+    "malicious": "Malicious", "brute force": "Brute Force",
 }
 
 def normalize(val):

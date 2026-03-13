@@ -28,8 +28,13 @@ def parse_sample(conv):
                 feats[fn] = line.split(f"{fn}:")[1].strip()
     for line in asst_text.split("\n"):
         if "Classification:" in line: labels["cls"] = line.split("Classification:")[1].strip()
+        elif "Triage Decision:" in line: labels["tri"] = line.split("Triage Decision:")[1].strip()
         elif "Triage:" in line: labels["tri"] = line.split("Triage:")[1].strip()
         elif "Attack Category:" in line: labels["atk"] = line.split("Attack Category:")[1].strip()
+    # Default values for missing fields
+    labels.setdefault("cls", "Unknown")
+    labels.setdefault("tri", "unknown")
+    labels.setdefault("atk", "Unknown")
     return feats, labels
 
 def encode_features(data, encoders=None):

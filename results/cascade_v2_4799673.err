@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/lustrefs/disk/project/lt200473-ttctvs/soc-finetune/scripts/cascade_v2.py", line 289, in <module>
+    cascade = run_cascade_analysis()
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/soc-finetune/scripts/cascade_v2.py", line 88, in run_cascade_analysis
+    y_tri_train = le_tri.fit_transform([l["tri"] for l in train_labels])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/soc-finetune/scripts/cascade_v2.py", line 88, in <listcomp>
+    y_tri_train = le_tri.fit_transform([l["tri"] for l in train_labels])
+                                        ~^^^^^^^
+KeyError: 'tri'

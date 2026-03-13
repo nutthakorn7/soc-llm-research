@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+Computers \& Security \\
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``Beyond Accuracy: A 30-Item Checklist for Validating Fine-Tuned LLM Classifiers Against Label Hallucination''} for consideration in \emph{Computers \& Security}.
+
+\textbf{Summary.} We propose a 30-item validation checklist for detecting label hallucination in fine-tuned LLM classifiers. Existing ML reproducibility guidelines focus on accuracy and data splitting but overlook a failure mode specific to LLMs: models that achieve high semantic accuracy while producing schema-violating labels. Our checklist spans 6 categories (dataset integrity, training hygiene, evaluation rigor, label compliance, robustness, and documentation) and includes a Perfect Score Suspicion Protocol for escalating verification when metrics report implausible results.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item The first validation checklist specifically targeting label hallucination in fine-tuned LLMs.
+\item A Perfect Score Suspicion Protocol with formal escalation criteria (Definition~1).
+\item Validation against 6 real failures from our companion studies---not hypothetical scenarios.
+\end{enumerate}
+
+\textbf{Relevance to Computers \& Security.} Label hallucination in automated alert classification can trigger incorrect SOAR playbooks and compromise incident response. Our checklist provides security practitioners with a structured, actionable tool for validating LLM classifiers before deployment in security-critical environments.
+
+\textbf{Novelty.} While Pineau et al. (2021) proposed ML reproducibility checklists and Kapoor and Narayanan (2023) documented data leakage risks, no prior checklist addresses the label hallucination failure mode unique to generative classifiers.
+
+This manuscript has not been published previously and is not under consideration elsewhere.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

@@ -39,14 +39,14 @@
     {
       "name": "Qwen3.5-9B \u00d7 20K",
       "adapter": "clean-qwen35-20k",
-      "gpu_hours": 7.15,
-      "steps": "2000/3750",
-      "final_loss": 0.05821333885192871,
+      "gpu_hours": 1.42,
+      "steps": "1900/3750",
+      "final_loss": 0.05868190288543701,
       "completed": false,
-      "electricity_kwh": 2.86,
-      "electricity_cost_usd": 0.34,
-      "cloud_equivalent_usd": 14.3,
-      "co2_kg": 1.43
+      "electricity_kwh": 0.57,
+      "electricity_cost_usd": 0.07,
+      "cloud_equivalent_usd": 2.84,
+      "co2_kg": 0.28
     },
     {
       "name": "DeepSeek-R1 7B \u00d7 5K",
@@ -206,11 +206,11 @@
     }
   ],
   "totals": {
-    "gpu_hours": 27.2,
-    "electricity_kwh": 10.9,
-    "electricity_cost_usd": 1.31,
-    "cloud_equivalent_usd": 54.46,
-    "co2_kg": 5.4
+    "gpu_hours": 21.5,
+    "electricity_kwh": 8.6,
+    "electricity_cost_usd": 1.03,
+    "cloud_equivalent_usd": 43.0,
+    "co2_kg": 4.3
   },
   "icl_comparison": {
     "GPT-4o (10K alerts)": 556.0,

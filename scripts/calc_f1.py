@@ -110,8 +110,10 @@ def evaluate(predictions_file):
     true_cls, pred_cls = [], []
     true_tri, pred_tri = [], []
     true_atk, pred_atk = [], []
+    true_atk_strict, pred_atk_strict = [], []  # before normalization
     priority_errors = []
     exact_matches = 0
+    alias_used = 0
 
     for item in data:
         label = parse_response(item.get('label', ''))
@@ -126,6 +128,17 @@ def evaluate(predictions_file):
         if label['attack_category'] and pred['attack_category']:
             true_atk.append(label['attack_category'])
             pred_atk.append(pred['attack_category'])
+            # Also collect raw (pre-normalization) for strict F1
+            label_text_clean = re.sub(r'<think>.*?</think>', '', item.get('label', ''), flags=re.DOTALL)
+            pred_text_clean = re.sub(r'<think>.*?</think>', '', item.get('predict', ''), flags=re.DOTALL)
+            lm = re.search(r'(?i)attack category:\s*(.*)', label_text_clean)
+            pm = re.search(r'(?i)attack category:\s*(.*)', pred_text_clean)
+            l_raw = lm.group(1).strip().lower() if lm else ''
+            p_raw = pm.group(1).strip().lower() if pm else ''
+            true_atk_strict.append(l_raw)
+            pred_atk_strict.append(p_raw)
+            if p_raw != l_raw and ATTACK_ALIASES.get(p_raw, p_raw) == ATTACK_ALIASES.get(l_raw, l_raw):
+                alias_used += 1
         if label['priority'] is not None and pred['priority'] is not None:
             priority_errors.append(abs(label['priority'] - pred['priority']))
 
@@ -135,18 +148,25 @@ def evaluate(predictions_file):
             label['attack_category'] == pred['attack_category']):
             exact_matches += 1
 
+    atk_norm = calc_f1(true_atk, pred_atk)
+    atk_strict = calc_f1(true_atk_strict, pred_atk_strict)
+
     results = {
         "total_samples": len(data),
         "exact_match": exact_matches / len(data) if data else 0,
         "classification": calc_f1(true_cls, pred_cls),
         "triage": calc_f1(true_tri, pred_tri),
-        "attack_category": calc_f1(true_atk, pred_atk),
+        "attack_category": atk_norm,
+        "attack_category_strict": atk_strict,
+        "alias_used": alias_used,
         "priority_mae": sum(priority_errors) / len(priority_errors) if priority_errors else None,
     }
 
-    # Average F1
-    task_f1s = [results['classification']['f1'], results['triage']['f1'], results['attack_category']['f1']]
+    # Average F1 (both versions)
+    task_f1s = [results['classification']['f1'], results['triage']['f1'], atk_norm['f1']]
     results['avg_macro_f1'] = sum(task_f1s) / len(task_f1s)
+    task_f1s_strict = [results['classification']['f1'], results['triage']['f1'], atk_strict['f1']]
+    results['avg_macro_f1_strict'] = sum(task_f1s_strict) / len(task_f1s_strict)
 
     return results
 
@@ -163,9 +183,13 @@ def print_results(results, model_name="Fine-tuned"):
     for task in ['classification', 'triage', 'attack_category']:
         r = results[task]
         print(f"  {task:<25} {r['f1']:>8.4f} {r['precision']:>8.4f} {r['recall']:>8.4f} {r['n_classes']:>8}")
+    r_s = results['attack_category_strict']
+    print(f"  {'attack_category (strict)':<25} {r_s['f1']:>8.4f} {r_s['precision']:>8.4f} {r_s['recall']:>8.4f} {r_s['n_classes']:>8}")
+    print(f"  Alias normalizations used: {results['alias_used']}")
     if results['priority_mae'] is not None:
         print(f"  {'priority (MAE)':<25} {results['priority_mae']:>8.4f}")
-    print(f"\n  📊 Average Macro-F1: {results['avg_macro_f1']:.4f}")
+    print(f"\n  📊 Average Macro-F1 (normalized): {results['avg_macro_f1']:.4f}")
+    print(f"  📊 Average Macro-F1 (strict):     {results['avg_macro_f1_strict']:.4f}")
 
     print(f"\n  {'='*70}")
     print(f"  COMPARISON WITH TRUST-SOC ICL BASELINES")

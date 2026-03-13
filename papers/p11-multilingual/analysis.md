@@ -1,33 +1,33 @@
 # P11: Multilingual SOC — Thai Language Alert Classification
 
 ## Thesis
-LLMs pre-trained on multilingual corpora can classify Thai SOC alerts with minimal performance degradation compared to English.
+LLMs pre-trained on multilingual corpora can classify Thai SOC alerts with minimal degradation vs English.
 
 ## Dataset
-- **Source**: SALAD (5K) with Thai-translated instructions
-- **Method**: Template-based translation (instructions → Thai, labels → English)
-- **Why template**: SOC alerts contain technical English terms (IP, port, CVE) — full translation loses meaning
+- **Source**: SALAD 5K with Thai-translated instructions
+- **Method**: Template-based (instructions→Thai, labels→English)
+- Technical terms (IP, port, CVE) kept in English
 
-## Experiment Design
+## Experiments
 
-| Config | Train Lang | Test Lang | Model |
-|---|---|---|---|
-| Baseline (English) | EN | EN | Qwen3.5-0.8B | ✅ 100% |
-| Thai-only | **TH** | TH | Qwen3.5-0.8B | ⏳ |
+| Config | Train | Test | Model | Status |
+|--------|-------|------|-------|--------|
+| English baseline | EN | EN | Qwen3.5-0.8B | ✅ 100% F1 |
+| **Thai-only** | **TH** | TH | Qwen3.5-0.8B | ✅ trained, 🔄 eval submitted |
 | Cross-lingual | EN | **TH** | Qwen3.5-0.8B | TODO |
 | Mixed | EN+TH | EN+TH | Qwen3.5-0.8B | TODO |
 
-## Key Research Questions
-1. Thai instructions → same F1 as English?
-2. Cross-lingual: train EN, test TH → how much drop?
-3. Is Qwen3.5 (multilingual) better than Mistral (EN) for Thai?
+## ⚠️ Note
+If Thai model also achieves 100% (likely given SALAD simplicity), differentiation must come from:
+1. Cross-lingual transfer gap (train EN, test TH)
+2. Error analysis on Thai-specific patterns
+3. Cross-domain Thai data (if available)
 
 ## Action Plan
-- [x] Create Thai SALAD dataset (template translation)
-- [x] Submit training on Lanta
-- [ ] Eval: Thai model on Thai test
-- [ ] Eval: English model on Thai test (cross-lingual)
-- [ ] Compare with Mistral (EN-centric)
+- [x] Create Thai SALAD dataset ✅
+- [x] Submit Thai training ✅
+- [/] Thai eval (submitted)
+- [ ] Cross-lingual eval
 - [ ] Write paper
 
 ## Target: LREC / ACL Findings

@@ -79,11 +79,13 @@ def tokenize(ex):
     enc = tok(s, truncation=True, max_length=args.max_len, padding="max_length", return_tensors="pt")
     ids = enc["input_ids"].squeeze(0); attn = enc["attention_mask"].squeeze(0)
     labels = ids.clone(); labels[attn == 0] = -100
-    # Convert to lists to prevent datasets from inheriting ClassLabel feature type
-    # (GoEmotions has a "labels" column with ClassLabel(28) — token IDs like 151645 would crash)
-    return {"input_ids": ids.tolist(), "attention_mask": attn.tolist(), "labels": labels.tolist()}
+    # Use 'lm_labels' to avoid ClassLabel schema conflict
+    # (GoEmotions has a "labels" column typed ClassLabel(28) — token IDs like 151645 crash if
+    #  datasets tries to cast them to that schema during .map() writes)
+    return {"input_ids": ids.tolist(), "attention_mask": attn.tolist(), "lm_labels": labels.tolist()}
 
 train_ds = raw_tr.map(tokenize, remove_columns=raw_tr.column_names)
+train_ds = train_ds.rename_column("lm_labels", "labels")
 train_ds.set_format("torch")
 print(f"Tokenized {len(train_ds)} samples")
 

@@ -1,0 +1,124 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance}
+
+\begin{document}
+\title{SALAD-v2: A Multi-Source Cybersecurity Dataset for Cross-Environment SOC Alert Classification}
+\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
+\maketitle
+
+\begin{abstract}
+Single-source SOC datasets limit model generalization to specific network environments. We introduce SALAD-v2, merging SALAD (UNSW-NB15 derived, 8 categories, $H=1.24$) with Advanced SIEM logs (6 categories, $H=0.85$) into a unified 10K-sample, $\sim$14-class benchmark. Label entropy increases to $H\approx2.0$ bits---entering the ``transition zone'' where our entropy framework (P8) predicts LLMs begin adding value over traditional ML. We design the first cross-source evaluation protocol: models trained on SALAD are tested on SIEM (and vice versa) to measure environment transfer. SALAD-v2 addresses three limitations of single-source benchmarks: low entropy, environment overfitting, and limited label diversity.
+\end{abstract}
+\begin{IEEEkeywords}
+multi-source dataset, cybersecurity, cross-environment transfer, SOC classification, dataset difficulty
+\end{IEEEkeywords}
+
+\section{Introduction}
+SALAD achieves 87.4\% DT F1 with only 87 unique patterns---a lookup table suffices. Real SOCs receive alerts from multiple sources (Suricata, Snort, OSSEC, cloud WAFs), each with different format, vocabulary, and attack distributions. A model trained on SALAD logs may fail on SIEM alerts from a different IDS.
+
+SALAD-v2 addresses this by combining two independent alert sources, creating a more challenging and realistic benchmark:
+\begin{enumerate}
+\item \textbf{Higher entropy}: $H\approx2.0$ vs.\ $H=1.24$, entering the ML-LLM transition zone.
+\item \textbf{Cross-source evaluation}: Tests whether models generalize across IDS environments.
+\item \textbf{Label diversity}: $\sim$14 categories vs.\ 8, including novel types (Malware, Phishing).
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Network Intrusion Detection Datasets}
+The UNSW-NB15 dataset~\cite{moustafa2016} contains 2.5M network flow records across 9 attack types, forming the foundation of SALAD. Sharafaldin et~al.~\cite{sharafaldin2018} created CICIDS2017 with contemporary attack scenarios. Ring et~al.~\cite{ring2019} surveyed 34 IDS datasets, identifying staleness, synthetic traffic, and missing ground truth as common problems. Catal et~al.~\cite{catal2022} extended this to 68 datasets but without evaluating LLM suitability. The fundamental limitation shared by all single-source datasets is environment overfitting---models trained on one IDS format fail on another.
+
+\subsection{Multi-Source Benchmarks and Dataset Merging}
+In general NLP, Talmor and Berant~\cite{talmor2019} demonstrated that multi-source training improves reading comprehension robustness. CyberBench~\cite{gupta2024} combines security tasks for LLM evaluation but focuses on instruction following, not classification. Liu et~al.~\cite{liu2024bench} created SecBench with multiple cybersecurity dimensions. Ferrag et~al.~\cite{ferrag2024} surveyed LLM applications in cybersecurity, identifying dataset limitations as a key bottleneck. No prior work merges multiple IDS datasets into a unified classification benchmark with cross-source evaluation protocols.
+
+\subsection{Fine-Tuning for Cybersecurity Classification}
+LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient domain adaptation, making LLM fine-tuning feasible on single GPUs. Our companion work shows that SALAD's low entropy ($H=1.24$, Grade~D) means traditional ML suffices; SALAD-v2's doubled entropy ($H\approx2.0$) enters the transition zone where LLMs add genuine value.
+
+\section{Dataset Construction}
+
+\subsection{Source Datasets}
+
+\begin{table}[h]
+\centering\caption{SALAD-v2 Components}
+\begin{tabular}{lccc}
+\toprule & \textbf{SALAD} & \textbf{Adv.\ SIEM} & \textbf{SALAD-v2} \\
+\midrule
+Source & UNSW-NB15 & Enterprise SIEM & Merged \\
+Train & 5,000 & 5,000 & \textbf{10,000} \\
+Test & 9,851 & 1,000 & \textbf{10,851} \\
+Categories & 8 & 6 & \textbf{$\sim$14} \\
+$H(Y)$ & 1.24 & 0.85 & \textbf{$\sim$2.0} \\
+Unique patterns & 87 & --- & $>$500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Label Unification}
+Overlapping categories are merged with documented mappings:
+\begin{itemize}
+\item SALAD ``DoS'' + SIEM ``DDoS'' $\to$ ``Denial of Service''
+\item SALAD ``Reconnaissance'' + SIEM ``Port Scan'' $\to$ ``Reconnaissance''
+\item SIEM-only: ``Malware,'' ``Phishing,'' ``Data Exfiltration'' (new)
+\item SALAD-only: ``Backdoor,'' ``Shellcode,'' ``Generic'' (retained)
+\end{itemize}
+
+\subsection{Quality Assurance}
+Zero-overlap verification between train/test splits using MinHash deduplication. Stratified sampling maintains category proportions in both source components.
+
+\section{Cross-Source Evaluation Protocol}
+
+\begin{table}[h]
+\centering\caption{Cross-Source Transfer Matrix}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Train} & \textbf{SALAD test} & \textbf{SIEM test} & \textbf{v2 test} \\
+\midrule
+SALAD only & Baseline & Cross-source & --- \\
+SIEM only & Cross-source & Baseline & --- \\
+SALAD-v2 & --- & --- & Multi-source \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key question}: Does multi-source training (SALAD-v2) outperform single-source on the combined test set? If yes, dataset merging improves generalization. If no, source-specific models are preferred.
+
+\section{Expected Results}
+
+\subsection{Entropy Effect on Baselines}
+At $H\approx2.0$, P8's framework predicts:
+\begin{itemize}
+\item DT F1 drops from 87.4\% to $\sim$60\%
+\item SVM remains competitive at $\sim$80\%
+\item LLMs begin providing meaningful advantage
+\end{itemize}
+
+\subsection{Cross-Source Transfer}
+We hypothesize SALAD$\to$SIEM transfer will be $<$50\% due to vocabulary and format differences, demonstrating the need for multi-source training.
+
+\section{Discussion}
+
+\subsection{Toward Grade~A Benchmarks}
+SALAD-v2 ($H\approx2.0$) achieves Grade~C in our grading system. Grade~A requires $H>4$ bits, $>$10K patterns, and inherent ambiguity. Future versions could incorporate real SOC analyst disagreement data and temporal drift.
+
+\subsection{Limitations}
+\textbf{Two sources}: Only SALAD + SIEM. More sources (cloud WAF, EDR, XDR) would increase realism. \textbf{Synthetic labels}: Both sources use automated labeling; human-annotated SOC data would be preferable. \textbf{Label mapping}: Subjective decisions in category unification may introduce bias.
+
+\section{Conclusion}
+SALAD-v2 provides the first multi-source cybersecurity classification benchmark with cross-environment evaluation protocols. By doubling entropy to $H\approx2.0$, it enters the transition zone where LLMs demonstrate value over traditional ML, creating a more meaningful evaluation for LLM fine-tuning research.
+
+\section*{Acknowledgments}
+Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC.
+\begin{thebibliography}{10}
+\bibitem{gupta2024} A.~Gupta et~al., ``CyberBench: Multi-Task Security Evaluation for LLMs,'' \emph{arXiv}, 2024.
+\bibitem{talmor2019} A.~Talmor and J.~Berant, ``MultiQA: Generalization and Transfer in Reading Comprehension,'' in \emph{Proc.\ ACL}, 2019.
+\bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15: A Comprehensive Data Set for Network Intrusion Detection Systems,'' in \emph{Proc.\ MilCIS}, 2015.
+\bibitem{sharafaldin2018} I.~Sharafaldin, A.~H.~Lashkari, and A.~A.~Ghorbani, ``Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization,'' in \emph{Proc.\ ICISSP}, 2018.
+\bibitem{ferrag2024} M.~A.~Ferrag et~al., ``Generative AI and Large Language Models for Cyber Security: A Survey,'' \emph{arXiv:2405.12750}, 2024.
+\bibitem{catal2022} C.~Catal et~al., ``A Survey of Network Intrusion Detection Datasets,'' \emph{Computers \& Security}, 2022.
+\bibitem{liu2024bench} Y.~Liu et~al., ``SecBench: A Comprehensive Multi-Dimensional Benchmarking Dataset for LLMs in Cybersecurity,'' \emph{arXiv:2412.20787}, 2024.
+\bibitem{ring2019} M.~Ring et~al., ``A Survey of Network-based Intrusion Detection Data Sets,'' \emph{Computers \& Security}, vol.~86, pp.~147--167, 2019.
+\bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{Proc.\ ICLR}, 2022.
+\bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
+\end{thebibliography}
+\balance\end{document}

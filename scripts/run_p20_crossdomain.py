@@ -79,10 +79,12 @@ def train_and_eval(train_domain, test_domain, model_name, seed=42):
         enc = tok(s, truncation=True, max_length=MAX_LEN, padding="max_length", return_tensors="pt")
         ids = enc["input_ids"].squeeze(0); attn = enc["attention_mask"].squeeze(0)
         labels = ids.clone(); labels[attn == 0] = -100
-        # Convert to lists to prevent datasets from inheriting ClassLabel feature type
-        return {"input_ids": ids.tolist(), "attention_mask": attn.tolist(), "labels": labels.tolist()}
+        # Use 'lm_labels' to avoid ClassLabel schema conflict
+        # (GoEmotions "labels" column is ClassLabel(28) — token IDs crash .map() writes)
+        return {"input_ids": ids.tolist(), "attention_mask": attn.tolist(), "lm_labels": labels.tolist()}
     
     train_ds = raw_tr.map(tokenize, remove_columns=raw_tr.column_names)
+    train_ds = train_ds.rename_column("lm_labels", "labels")
     train_ds.set_format("torch")
     
     loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
@@ -120,15 +122,20 @@ def train_and_eval(train_domain, test_domain, model_name, seed=42):
         if (i+1) % 100 == 0: print(f"  eval {i+1}/{len(raw_te)}")
     
     f1 = f1_score(golds, preds, average="macro", zero_division=0)
+    f1_lenient = f1_score([g.lower().strip() for g in golds],
+                          [p.lower().strip() for p in preds],
+                          average="macro", zero_division=0)
     acc = sum(p == l for p, l in zip(preds, golds)) / len(golds)
+    acc_lenient = sum(p.lower().strip() == l.lower().strip() for p, l in zip(preds, golds)) / len(golds)
     
-    print(f"  F1={f1:.4f} Acc={acc:.4f} Top vocab: {dict(vocab.most_common(5))}")
+    print(f"  F1={f1:.4f} F1_lenient={f1_lenient:.4f} Acc={acc:.4f} Top vocab: {dict(vocab.most_common(5))}")
     
     del mdl, opt, loader; torch.cuda.empty_cache()
     
     res = {"paper": "P20", "train_domain": train_domain, "test_domain": test_domain,
            "is_cross_domain": is_cross, "model": model_name.split("/")[-1],
-           "f1": round(f1, 4), "accuracy": round(acc, 4),
+           "f1": round(f1, 4), "f1_lenient": round(f1_lenient, 4),
+           "accuracy": round(acc, 4), "accuracy_lenient": round(acc_lenient, 4),
            "train_time_min": round(train_min, 1), "seed": seed,
            "top_predictions": dict(vocab.most_common(10))}
     

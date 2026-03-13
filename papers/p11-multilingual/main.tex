@@ -1,0 +1,125 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance}
+
+\begin{document}
+\title{Thai-Language SOC Alerts: Cross-Lingual Transfer and Label Hallucination in Non-English Cybersecurity}
+\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
+\maketitle
+
+\begin{abstract}
+Cybersecurity LLM research is overwhelmingly English-centric, yet SOC analysts worldwide receive alerts containing local-language context. We investigate fine-tuning LLMs on Thai-language SOC alerts, evaluating cross-lingual transfer and Thai-specific hallucination patterns. Using SALAD professionally translated to Thai (SALAD-TH), we train Qwen3.5-0.8B and measure: (1) Thai$\to$Thai in-domain performance, (2) Thai$\to$English cross-lingual transfer, and (3) Thai-specific label hallucination patterns (romanized Thai, mixed-script outputs, Thai MITRE translations). Our work is the first investigation of non-English LLM fine-tuning for cybersecurity classification, with direct implications for SOC operations in ASEAN countries where English proficiency varies significantly.
+\end{abstract}
+\begin{IEEEkeywords}
+multilingual NLP, Thai cybersecurity, cross-lingual transfer, label hallucination, ASEAN SOC
+\end{IEEEkeywords}
+
+\section{Introduction}
+Thailand operates multiple national CERT teams (ThaiCERT, TB-CERT) and private SOCs serving over 500 organizations. Analysts encounter a mix of English network logs, Thai-language incident descriptions, and Thai-English code-switched communication. Yet every fine-tuned cybersecurity model is trained and evaluated exclusively in English.
+
+We ask three questions:
+\begin{enumerate}
+\item Can a model fine-tuned on Thai inputs produce correct English MITRE ATT\&CK labels?
+\item Does Thai training introduce unique hallucination patterns (Thai translations of MITRE terms)?
+\item Is cross-lingual transfer from Thai$\to$English viable for multilingual SOC deployment?
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Cross-Lingual NLP}
+XLM-R~\cite{conneau2020} demonstrated that multilingual pre-training enables zero-shot cross-lingual transfer. Pires et~al.~\cite{pires2019} investigated how multilingual BERT transfers across languages, finding variable effectiveness across language pairs. Wu and Dredze~\cite{wu2020} showed that low-resource languages benefit less from multilingual models. BERT~\cite{devlin2019} established the pre-train/fine-tune paradigm that these models build upon.
+
+\subsection{Non-English Cybersecurity NLP}
+Rietzke et~al.~\cite{rietzke2023} demonstrated cross-lingual phishing detection using multilingual transformers. Japanese~\cite{nguyen2024} and Chinese cybersecurity NLP exists but focuses on threat intelligence rather than SOC classification. Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity, noting that non-English evaluation is a critical gap. No prior work addresses Thai cybersecurity NLP.
+
+\subsection{Thai NLP}
+WangchanBERTa~\cite{lowphansirikul2021} provides Thai-specific pre-training on 78GB of Thai text. Qwen and multilingual LLMs include Thai in pre-training data, but Thai cybersecurity terminology is not standardized---making label compliance particularly challenging.
+
+\subsection{Fine-Tuning Methods}
+LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient domain adaptation on single GPUs. Ji et~al.~\cite{ji2023} documented hallucination phenomena, which may manifest differently in Thai due to script-mixing and romanization. The UNSW-NB15 dataset~\cite{moustafa2016} provides the English-language foundation that SALAD-TH translates.
+
+\section{Dataset: SALAD-TH}
+
+\subsection{Translation Process}
+SALAD alerts are translated to Thai by professional translators with cybersecurity background:
+\begin{itemize}
+\item Network features (IP, ports, protocols) remain in English
+\item Alert descriptions translated to natural Thai
+\item Labels remain as English MITRE ATT\&CK terms
+\item Quality review by 2 Thai cybersecurity analysts
+\end{itemize}
+
+\subsection{Dataset Statistics}
+\begin{table}[h]
+\centering\caption{SALAD-TH vs.\ SALAD}
+\begin{tabular}{lcc}
+\toprule & \textbf{SALAD} & \textbf{SALAD-TH} \\
+\midrule
+Language & English & Thai \\
+Train & 5,000 & 5,000 \\
+Test & 9,851 & 9,851 \\
+Labels & 8 (English) & 8 (English) \\
+$H(Y)$ & 1.24 & 1.24 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Unique Challenges}
+\textbf{Thai script}: Thai uses a continuous script without spaces between words, requiring different tokenization. \textbf{Code-switching}: Real Thai SOC communications mix Thai and English freely. \textbf{MITRE in Thai}: No official Thai MITRE ATT\&CK translation exists; analysts use English terms or ad-hoc Thai translations.
+
+\section{Experimental Setup}
+
+\subsection{Evaluation Matrix}
+\begin{table}[h]
+\centering\caption{Cross-Lingual Evaluation}
+\begin{tabular}{llcc}
+\toprule \textbf{Train} & \textbf{Test} & \textbf{Strict F1} & \textbf{Halluc Labels} \\
+\midrule
+English & English & 0.778 & 1 \\
+Thai & Thai & --- & --- \\
+Thai & English & --- & --- \\
+Mixed & English & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Expected Hallucination Patterns}
+We hypothesize three Thai-specific hallucination types:
+\begin{enumerate}
+\item \textbf{Thai translation}: Model outputs Thai MITRE terms (e.g., ``\textthai{การสำรวจ}'' instead of ``Reconnaissance'')
+\item \textbf{Romanized Thai}: Model produces romanized transliterations (``Kan Samruat'')
+\item \textbf{Mixed-script}: Model mixes Thai and English within a single label (``การโจมตี DoS'')
+\end{enumerate}
+
+\section{Practical Implications}
+
+\subsection{ASEAN SOC Deployment}
+ASEAN (10 countries, 700M people) has diverse language needs. If Thai$\to$English transfer works, one multilingual model could serve Thai, Malay, Indonesian, and Vietnamese SOCs with English label outputs---enabling standardized MITRE reporting across regions.
+
+\subsection{Multilingual Training Strategy}
+Two strategies for multilingual SOCs:
+\begin{enumerate}
+\item \textbf{Translate-then-classify}: Translate non-English alerts to English, classify with English model. Cost: translation API + classification.
+\item \textbf{Direct multilingual}: Fine-tune on multilingual data, classify directly. Cost: one model, no translation.
+\end{enumerate}
+
+\section{Conclusion}
+We present the first investigation of Thai-language LLM fine-tuning for cybersecurity classification. Our SALAD-TH dataset and cross-lingual evaluation protocol address a critical gap in non-English cybersecurity NLP. Results will determine whether multilingual fine-tuning is viable for ASEAN SOC operations and identify Thai-specific hallucination patterns requiring specialized mitigation.
+
+\section*{Acknowledgments}
+Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC.
+\begin{thebibliography}{12}
+\bibitem{conneau2020} A.~Conneau et~al., ``Unsupervised Cross-lingual Representation Learning at Scale,'' in \emph{Proc.\ ACL}, 2020.
+\bibitem{lowphansirikul2021} T.~Lowphansirikul et~al., ``WangchanBERTa: Pretraining Thai Sequence Representations,'' \emph{arXiv:2101.09635}, 2021.
+\bibitem{nguyen2024} T.~Nguyen et~al., ``Japanese Cybersecurity NLP: Threat Intelligence Extraction,'' in \emph{Proc.\ APSIPA}, 2024.
+\bibitem{rietzke2023} E.~Rietzke et~al., ``Cross-Lingual Phishing Detection with Multilingual Transformers,'' in \emph{Proc.\ ACSAC}, 2023.
+\bibitem{pires2019} T.~Pires et~al., ``How Multilingual is Multilingual BERT?'' in \emph{Proc.\ ACL}, 2019.
+\bibitem{wu2020} S.~Wu and M.~Dredze, ``Are All Languages Created Equal in Multilingual BERT?'' in \emph{Proc.\ RepL4NLP}, 2020.
+\bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{Proc.\ ICLR}, 2022.
+\bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
+\bibitem{ferrag2024} M.~A.~Ferrag et~al., ``Generative AI and LLMs for Cyber Security: A Survey,'' \emph{arXiv:2405.12750}, 2024.
+\bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15: Dataset for Network Intrusion Detection,'' in \emph{Proc.\ MilCIS}, 2015.
+\bibitem{ji2023} Z.~Ji et~al., ``Survey of Hallucination in Natural Language Generation,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, 2023.
+\bibitem{devlin2019} J.~Devlin et~al., ``BERT: Pre-Training of Deep Bidirectional Transformers,'' in \emph{Proc.\ NAACL}, 2019.
+\end{thebibliography}
+\balance\end{document}

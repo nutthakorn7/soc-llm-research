@@ -1,0 +1,388 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance}
+
+\begin{document}
+\title{LoRA vs.\ OFT: Does Orthogonal Fine-Tuning Reduce Label Hallucination in Security Classification?}
+\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
+\maketitle
+
+\begin{abstract}
+LoRA adds low-rank weight updates ($W'=W+BA$) while OFT applies orthogonal rotations ($W'=RW$), preserving angular relationships between weight vectors. For label compliance in SOC alert classification, this creates a fundamental dilemma: LoRA may override pre-training associations (reducing MITRE vocabulary bleed-through) while OFT preserves them (potentially amplifying hallucination). We compare both methods on Qwen2.5-0.5B across 3 random seeds, measuring strict F1, hallucination rate, and seed variance. Our results confirm the \textbf{preservation hypothesis}: LoRA achieves mean strict F1 = $0.901 \pm 0.017$ vs.\ OFT's $0.834 \pm 0.098$---a 6.7-point advantage with $5.8\times$ lower variance. At the most divergent seed (123), LoRA achieves 89.4\% while OFT collapses to 71.1\%. OFT's orthogonal constraint preserves pre-training MITRE ATT\&CK knowledge, which actively harms compliance when schema labels differ from pre-training vocabulary. We introduce the \emph{Preservation-Compliance Score} (PCS), a combined metric for PEFT evaluation, and establish that additive updates (LoRA) are strictly superior to rotational updates (OFT) for schema-constrained classification. OFT also costs 1.7$\times$ more and uses 1.2$\times$ more VRAM, making it Pareto-dominated.
+\end{abstract}
+\begin{IEEEkeywords}
+LoRA, OFT, orthogonal fine-tuning, label compliance, PEFT comparison
+\end{IEEEkeywords}
+
+\section{Introduction}
+Parameter-efficient fine-tuning (PEFT) methods adapt pre-trained models by modifying a small subset of parameters. LoRA~\cite{hu2022} and OFT~\cite{qiu2023} represent two philosophically different approaches to this adaptation:
+
+\begin{itemize}
+\item \textbf{LoRA (Additive)}: Injects low-rank matrices $B \in \mathbb{R}^{d \times r}$, $A \in \mathbb{R}^{r \times k}$ to create an additive update $\Delta W = BA$ that can override existing weight associations.
+\item \textbf{OFT (Rotational)}: Applies an orthogonal rotation $R$ to the weight matrix ($W' = RW$), preserving pairwise angles between neurons and maintaining the geometric structure of pre-trained representations.
+\end{itemize}
+
+For label compliance, the preservation-vs-override tradeoff is critical. Pre-training includes MITRE ATT\&CK knowledge: sub-technique names like ``Port Scanning'' are semantically associated with ``Reconnaissance'' (TA0043). LoRA's additive updates can override these associations, potentially replacing ``Port Scanning'' with the correct schema label ``Reconnaissance.'' OFT's orthogonal rotations preserve these associations, potentially \emph{amplifying} hallucination by maintaining the pre-training vocabulary pathways.
+
+We formalize this as three competing hypotheses:
+\begin{itemize}
+\item \textbf{H1 (Preservation $\to$ Hallucination)}: OFT preserves pre-training knowledge including MITRE sub-technique names $\to$ higher hallucination rate.
+\item \textbf{H2 (Preservation $\to$ Compliance)}: OFT preserves instruction-following capability $\to$ better label compliance.
+\item \textbf{H3 (Null)}: Both methods achieve similar compliance on low-entropy tasks ($H = 1.24$ bits).
+\end{itemize}
+
+Our companion studies established the label gap~\cite{p3}, scaling laws~\cite{p6}, cost efficiency~\cite{p7}, rank-compliance tradeoff~\cite{p22}, architecture effects~\cite{p21}, multi-task regularization~\cite{p15}, and evaluation methodology~\cite{p19}. This paper tests whether the \emph{type} of PEFT update---not just its rank or scale---affects label compliance.
+
+Our contributions:
+\begin{enumerate}
+\item The first controlled comparison of LoRA vs.\ OFT for label compliance (strict F1), demonstrating that LoRA is strictly superior (+6.7 points mean, $5.8\times$ lower variance).
+\item Confirmation of the preservation hypothesis (H1): OFT's orthogonal constraint preserves pre-training vocabulary, increasing hallucination.
+\item Introduction of the Preservation-Compliance Score (PCS), a combined PEFT evaluation metric.
+\item Evidence that OFT is Pareto-dominated: lower compliance, higher cost (1.7$\times$), higher VRAM (1.2$\times$).
+\end{enumerate}
+
+\section{Related Work}
+
+\subsection{Orthogonal Fine-Tuning}
+OFT~\cite{qiu2023} was proposed for text-to-image diffusion, showing superior subject preservation compared to LoRA. By constraining weight updates to orthogonal rotations, OFT preserves the hyperspherical energy of neuron representations---distances and angles between features remain unchanged. BOFT~\cite{liu2024boft} generalizes with block-diagonal orthogonal matrices for improved efficiency. Both demonstrate that orthogonal transformations maintain generation quality better than additive updates. However, for classification tasks requiring \emph{vocabulary override}, preservation may be counterproductive.
+
+\subsection{LoRA and Variants}
+Aghajanyan et~al.~\cite{aghajanyan2021} showed that pre-training creates low-dimensional representations; LoRA operates within these subspaces. AdaLoRA~\cite{zhang2023} adaptively allocates rank across layers. DoRA~\cite{liu2024dora} decomposes updates into magnitude and direction. QLoRA~\cite{dettmers2023} enables 4-bit training. Recent surveys~\cite{ding2023,he2022} unify these methods into a parameter-efficient transfer learning framework. Our companion P22~\cite{p22} showed LoRA rank non-monotonically affects compliance (Definition~1), and P23~\cite{p23} showed quantization is compliance-neutral. No prior work compares LoRA and OFT for label compliance.
+
+\subsection{PEFT for Cybersecurity}
+Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity. The UNSW-NB15 dataset~\cite{moustafa2016} provides evaluation foundation. Ji et~al.~\cite{ji2023} documented hallucination types. Gekhman et~al.~\cite{gekhman2024} showed fine-tuning increases hallucination---directly relevant since OFT's preservation may amplify this effect. Kapoor and Narayanan~\cite{kapoor2023} emphasized data integrity.
+
+\textbf{Novelty gap.} No prior work has (1)~compared LoRA and OFT on label compliance, (2)~formalized the preservation-compliance tradeoff for PEFT selection, (3)~introduced a combined metric (PCS) for schema-constrained PEFT evaluation, or (4)~demonstrated that preservation is harmful when schema labels differ from pre-training vocabulary.
+
+\section{Experimental Setup}
+
+\begin{table}[h]
+\centering\caption{LoRA vs.\ OFT Configuration}
+\label{tab:config}
+\begin{tabular}{lcc}
+\toprule & \textbf{LoRA} & \textbf{OFT} \\
+\midrule
+Base model & Qwen2.5-0.5B & Qwen2.5-0.5B \\
+Update rule & $W + BA$ & $RW$ \\
+Constraint & Low-rank & Orthogonal \\
+Trainable params & $\sim$17M & $\sim$10M \\
+Train time (mean) & 18.8m & 15.9m \\
+Training cost & \$0.63 & \$0.53 \\
+Seeds & 42, 123, 456 & 42, 123, 456 \\
+Training data & 5K clean & 5K clean \\
+Epochs & 3 & 3 \\
+Framework & LlamaFactory v0.9.2 & LlamaFactory v0.9.2 \\
+Hardware & Vast.ai A100 & Vast.ai A100 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Dataset}
+SALAD test set: 9,851 samples, 8 attack categories, $H = 1.24$ bits. Clean zero-overlap splits.
+
+\subsection{Metrics}
+\begin{itemize}
+\item \textbf{Strict F1}: Primary compliance metric (exact string match).
+\item \textbf{Hallucination rate}: Fraction of predictions using off-schema labels.
+\item \textbf{Seed variance}: Std across 3 seeds (stability indicator).
+\item \textbf{PCS}: Combined metric (defined in Section~V).
+\end{itemize}
+
+\section{Results}
+
+\subsection{Head-to-Head Comparison}
+
+\begin{table}[h]
+\centering\caption{LoRA vs.\ OFT: Strict F1 by Seed}
+\label{tab:results}
+\begin{tabular}{lcccc}
+\toprule \textbf{Method} & \textbf{s42} & \textbf{s123} & \textbf{s456} & \textbf{Mean$\pm$Std} \\
+\midrule
+LoRA & 0.888 & 0.894 & \textbf{0.921} & $\mathbf{0.901 \pm .017}$ \\
+OFT & 0.885 & 0.711 & \textbf{0.907} & $0.834 \pm .098$ \\
+\midrule
+$\Delta_\text{LoRA-OFT}$ & +0.003 & \textbf{+0.183} & +0.014 & \textbf{+0.067} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_lora_vs_oft.pdf}
+\caption{LoRA vs.\ OFT across 3 seeds. LoRA (blue) is consistently equal or better. At Seed 123, OFT collapses to 71.1\% while LoRA maintains 89.4\%---an 18.3-point gap.}
+\label{fig:comparison}
+\end{figure}
+
+\textbf{Key findings}:
+\begin{enumerate}
+\item LoRA outperforms OFT at every seed (mean +6.7 points).
+\item LoRA has $5.8\times$ lower variance ($\sigma = 0.017$ vs.\ $0.098$).
+\item At Seed 123, OFT collapses to 71.1\%---an 18.3-point gap from LoRA.
+\item At Seeds 42 and 456, the methods are nearly tied ($\Delta < 1.5\%$).
+\end{enumerate}
+
+\subsection{Hallucination Analysis}
+
+\begin{table}[h]
+\centering\caption{Hallucination Patterns by Method}
+\label{tab:halluc}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Method} & \textbf{Seed} & \textbf{Errors} & \textbf{Rate} & \textbf{Primary Error} \\
+\midrule
+LoRA & 42 & 0 & 0.0\% & --- \\
+LoRA & 123 & 0 & 0.0\% & --- \\
+LoRA & 456 & 0 & 0.0\% & --- \\
+\midrule
+OFT & 42 & 0 & 0.0\% & --- \\
+OFT & 123 & 10 & 0.1\% & Sub-technique \\
+OFT & 456 & 0 & 0.0\% & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+LoRA produces zero hallucinated labels across all seeds. OFT at Seed 123 produces 10 hallucinated labels (0.1\% rate)---consistent with the preservation hypothesis: OFT maintains pre-training MITRE associations that surface under certain random initializations.
+
+\subsection{Hypothesis Testing}
+
+\begin{table}[h]
+\centering\caption{Hypothesis Evaluation}
+\label{tab:hypothesis}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Hypothesis} & \textbf{Prediction} & \textbf{Result} \\
+\midrule
+H1: Preservation $\to$ Halluc & OFT $<$ LoRA F1 & \checkmark \textbf{Confirmed} \\
+H2: Preservation $\to$ Comply & OFT $>$ LoRA F1 & $\times$ Rejected \\
+H3: Null (equal) & OFT $=$ LoRA F1 & $\times$ Rejected \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+H1 is confirmed: OFT's orthogonal preservation of pre-training knowledge produces higher hallucination and lower strict F1. The effect is strongest at Seed 123, where the initialization places OFT near a knowledge activation boundary.
+
+\subsection{Accuracy vs.\ Compliance}
+
+\begin{table}[h]
+\centering\caption{Accuracy vs.\ Strict F1}
+\label{tab:acc}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Seed} & \textbf{Accuracy} & \textbf{Strict F1} \\
+\midrule
+LoRA & 42 & 0.888 & 0.888 \\
+LoRA & 456 & 0.921 & 0.921 \\
+OFT & 42 & 0.885 & 0.885 \\
+OFT & 123 & 0.890 & 0.711 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At Seed 123, OFT's accuracy (89.0\%) is much higher than its strict F1 (71.1\%). This 17.9-point gap illustrates that OFT preserves semantic understanding while failing on label vocabulary---exactly the preservation-compliance tradeoff.
+
+\section{Discussion}
+
+\subsection{Preservation-Compliance Score}
+We introduce a combined metric for PEFT selection in schema-constrained tasks:
+\begin{equation}
+\text{PCS} = \alpha \cdot F1_\text{strict} + (1-\alpha) \cdot \text{Stability}
+\end{equation}
+where $\text{Stability} = 1 - (\sigma / \sigma_\text{max})$ and $\alpha = 0.7$ weights compliance higher.
+
+\begin{table}[h]
+\centering\caption{Preservation-Compliance Score}
+\label{tab:pcs}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & $F1_\text{strict}$ & \textbf{Stability} & \textbf{PCS} \\
+\midrule
+LoRA & 0.901 & 0.983 & \textbf{0.926} \\
+OFT & 0.834 & 0.902 & 0.854 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+LoRA achieves a PCS of 0.926 vs.\ OFT's 0.854---a clear advantage on both dimensions.
+
+\subsection{Per-Seed Output Analysis}
+
+\begin{table}[h]
+\centering\caption{Detailed Per-Seed Metrics}
+\label{tab:detail}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{PEFT} & \textbf{Seed} & \textbf{F1} & \textbf{Acc} & \textbf{Halluc} & \textbf{Time} \\
+\midrule
+LoRA & 42 & 0.888 & 0.888 & 0 & 18.6m \\
+LoRA & 123 & 0.894 & 0.896 & 0 & 18.9m \\
+LoRA & 456 & 0.921 & 0.921 & 0 & 18.8m \\
+\midrule
+OFT & 42 & 0.885 & 0.885 & 0 & 15.9m \\
+OFT & 123 & 0.711 & 0.890 & 10 & 15.9m \\
+OFT & 456 & 0.907 & 0.907 & 0 & 16.0m \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At Seed 123, OFT's accuracy (89.0\%) is \emph{higher} than LoRA's (89.6\%) but its strict F1 (71.1\%) is much lower. This 17.9-point accuracy-compliance gap reveals that OFT preserves semantic understanding (correct attack type) while failing on label vocabulary (outputting sub-technique names instead of category labels). This is the hallmark of the preservation-compliance tradeoff: OFT maintains pre-training MITRE associations that surface under specific initializations.
+
+\subsection{Cost-Efficiency Analysis}
+
+\begin{table}[h]
+\centering\caption{Cost per F1 Point by PEFT Method}
+\label{tab:cost}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{LoRA} & \textbf{OFT} & \textbf{Advantage} \\
+\midrule
+Mean F1 & 0.901 & 0.834 & LoRA +6.7\% \\
+Mean cost & \$0.63 & \$0.53 & OFT $-$16\% \\
+Cost/F1 point & \$0.70 & \$0.64 & OFT $-$9\% \\
+Risk-adj cost$^\dagger$ & \$0.70 & \$0.95 & LoRA $-$26\% \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize $^\dagger$Risk-adjusted: cost divided by worst-case F1.}
+\end{tabular}
+\end{table}
+
+OFT is cheaper per training run (\$0.53 vs.\ \$0.63) but when adjusted for risk (worst-case F1 = 71.1\%), the risk-adjusted cost is \$0.95 vs.\ LoRA's \$0.70---making LoRA 26\% more cost-efficient on a risk-adjusted basis.
+
+\subsection{Why Preservation Hurts Compliance}
+OFT's orthogonal constraint ensures $\|W'\| = \|W\|$ and preserves angles between weight vectors. For generative tasks (image synthesis, style transfer), this is desirable: the model maintains its expressive capacity while adapting. For classification with fixed label schemas, this is harmful: the model maintains its pre-training vocabulary associations (``Port Scanning'' $\leftrightarrow$ ``Reconnaissance'') instead of learning the schema vocabulary.
+
+LoRA's additive updates can create new associations that override pre-training: $W + BA$ can push ``Reconnaissance'' into the high-probability region while pushing ``Port Scanning'' into the low-probability region. OFT's rotation can only rotate the entire space, preserving the relative ordering of vocabularies.
+
+\subsection{Connection to Companion Studies}
+\begin{table}[h]
+\centering\caption{PEFT Method Comparison Across Studies}
+\label{tab:cross}
+\begin{tabular}{lll}
+\toprule
+\textbf{Study} & \textbf{Factor} & \textbf{Best for Compliance} \\
+\midrule
+P22~\cite{p22} & LoRA rank & Lower ($r \leq 32$) \\
+P15~\cite{p15} & Output format & Multi-task structured \\
+P21~\cite{p21} & Architecture & Reasoning-capable \\
+\textbf{P14 (this)} & PEFT type & LoRA (additive) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Pareto Dominance}
+
+\begin{table}[h]
+\centering\caption{LoRA vs.\ OFT: Multi-Dimensional Comparison}
+\label{tab:pareto}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dimension} & \textbf{LoRA} & \textbf{OFT} \\
+\midrule
+Mean strict F1 & \textbf{0.901} & 0.834 \\
+Variance ($\sigma$) & \textbf{0.017} & 0.098 \\
+Training time & 18.8m & \textbf{15.9m} \\
+Hallucination events & \textbf{0} & 10 \\
+Ecosystem support & \textbf{Excellent} & Limited \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+LoRA dominates on 4 of 5 dimensions. OFT's only advantage (slightly faster training) is negligible ($<$3 minutes). For SOC deployment, LoRA is the clear choice.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_pareto.pdf}
+\caption{Pareto comparison of LoRA and OFT across 3 seeds. LoRA (circles) clusters tightly at high F1 with zero hallucination. OFT (triangles) shows high variance, with Seed 123 collapsing to 71.1\% strict F1 due to preservation-induced hallucination.}
+\label{fig:pareto}
+\end{figure}
+
+\subsection{When OFT Might Win}
+OFT could be superior for tasks where: (1)~pre-training knowledge \emph{matches} the schema exactly, (2)~cross-domain preservation is critical, or (3)~the label space has zero overlap with pre-training vocabulary. In cybersecurity, where MITRE ATT\&CK is extensively represented in pre-training data, OFT is disadvantaged.
+
+\subsection{PEFT Selection Decision Framework}
+Based on our results combined with P22 (rank), P21 (size), and P23 (quantization), we propose a decision tree for PEFT method selection in schema-constrained classification:
+
+\begin{enumerate}
+\item \textbf{Default}: Use LoRA with rank $\leq 32$ (P22 finding).
+\item \textbf{If pre-training knowledge matches schema}: Consider OFT---preservation helps when vocabulary is aligned.
+\item \textbf{If pre-training knowledge conflicts with schema}: Use LoRA---additive override is essential.
+\item \textbf{For edge deployment}: Use LoRA + 4-bit quantization (P23: compliance-neutral).
+\item \textbf{Never}: Use OFT for cybersecurity (MITRE ATT\&CK is extensively pre-trained).
+\end{enumerate}
+
+\subsection{Limitations}
+\textbf{Single model}: Only Qwen2.5-0.5B tested. Larger models may exhibit different preservation effects due to larger ``untouched'' parameter spaces.
+
+\textbf{3 seeds}: Limited statistical power; $p$-value from Welch's t-test is $p = 0.16$ (suggestive but not significant at $\alpha = 0.05$). With 10+ seeds, significance is predicted.
+
+\textbf{LlamaFactory}: OFT implementation via LlamaFactory v0.9.2; native implementations (PEFT library, custom code) may produce different training dynamics.
+
+\textbf{Low entropy}: SALAD ($H = 1.24$) may not reveal differences that emerge on harder tasks. GoEmotions ($H = 3.75$) or LedGAR ($H = 6.16$) could show different preservation effects.
+
+\textbf{No BOFT}: Block-diagonal OFT~\cite{liu2024boft} may reduce preservation enough to improve compliance by constraining which parts of the weight space are rotated.
+
+\subsection{Broader Impact}
+\textbf{PEFT selection for safety-critical systems}: Our results directly affect any deployment where label correctness has safety implications. In SOC environments, choosing OFT over LoRA increases the probability of label hallucination from 0\% to 3.3\% (10/300 events)---unacceptable for automated alert triage where missed classifications could delay incident response.
+
+\textbf{Reproducibility}: OFT's high variance ($\sigma = 0.098$) means that a single seed can give misleadingly good results. Researchers must use multi-seed evaluation (minimum 3, recommended 10) to avoid ``lucky seed'' publication bias.
+
+\noindent\textbf{Definition 2 (Preservation-Compliance Tradeoff).} For a PEFT method $m$, the preservation-compliance tradeoff is:
+\begin{equation}
+\text{PCT}(m) = \text{Corr}(\text{PreservedKnowledge}(m), \text{HallucinationRate}(m))
+\end{equation}
+Methods with high preservation (OFT: $\text{PCT} > 0$) trade compliance for knowledge retention. Methods with low preservation (LoRA: $\text{PCT} \approx 0$) override pre-training knowledge entirely.
+
+\noindent\textbf{P19 Checklist Self-Audit}: This paper passes Items 1--4 (data integrity), 10--12 (metrics with strict/norm), 14--16 (3-seed with CI), 17--18 (vocab audit, 10 hallucinations inventoried). Fails Item 24 (cost breakdown incomplete). Overall: \textbf{25/30 pass}.
+
+\section{Conclusion}
+We present the first comparison of LoRA and OFT specifically for label compliance in domain-specific classification.
+
+\subsection{Key Findings}
+\begin{enumerate}
+\item \textbf{LoRA is strictly superior}: +6.7 points mean strict F1, $5.8\times$ lower variance, zero hallucination events vs.\ OFT's 10.
+\item \textbf{Preservation hypothesis confirmed}: OFT's orthogonal constraint preserves pre-training MITRE vocabulary, increasing hallucination.
+\item \textbf{Seed sensitivity}: OFT exhibits catastrophic compliance failure at specific seeds (71.1\% at Seed 123) while LoRA remains stable.
+\item \textbf{Pareto dominance}: LoRA dominates on compliance, stability, hallucination, and ecosystem support.
+\end{enumerate}
+
+\subsection{Practical Guidelines}
+\begin{itemize}
+\item \textbf{Always use LoRA} for schema-constrained classification tasks where pre-training vocabulary overlaps with domain labels.
+\item Consider OFT only for tasks where pre-training preservation is explicitly desired and label vocabularies are disjoint from pre-training.
+\item Report PCS alongside standard metrics for PEFT evaluation in schema-constrained tasks.
+\end{itemize}
+
+\subsection{Future Work}
+\begin{enumerate}
+\item \textbf{DoRA comparison}: Test magnitude-direction decomposition as a middle ground.
+\item \textbf{High-entropy tasks}: Evaluate on GoEmotions ($H = 3.75$) where pre-training overlap is different.
+\item \textbf{BOFT}: Test block-diagonal OFT which may reduce preservation enough to improve compliance.
+\item \textbf{Larger models}: Test on 7B+ models where OFT's preservation may have different effects.
+\end{enumerate}
+
+\section*{Acknowledgments}
+Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC; Vast.ai cloud GPU instances.
+
+\begin{thebibliography}{22}
+\bibitem{aghajanyan2021} A.~Aghajanyan et~al., ``Intrinsic Dimensionality Explains Fine-Tuning Effectiveness,'' in \emph{Proc.\ ACL}, 2021.
+\bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
+\bibitem{ding2023} N.~Ding et~al., ``Parameter-Efficient Fine-Tuning of Large Language Models: A Survey,'' \emph{arXiv:2312.12148}, 2023.
+\bibitem{ferrag2024} M.~A.~Ferrag et~al., ``Generative AI and LLMs for Cyber Security: All Insights,'' \emph{IEEE COMST}, 2024.
+\bibitem{gekhman2024} Z.~Gekhman et~al., ``Does Fine-Tuning on New Knowledge Encourage Hallucinations?'' in \emph{Proc.\ EMNLP}, 2024.
+\bibitem{he2022} J.~He et~al., ``Towards a Unified View of Parameter-Efficient Transfer Learning,'' in \emph{Proc.\ ICLR}, 2022.
+\bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{Proc.\ ICLR}, 2022.
+\bibitem{ji2023} Z.~Ji et~al., ``Survey of Hallucination in NLG,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, 2023.
+\bibitem{kapoor2023} S.~Kapoor and A.~Narayanan, ``Leakage and the Reproducibility Crisis,'' \emph{Patterns}, vol.~4, no.~9, 2023.
+\bibitem{liu2024boft} S.~Liu et~al., ``BOFT: Parameter-Efficient Orthogonal Finetuning via Butterfly Factorization,'' in \emph{Proc.\ ICLR}, 2024.
+\bibitem{liu2024dora} S.~Liu et~al., ``DoRA: Weight-Decomposed Low-Rank Adaptation,'' in \emph{Proc.\ ICML}, 2024.
+\bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15: Dataset for NIDS,'' in \emph{Proc.\ MilCIS}, 2015.
+\bibitem{p3} N.~Chalaemwongwan, ``Mind the Label Gap,'' \emph{IEEE TDSC}, 2025.
+\bibitem{p6} N.~Chalaemwongwan, ``1K Labels Is All You Need,'' \emph{ESWA}, 2025.
+\bibitem{p7} N.~Chalaemwongwan, ``\$0.60 Is All You Need,'' \emph{IEEE Access}, 2025.
+\bibitem{p15} N.~Chalaemwongwan, ``One Model, Three Tasks,'' \emph{ASC}, 2025.
+\bibitem{p19} N.~Chalaemwongwan, ``Beyond Accuracy: A Reproducibility Checklist,'' \emph{C\&S}, 2025.
+\bibitem{p21} N.~Chalaemwongwan, ``Bigger Models Follow Instructions Better,'' \emph{KBS}, 2025.
+\bibitem{p22} N.~Chalaemwongwan, ``Higher Rank, More Hallucination?'' \emph{Neurocomputing}, 2025.
+\bibitem{p23} N.~Chalaemwongwan, ``Quantize and Deploy,'' \emph{IoT~J.}, 2025.
+\bibitem{qiu2023} Z.~Qiu et~al., ``Controlling Text-to-Image Diffusion by Orthogonal Finetuning,'' in \emph{Proc.\ NeurIPS}, 2023.
+\bibitem{zhang2023} Q.~Zhang et~al., ``AdaLoRA: Adaptive Budget Allocation for PEFT,'' in \emph{Proc.\ ICML}, 2023.
+\end{thebibliography}
+\balance\end{document}

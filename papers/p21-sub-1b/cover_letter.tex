@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+Knowledge-Based Systems \\
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``Bigger Models Follow Instructions Better: How Model Size Affects Label Hallucination in Fine-Tuned LLMs''} for consideration in \emph{Knowledge-Based Systems}.
+
+\textbf{Summary.} We evaluate 7 LLMs (0.8B--9B parameters) for SOC alert classification and show that model size has near-zero correlation with label compliance ($R^2 \approx 0.15$). Phi4-mini (3.8B) achieves perfect compliance while Qwen3-8B (8B) hallucinates 2 label types. The critical factor is reasoning architecture: models trained with chain-of-thought reasoning suppress pre-training vocabulary interference, achieving compliance at 2.4$\times$ lower parameter cost than brute-force scaling.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item Demonstration that model size is a poor compliance predictor ($R^2 \approx 0.15$), contradicting neural scaling law assumptions.
+\item A Compliance Predictor Hierarchy: reasoning $\gg$ size $\gg$ pre-training knowledge (which has \emph{negative} effect).
+\item Edge deployment guidelines: Phi4-mini (3.8B) as the smallest fully compliant model.
+\end{enumerate}
+
+\textbf{Relevance to KBS.} Knowledge-based systems increasingly rely on LLMs for knowledge extraction and classification. Our finding that pre-training \emph{knowledge} can paradoxically hurt classification compliance---because domain knowledge competes with fine-tuning labels---reveals a fundamental tension in knowledge-based LLM deployment that this journal's readership needs to understand.
+
+\textbf{Novelty.} Prior scaling studies measure perplexity or benchmark accuracy. We are the first to show that model size does not predict label compliance, and that reasoning architecture provides a 2.4$\times$ more parameter-efficient path to perfect compliance than scale alone.
+
+This manuscript has not been published previously and is not under consideration elsewhere.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

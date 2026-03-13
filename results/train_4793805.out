@@ -168,3 +168,28 @@ Priority Score: 0.06<|im_end|>
 {'loss': '0.05906', 'grad_norm': '0.006322', 'learning_rate': '2.132e-05', 'epoch': '2.43'}
 {'loss': '0.05884', 'grad_norm': '0.007734', 'learning_rate': '1.695e-05', 'epoch': '2.494'}
 {'loss': '0.05858', 'grad_norm': '0.005282', 'learning_rate': '1.304e-05', 'epoch': '2.558'}
+{'eval_loss': '0.05868', 'eval_runtime': '189.3', 'eval_samples_per_second': '26.42', 'eval_steps_per_second': '3.302', 'epoch': '2.558'}
+{'loss': '0.05884', 'grad_norm': '0.00587', 'learning_rate': '9.61e-06', 'epoch': '2.622'}
+{'loss': '0.05876', 'grad_norm': '0.004596', 'learning_rate': '6.68e-06', 'epoch': '2.686'}
+{'loss': '0.05901', 'grad_norm': '0.007869', 'learning_rate': '4.267e-06', 'epoch': '2.75'}
+{'loss': '0.059', 'grad_norm': '0.005993', 'learning_rate': '2.383e-06', 'epoch': '2.814'}
+{'loss': '0.05893', 'grad_norm': '0.006923', 'learning_rate': '1.04e-06', 'epoch': '2.878'}
+{'loss': '0.05878', 'grad_norm': '0.006156', 'learning_rate': '2.445e-07', 'epoch': '2.942'}
+{'train_runtime': '2.198e+04', 'train_samples_per_second': '6.824', 'train_steps_per_second': '0.107', 'train_loss': '0.06378', 'epoch': '3'}
+***** train metrics *****
+  epoch                    =         3.0
+  total_flos               = 146772939GF
+  train_loss               =      0.0638
+  train_runtime            =  6:06:21.47
+  train_samples_per_second =       6.824
+  train_steps_per_second   =       0.107
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/qwen35-08b-lora/training_loss.png
+Figure saved at: /project/lt200473-ttctvs/soc-finetune/outputs/qwen35-08b-lora/training_eval_loss.png
+[WARNING|2026-03-10 01:44:09] llamafactory.extras.ploting:149 >> No metric eval_accuracy to plot.
+***** eval metrics *****
+  epoch                   =        3.0
+  eval_loss               =     0.0586
+  eval_runtime            = 0:03:09.09
+  eval_samples_per_second =     26.442
+  eval_steps_per_second   =      3.305
+=== Training Complete === | End: Tue Mar 10 01:47:48 AM +07 2026

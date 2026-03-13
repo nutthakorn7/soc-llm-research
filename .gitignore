@@ -5,6 +5,20 @@ results/*/f1_results.json
 *.bin
 *.pt
 
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.safetensors
+*.bin
+*.pt
+
 # Python
 __pycache__/
 *.pyc

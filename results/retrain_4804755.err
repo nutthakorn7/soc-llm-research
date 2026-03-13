@@ -1,0 +1,212 @@
+warmup_ratio is deprecated and will be removed in v5.2. Use `warmup_steps` instead.
+[INFO|configuration_utils.py:668] 2026-03-11 07:36:24,929 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/SmolLM2-1.7B-Instruct/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 07:36:24,979 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 64,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 8192,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 24,
+  "num_key_value_heads": 32,
+  "pad_token_id": 2,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 130000,
+    "rope_type": "default"
+  },
+  "tie_word_embeddings": true,
+  "transformers.js_config": {
+    "dtype": "q4",
+    "kv_cache_dtype": {
+      "fp16": "float16",
+      "q4f16": "float16"
+    },
+    "use_external_data_format": {
+      "model.onnx": true,
+      "model_fp16.onnx": true
+    }
+  },
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_auto.py:486] 2026-03-11 07:36:24,979 >> Could not locate the tokenizer configuration file, will try to use the model config instead.
+[INFO|configuration_utils.py:668] 2026-03-11 07:36:25,031 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/SmolLM2-1.7B-Instruct/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 07:36:25,032 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 64,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 8192,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 24,
+  "num_key_value_heads": 32,
+  "pad_token_id": 2,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 130000,
+    "rope_type": "default"
+  },
+  "tie_word_embeddings": true,
+  "transformers.js_config": {
+    "dtype": "q4",
+    "kv_cache_dtype": {
+      "fp16": "float16",
+      "q4f16": "float16"
+    },
+    "use_external_data_format": {
+      "model.onnx": true,
+      "model_fp16.onnx": true
+    }
+  },
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 49152
+}
+
+[INFO|configuration_utils.py:668] 2026-03-11 07:36:25,032 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/SmolLM2-1.7B-Instruct/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 07:36:25,033 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 64,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 8192,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 24,
+  "num_key_value_heads": 32,
+  "pad_token_id": 2,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 130000,
+    "rope_type": "default"
+  },
+  "tie_word_embeddings": true,
+  "transformers.js_config": {
+    "dtype": "q4",
+    "kv_cache_dtype": {
+      "fp16": "float16",
+      "q4f16": "float16"
+    },
+    "use_external_data_format": {
+      "model.onnx": true,
+      "model_fp16.onnx": true
+    }
+  },
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 49152
+}
+
+[INFO|tokenization_auto.py:486] 2026-03-11 07:36:25,033 >> Could not locate the tokenizer configuration file, will try to use the model config instead.
+Converting format of dataset:   0%|          | 0/5000 [00:00<?, ? examples/s]Converting format of dataset:  42%|████▏     | 2080/5000 [00:00<00:00, 20008.51 examples/s]Converting format of dataset:  86%|████████▌ | 4286/5000 [00:00<00:00, 21191.06 examples/s]Converting format of dataset: 100%|██████████| 5000/5000 [00:00<00:00, 20440.84 examples/s]
+Running tokenizer on dataset:   0%|          | 0/5000 [00:00<?, ? examples/s]Running tokenizer on dataset:  20%|██        | 1000/5000 [00:00<00:00, 4213.72 examples/s]Running tokenizer on dataset:  40%|████      | 2000/5000 [00:00<00:00, 4372.68 examples/s]Running tokenizer on dataset:  60%|██████    | 3000/5000 [00:00<00:00, 4423.48 examples/s]Running tokenizer on dataset:  80%|████████  | 4000/5000 [00:00<00:00, 4460.80 examples/s]Running tokenizer on dataset: 100%|██████████| 5000/5000 [00:01<00:00, 4487.45 examples/s]Running tokenizer on dataset: 100%|██████████| 5000/5000 [00:01<00:00, 4431.28 examples/s]
+[INFO|configuration_utils.py:668] 2026-03-11 07:36:35,506 >> loading configuration file /project/lt200473-ttctvs/soc-finetune/models/SmolLM2-1.7B-Instruct/config.json
+[INFO|configuration_utils.py:742] 2026-03-11 07:36:35,506 >> Model config LlamaConfig {
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 64,
+  "hidden_act": "silu",
+  "hidden_size": 2048,
+  "initializer_range": 0.02,
+  "intermediate_size": 8192,
+  "max_position_embeddings": 8192,
+  "mlp_bias": false,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 24,
+  "num_key_value_heads": 32,
+  "pad_token_id": 2,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 130000,
+    "rope_type": "default"
+  },
+  "tie_word_embeddings": true,
+  "transformers.js_config": {
+    "dtype": "q4",
+    "kv_cache_dtype": {
+      "fp16": "float16",
+      "q4f16": "float16"
+    },
+    "use_external_data_format": {
+      "model.onnx": true,
+      "model_fp16.onnx": true
+    }
+  },
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 49152
+}
+
+Traceback (most recent call last):
+  File "/home/lm2002/.conda/envs/soc-finetune/bin/llamafactory-cli", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/launcher.py", line 157, in launch
+    run_exp()
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 125, in run_exp
+    _training_function(config={"args": args, "callbacks": callbacks})
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/tuner.py", line 93, in _training_function
+    run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks)
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/train/sft/workflow.py", line 53, in run_sft
+    model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustrefs/disk/project/lt200473-ttctvs/workshop-pretrain/LlamaFactory/src/llamafactory/model/loader.py", line 178, in load_model
+    model = load_class.from_pretrained(**init_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 374, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/modeling_utils.py", line 3996, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lm2002/.conda/envs/soc-finetune/lib/python3.11/site-packages/transformers/modeling_utils.py", line 573, in _get_resolved_checkpoint_files
+    raise OSError(
+OSError: Error no file named model.safetensors, or pytorch_model.bin, found in directory /project/lt200473-ttctvs/soc-finetune/models/SmolLM2-1.7B-Instruct.

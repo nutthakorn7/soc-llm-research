@@ -1,0 +1,41 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+IEEE Transactions on Dependable and Secure Computing \\
+}
+
+\opening{Dear Editor,}
+
+We are pleased to submit our manuscript entitled \textbf{``Mind the Label Gap: How Fine-Tuned LLMs Hallucinate Sub-Categories in SOC Alert Classification''} for consideration in \emph{IEEE Transactions on Dependable and Secure Computing}.
+
+\textbf{Summary.} We present the first systematic study of label compliance in fine-tuned LLMs for Security Operations Center (SOC) alert classification. While most models achieve perfect \emph{semantic} accuracy (normalized F1 = 100\%), we discover that strict label compliance varies from 74.9\% to 100\% depending on model architecture---a 25-point gap hidden by conventional evaluation metrics. Models hallucinate MITRE ATT\&CK sub-category names from pre-training knowledge, producing up to 4,947 schema-violating labels in a single evaluation. We term this phenomenon the ``label gap'' and introduce a dual-metric framework (strict vs.\ normalized F1) to expose it.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item A 7-model benchmark (0.8B--9B parameters) with strict and normalized F1 on clean, zero-overlap data splits.
+\item A taxonomy of 10,093 label hallucination errors across 6 types (sub-technique substitution, morphological, cross-category, corrupted token, sibling class).
+\item Discovery of non-monotonic scaling: 5K training samples produce 96$\times$ more errors than 1K, revealing a ``knowledge activation valley.''
+\item Evidence that reasoning-oriented architectures (DeepSeek-R1, Phi4-mini) eliminate hallucination entirely, while model size does not predict compliance.
+\item Cost analysis showing fine-tuning is 149--181$\times$ cheaper than commercial LLM APIs (GPT-4o, Claude).
+\end{enumerate}
+
+\textbf{Relevance to IEEE TDSC.} This work directly addresses dependability and security concerns in AI-assisted SOC operations. Label compliance failures in automated alert classification can trigger incorrect SOAR playbooks, distort threat landscape reporting, and compromise incident response. Our dual-metric framework provides a practical tool for evaluating the trustworthiness of fine-tuned LLMs in security-critical applications.
+
+\textbf{Novelty.} While LLM hallucination has been extensively studied for factual generation, hallucination in \emph{classification tasks}---where models produce semantically correct but schema-violating labels---has received virtually no attention. We are the first to identify, categorize, and propose mitigations for this novel failure mode.
+
+This manuscript has not been published previously and is not under consideration elsewhere. All authors have approved the manuscript and agree with its submission to IEEE TDSC.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

@@ -1,0 +1,16 @@
+{
+  "add_prefix_space": false,
+  "backend": "tokenizers",
+  "bos_token": "<|end_of_text|>",
+  "clean_up_tokenization_spaces": true,
+  "eos_token": "<|end_of_text|>",
+  "errors": "replace",
+  "is_local": true,
+  "model_max_length": 9223372036854775807,
+  "pad_token": "<|end_of_text|>",
+  "padding_side": "right",
+  "split_special_tokens": false,
+  "tokenizer_class": "GPT2Tokenizer",
+  "unk_token": "<|end_of_text|>",
+  "vocab_size": 49152
+}

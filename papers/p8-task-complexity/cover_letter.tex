@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+Information Sciences \\
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``Task Entropy Predicts LLM Necessity: A Decision Framework for Classifier Selection in Applied Domains''} for consideration in \emph{Information Sciences}.
+
+\textbf{Summary.} We propose an entropy-based decision framework that answers a practical question: when should practitioners use an LLM instead of a traditional classifier? Across 4 domains spanning label entropy $H(Y)$ from 1.24 to 6.16 bits (cybersecurity, news, emotion, legal), we show that $H(Y)$ alone explains over 80\% of the variance in the ML-LLM performance gap. SVM achieves 90.9\% F1 at $H=1.24$ but collapses to 24.3\% at $H=3.75$---a 66-point drop that $H(Y)$ predicts in seconds.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item A formal Entropy Decision Function mapping $H(Y)$ to optimal classifier family ($H<2$: SVM, $2 \leq H < 3$: transition, $H \geq 3$: LLM).
+\item Validation across 4 domains showing $H(Y)$ predicts the ML-LLM gap with $>$80\% accuracy.
+\item Cost-benefit analysis: SVM at \$0 matches LLM at \$987/year on low-entropy tasks.
+\end{enumerate}
+
+\textbf{Relevance to Information Sciences.} Information-theoretic measures are central to this journal. We demonstrate a novel application of Shannon entropy: predicting the practical utility of LLMs before deployment. This turns classifier selection from an empirical trial-and-error process into a principled, information-theoretic decision.
+
+\textbf{Novelty.} HELM evaluates LLMs across 42 scenarios but provides no \emph{decision framework} for when to use them. We are the first to use label entropy as a quantitative predictor of LLM necessity, validated across multiple domains.
+
+This manuscript has not been published previously and is not under consideration elsewhere.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

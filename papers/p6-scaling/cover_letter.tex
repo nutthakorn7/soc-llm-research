@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+Expert Systems with Applications \\
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``1K Labels Is All You Need: Non-Monotonic Scaling Laws for Label Compliance in Fine-Tuned LLMs''} for consideration in \emph{Expert Systems with Applications}.
+
+\textbf{Summary.} We study how training data volume affects label compliance in fine-tuned LLMs for SOC alert classification. We discover a non-monotonic scaling law: increasing training data from 1K to 5K samples \emph{worsens} label compliance before improving at 20K---a ``knowledge activation valley'' where models activate pre-training associations that compete with fine-tuning labels. At 1K samples, Qwen3.5-0.8B achieves near-perfect compliance; at 5K, compliance drops by 40.6 percentage points before recovering.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item Discovery of non-monotonic scaling: strict F1 follows an inverted-U pattern, contradicting the assumption that more data always helps.
+\item A 4-regime scaling framework (cold start $\to$ compliance $\to$ activation valley $\to$ recovery) validated across multiple seeds.
+\item Evidence that semantic accuracy and label compliance scale independently---a finding with implications for all LLM fine-tuning applications.
+\end{enumerate}
+
+\textbf{Relevance to ESWA.} This work provides directly actionable guidance for practitioners deploying expert systems: selecting training data volume is not a simple ``more is better'' decision. Our scaling framework enables practitioners to predict compliance behavior and avoid the activation valley, directly improving expert system reliability.
+
+\textbf{Novelty.} While neural scaling laws (Kaplan et al., 2020; Hoffmann et al., 2022) focus on loss and perplexity, no prior work has characterized scaling behavior for label compliance---the gap between what a model \emph{means} and what it \emph{says}.
+
+This manuscript has not been published previously and is not under consideration elsewhere.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

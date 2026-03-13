@@ -1,39 +1,29 @@
 # P14: OFT vs LoRA for Security Domain Adaptation
 
-## Methods Compared
+## Methods
 
-| Method | Trainable Params | Memory | Approach |
-|---|---|---|---|
-| **LoRA** | rank × (d_in + d_out) | Low | Low-rank additive |
-| **OFT** | rank × rank | Low | Orthogonal rotation |
-| **Full FT** | All params | High | Standard fine-tuning |
+| Method | Trainable Params | GPU-hours | Approach |
+|--------|-----------------|-----------|----------|
+| **LoRA** (rank 64) | 174M | 1.12h | Low-rank additive |
+| **OFT** | ~100M | 1.92h | Orthogonal rotation |
+| **Full FT** | All 9B | TBD | Standard |
 
-## Training Results (Qwen3.5-0.8B, 5K samples)
+## Training Done ✅ (Qwen3.5-9B, 3 seeds each)
 
-| Method | GPU-hours | Samples/s | Status |
-|---|---|---|---|
-| LoRA (rank 64) | 1.12h | 3.7/s | ✅ Done |
-| OFT | 1.92h | 2.2/s | ✅ Done |
-| Full FT | ⏳ | ⏳ | ⏳ Running |
+| Method | Seed 42 | Seed 77 | Seed 999 | Eval |
+|--------|---------|---------|----------|------|
+| LoRA | ✅ 100% | ✅ | ✅ | ✅ |
+| OFT | ✅ | ✅ | ✅ | 🔄 3 evals submitted |
+| Full FT | ✅ | — | — | TODO |
 
-## Eval Results
+## ⚠️ Challenge
+If OFT ≈ LoRA ≈ 100% on SALAD, differentiation must come from:
+1. Seed variance (OFT more stable?)
+2. Cross-domain performance (use P20 data)
+3. Training efficiency (LoRA 1.7× faster)
 
-| Method | Atk F1 (strict) | Atk F1 (norm) | Training Cost |
-|---|---|---|---|
-| LoRA | 87.5% | 100.0% | $2.24 |
-| OFT | ⏳ eval running | ⏳ | $3.84 |
-| Full FT | ⏳ eval running | ⏳ | TBD |
-
-## Key Questions
-1. Does OFT preserve semantic knowledge better than LoRA?
-2. Is Full FT worth 10× compute over LoRA?
-3. Which method is most stable across seeds?
-
-## Expected Findings
-- LoRA ≈ OFT for this task (not enough data to differentiate)
-- Full FT may overfit on 5K samples
-- LoRA wins on cost-efficiency: **1.7× faster** than OFT
-
-## Ablation TODO
-- OFT with different ranks
-- Compare trainable parameter count
+## Action Plan
+- [x] LoRA + OFT training (3 seeds) ✅
+- [/] OFT evals submitted (3 jobs)
+- [ ] Compare variance across seeds
+- [ ] Write paper

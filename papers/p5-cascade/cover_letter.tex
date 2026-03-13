@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{letter}{
+Editor-in-Chief \\
+Journal of Information Security \\
+}
+
+\opening{Dear Editor,}
+
+We submit our manuscript \textbf{``Entropy-Aware Cascade: When to Route SOC Alerts from Decision Trees to LLMs''} for consideration in \emph{Journal of Information Security}.
+
+\textbf{Summary.} We implement and evaluate DT$\to$LLM cascade classifiers for SOC alert classification and discover that task entropy completely determines cascade utility. On the SALAD dataset ($H=1.24$ bits), Decision Trees handle 99.9\% of samples with 100\% confidence, making the LLM cascade layer dead weight. We formalize this into an entropy-aware cascade policy validated across 4 domains ($H=1.24$--6.16 bits): if $H<1.5$, skip the LLM; at $H=2$--3, cascade with confidence threshold $\theta=0.70$--0.90 for 30--80\% cost savings; above $H>5$, deploy LLM only. Annual cost for a 100K-alert/day SOC drops from \$987 to \$6 with zero F1 loss.
+
+\textbf{Key contributions:}
+\begin{enumerate}
+\item A formal Cascade Utility definition that reduces cascade design to a 30-second entropy calculation.
+\item Demonstration that low-entropy tasks make cascading counterproductive---the DT handles everything.
+\item Cost projections: 165$\times$ annual savings via entropy-aware routing.
+\end{enumerate}
+
+\textbf{Relevance to JIS.} Cascade architectures are directly applicable to security operations, where classification speed, cost, and accuracy all matter. Our entropy-aware policy enables SOC teams to deploy the most cost-efficient architecture based on their specific task complexity---a practical contribution to information security operations.
+
+\textbf{Novelty.} Prior cascade work (Viola \& Jones, FrugalGPT, RouteLLM) optimizes routing \emph{after} cascade construction. We are the first to predict cascade utility \emph{before} implementation using a single entropy statistic, and to show that cascading is counterproductive for low-entropy security tasks.
+
+This manuscript has not been published previously and is not under consideration elsewhere.
+
+\closing{Respectfully submitted,\\[2em]
+Nutthakorn Chalaemwongwan\\
+Department of Computer Engineering, KOSEN-KMITL\\
+King Mongkut's Institute of Technology Ladkrabang\\
+nutthakorn.ch@kmitl.ac.th
+}
+
+\end{letter}
+\end{document}

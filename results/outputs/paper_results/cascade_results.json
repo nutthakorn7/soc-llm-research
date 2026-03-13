@@ -1,58 +1,92 @@
 [
   {
     "threshold": 0.5,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.6,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.7,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.8,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.9,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.95,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
   },
   {
     "threshold": 0.99,
-    "atk_f1": 0.6,
+    "atk_f1": 0.7877,
     "llm_calls": 0,
     "llm_pct": 0.0,
     "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
     "cost_reduction": 100.0
+  },
+  {
+    "threshold": 1.0,
+    "atk_f1": 0.7877,
+    "llm_calls": 0,
+    "llm_pct": 0.0,
+    "dt_only": 9851,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 51,
+    "cost_reduction": 100.0
+  },
+  {
+    "threshold": "oracle",
+    "atk_f1": 1.0,
+    "llm_calls": 51,
+    "llm_pct": 0.5,
+    "dt_only": 9800,
+    "benign_skipped": 11,
+    "dt_errors_remaining": 0,
+    "cost_reduction": 99.5
   }
 ]

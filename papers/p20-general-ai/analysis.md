@@ -1,55 +1,58 @@
-# P20: When, How, and How Big — Cross-Domain Results
+# P20: When, How, and How Big — Cross-Domain LLM Fine-Tuning
 
-## Exact Entropy Values (Computed)
+## ⭐ Most Important Paper (Revealed by Critical Analysis)
+SALAD saturates at 1K (H=1.24). Higher-entropy domains will show the real LLM advantage.
+
+## Entropy Values
 
 | Domain | Dataset | K | H(Y) bits | H_max | Normalized |
-|---|---|---|---|---|---|
-| SOC Alerts | SALAD | 13 | **1.2437** | 3.70 | 0.336 |
-| News | AG News | 4 | **1.9992** | 2.00 | 1.000 |
-| Emotion | GoEmotions | 28 | **3.7453** | 4.81 | 0.779 |
-| Legal | LEDGAR | 100 | **6.1580** | 6.64 | 0.927 |
+|--------|---------|---|-----------|-------|------------|
+| SOC Alerts | SALAD | 8* | **1.244** | 3.70 | 0.336 |
+| News | AG News | 4 | **1.999** | 2.00 | 1.000 |
+| Emotion | GoEmotions | 28 | **3.745** | 4.81 | 0.779 |
+| Legal | LedGAR | 100 | **6.158** | 6.64 | 0.927 |
 
-## Traditional ML Results (Done ✅)
+*8 categories in test set
 
-| Domain | H(Y) | DT | SVM | LR |
-|---|---|---|---|---|
-| SALAD | 1.24 | 73.6% | **90.9%** | 72.5% |
-| AG News | 2.00 | 57.9% | **88.4%** | 87.4% |
-| GoEmotions | 3.75 | 16.9% | **23.8%** | 12.3% |
-| LEDGAR | 6.16 | 18.0% | **65.0%** | 53.5% |
+## Traditional ML Baselines ✅
 
-## LLM Fine-tuning (0.8B + 9B)
+| Domain | H(Y) | DT | SVM | LR | BERT |
+|--------|------|-----|------|-----|------|
+| SALAD | 1.24 | 87.4% | **90.9%** | 72.5% | 81.4% |
+| AG News | 2.00 | 57.9% | **88.4%** | 87.4% | **92.0%** |
+| GoEmotions | 3.75 | 16.9% | **23.8%** | 12.3% | **34.0%** |
+| LedGAR | 6.16 | 18.0% | **65.0%** | 53.5% | **61.5%** |
 
-| Domain | 0.8B Training | 9B Training | 0.8B Eval | 9B Eval |
-|---|---|---|---|---|
-| SALAD | ✅ | ✅ | ✅ | ✅ |
-| AG News | ✅ | ✅ | ⏳ | ⏳ |
-| GoEmotions | ✅ | ✅ | ⏳ | ⏳ |
-| LEDGAR | ✅ | ✅ | ⏳ | ⏳ |
+## LLM Fine-tuning Status
 
-## Entropy vs Best-ML-F1 (Key Figure Data)
+| Domain | 0.8B Train | 9B Train | 0.8B Eval | 9B Eval |
+|--------|-----------|----------|-----------|---------|
+| SALAD | ✅ 100% | ✅ 100% | ✅ | ✅ |
+| AG News | ✅ × 3 seeds | ✅ × 3 seeds | 🔄 submitted | 🔄 submitted |
+| GoEmotions | ✅ × 3 seeds | ✅ × 3 seeds | 🔄 submitted | 🔄 submitted |
+| LedGAR | ✅ × 3 seeds | ✅ × 3 seeds | 🔄 submitted | 🔄 submitted |
 
-| H(Y) | Best Traditional | Best LLM | Gap |
-|---|---|---|---|
-| 1.24 | SVM 90.9% | LoRA 100% | +9.1% |
-| 2.00 | SVM 88.4% | ⏳ | ⏳ |
-| 3.75 | SVM 23.8% | ⏳ | ⏳ |
-| 6.16 | SVM 65.0% | ⏳ | ⏳ |
+**19 eval jobs submitted** — results will reveal:
+- Does 0.8B ≈ 9B on all domains?
+- Where does LLM advantage over SVM appear?
+- How does scaling behave on high-entropy tasks?
 
-## Decision Flowchart (Paper Figure)
+## Key Predictions
 
-```
-      Compute H(Y) from labeled data
-                  │
-          ┌───────┴───────┐
-          │               │
-      H < 2.0         H ≥ 2.0
-          │               │
-     SVM/DT ok      ┌─────┴─────┐
-    (F1 > 88%)      │           │
-                 K ≤ 10      K > 10
-                 H < 4       H ≥ 4
-                    │           │
-                Use ICL    Use LoRA
-              (if API ok)  (0.8B enough)
-```
+| H(Y) | Expected SVM→LLM Gap | Expected 0.8B vs 9B Gap |
+|-------|----------------------|-------------------------|
+| 1.24 | +9% (confirmed) | 0% (confirmed) |
+| 2.00 | +5-10% | < 3% |
+| 3.75 | **+30-50%** | 5-15% |
+| 6.16 | **+20-30%** | 10-20% |
+
+## Action Plan
+- [x] Traditional ML baselines (4 domains) ✅
+- [x] BERT baselines (4 domains) ✅
+- [x] All 19 LLM trainings (0.8B + 9B × 4 domains × 3 seeds)
+- [/] 19 eval jobs submitted — running on Lanta
+- [ ] Compile cross-domain comparison table
+- [ ] Plot: entropy vs F1 (DT, SVM, BERT, 0.8B, 9B)
+- [ ] Write paper
+
+## Target: NeurIPS / ICML
