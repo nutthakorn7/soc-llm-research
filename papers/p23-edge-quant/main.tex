@@ -8,7 +8,7 @@
 \maketitle
 
 \begin{abstract}
-Edge SOC deployments on resource-constrained devices (Jetson Orin, T4) demand aggressive quantization, but quantization's effect on label compliance---not just accuracy---is unknown. We compare 4-bit (NF4), 8-bit (LLM.int8), and 16-bit (bf16) training on Qwen2.5-0.5B for SOC alert classification, measuring strict F1, VRAM, inference latency, and hallucination rate. Our surprising finding: \textbf{quantization has near-zero effect on label compliance}. All three bit-widths achieve identical strict F1 within 0.2 percentage points (4-bit: 88.77\%, 8-bit: 88.97\%, 16-bit: 88.78\%), zero hallucinated labels, and identical normalized F1 (100\%). The capacity-compliance hypothesis from P22 does not transfer to quantization: while LoRA rank affects which \emph{update subspace} is accessible, quantization affects \emph{representation precision}---a fundamentally different capacity constraint. However, quantization dramatically affects operational metrics: 4-bit reduces VRAM by $1.95\times$ (5.26 vs.\ 10.24 GB) while 8-bit increases training time by $2.86\times$ (27.7 vs.\ 9.7 minutes). We provide deployment guidelines mapping quantization$\times$hardware to SOC deployment scenarios, demonstrating that 4-bit Qwen2.5-0.5B runs on \$200 Jetson Nano hardware processing 36K alerts/hour with no compliance penalty.
+Edge SOC deployments on resource-constrained devices (Jetson Orin, T4) demand aggressive quantization, but quantization's effect on label compliance---not just accuracy---is unknown. We compare 4-bit (NF4), 8-bit (LLM.int8), and 16-bit (bf16) training on Qwen2.5-0.5B for SOC alert classification, measuring strict F1, VRAM, inference latency, and hallucination rate. Our surprising finding: \textbf{quantization has near-zero effect on label compliance}. All three bit-widths achieve identical strict F1 within 0.2 percentage points (4-bit: 88.77\%, 8-bit: 88.97\%, 16-bit: 88.78\%), zero hallucinated labels, and identical normalized F1 (100\%). The capacity-compliance hypothesis from P22 does not transfer to quantization: while LoRA rank affects which \emph{update subspace} is accessible, quantization affects \emph{representation precision}---a fundamentally different capacity constraint. However, quantization dramatically affects operational metrics: 4-bit reduces VRAM by $1.92\times$ (5.3 vs.\ 10.2 GB) while 8-bit increases training time by $2.86\times$ (27.7 vs.\ 9.7 minutes). We provide deployment guidelines mapping quantization$\times$hardware to SOC deployment scenarios, demonstrating that 4-bit Qwen2.5-0.5B runs on \$200 Jetson Nano hardware processing 36K alerts/hour with no compliance penalty.
 \end{abstract}
 \begin{IEEEkeywords}
 quantization, edge deployment, label hallucination, SOC classification, QLoRA
@@ -27,7 +27,7 @@ Our contributions:
 \begin{enumerate}
 \item The first empirical comparison of 4/8/16-bit quantization on label compliance (strict F1), finding near-zero effect ($\Delta < 0.2$\%).
 \item Refutation of the capacity-compliance hypothesis for quantization: precision and subspace dimensionality affect compliance differently.
-\item Operational benchmarks: VRAM (5.26--10.24 GB), latency (123--323 ms), training time (9.7--27.7 min).
+\item Operational benchmarks: VRAM (5.3--10.2 GB), latency (114--305 ms), training time (9.7--27.7 min).
 \item Edge deployment guidelines mapping bit-width$\times$hardware$\times$throughput for SOC scenarios.
 \end{enumerate}
 
@@ -58,9 +58,9 @@ This distinction is critical: generative hallucination arises from accumulated q
 \begin{tabular}{ccccrr}
 \toprule \textbf{Bits} & \textbf{Method} & \textbf{VRAM} & \textbf{Train Time} & \textbf{Cost} & \textbf{Latency} \\
 \midrule
-4-bit & NF4 (QLoRA) & 5.26 GB & 18.8m & \$0.63 & 195ms \\
-8-bit & LLM.int8() & 5.45 GB & 27.7m & \$0.92 & 323ms \\
-16-bit & bf16 & 10.24 GB & 9.7m & \$0.32 & 123ms \\
+4-bit & NF4 (QLoRA) & 5.3 GB & 18.8m & \$0.63 & 182ms \\
+8-bit & LLM.int8() & 5.5 GB & 27.7m & \$0.92 & 305ms \\
+16-bit & bf16 & 10.2 GB & 9.7m & \$0.32 & 114ms \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -173,11 +173,11 @@ The maximum per-class range across quantization levels is \textbf{0.004}---negli
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_quant_tradeoff.pdf}
-\caption{Quantization tradeoff: VRAM savings vs.\ latency. 4-bit halves VRAM but increases latency $1.59\times$. 8-bit offers minimal VRAM savings but $2.63\times$ higher latency---the worst tradeoff.}
+\caption{Quantization tradeoff: VRAM savings vs.\ latency. 4-bit halves VRAM but increases latency $1.60\times$. 8-bit offers minimal VRAM savings but $2.68\times$ higher latency---the worst tradeoff.}
 \label{fig:tradeoff}
 \end{figure}
 
-16-bit is fastest (123ms) and cheapest (\$0.32) but requires $1.95\times$ more VRAM (10.24 vs.\ 5.26 GB). 4-bit reduces VRAM by $1.95\times$ with moderate latency increase ($1.59\times$). 8-bit is the worst option: minimal VRAM savings over 4-bit (+0.19 GB = 3.6\%) but $2.63\times$ higher latency.
+16-bit is fastest (114ms) and cheapest (\$0.32) but requires $1.92\times$ more VRAM (10.2 vs.\ 5.3 GB). 4-bit reduces VRAM by $1.92\times$ with moderate latency increase ($1.60\times$). 8-bit is the worst option: minimal VRAM savings over 4-bit (+0.2 GB = 3.8\%) but $2.68\times$ higher latency.
 
 \textbf{Surprising finding}: 8-bit is slower than both 4-bit and 16-bit. LLM.int8()'s mixed-precision decomposition identifies outlier features at runtime, adding computational overhead ($\sim$65\% slower than 4-bit NF4) that outweighs memory savings. For edge deployment, 4-bit (QLoRA) is the clear winner.
 
@@ -318,8 +318,8 @@ Quantization has near-zero effect on label compliance for SOC alert classificati
 \begin{enumerate}
 \item \textbf{Compliance-neutral}: 4-bit, 8-bit, and 16-bit produce identical label compliance. Quantize freely.
 \item \textbf{Capacity hypothesis refuted}: Precision reduction (quantization) is fundamentally different from subspace reduction (rank). Only rank affects compliance.
-\item \textbf{4-bit is optimal for edge}: $1.95\times$ VRAM reduction, moderate latency increase, zero compliance penalty.
-\item \textbf{8-bit is never optimal}: Worst latency ($2.63\times$ vs.\ 16-bit), minimal VRAM advantage over 4-bit.
+\item \textbf{4-bit is optimal for edge}: $1.92\times$ VRAM reduction, moderate latency increase, zero compliance penalty.
+\item \textbf{8-bit is never optimal}: Worst latency ($2.68\times$ vs.\ 16-bit), minimal VRAM advantage over 4-bit.
 \end{enumerate}
 
 \subsection{Future Work}
