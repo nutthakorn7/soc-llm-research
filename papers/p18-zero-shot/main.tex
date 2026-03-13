@@ -14,7 +14,7 @@ nutthakorn.ch@kmitl.ac.th}
 \maketitle
 
 \begin{abstract}
-Fine-tuned LLMs achieve near-perfect F1 on training-time categories, but real-world classification encounters evolving categories. We design a controlled leave-one-out experiment on AG News: Qwen2.5-0.5B is trained on 3 of 4 news categories and tested exclusively on the held-out category (500 samples each). All 4 held-out categories achieve \textbf{0.0\% accuracy}---the models cannot classify unseen categories under any condition. More intriguingly, the predicted vocabulary distributions reveal systematic biases: when ``Sports'' is held out, 94.4\% of predictions go to ``World''; when ``Sci/Tech'' is held out, 71.6\% go to ``Business.'' These confusion patterns suggest that fine-tuning creates \emph{semantic neighborhoods} where held-out categories are systematically mapped to the semantically closest training category. We formalize this via a confusion proximity matrix and validate that the confusions reflect genuine semantic relationships (Sports $\to$ World: international sports; Sci/Tech $\to$ Business: tech industry coverage). Our results establish that fine-tuning on Qwen2.5-0.5B completely destroys zero-shot generalization---the model cannot generate any label absent from training data, even when the label is a common English word present in pre-training.
+Fine-tuned LLMs achieve near-perfect F1 on training-time categories, but real-world classification encounters evolving categories. We design a controlled leave-one-out experiment on AG News: Qwen2.5-0.5B is trained on 3 of 4 news categories and tested exclusively on the held-out category (500 samples each). All 4 held-out categories achieve \textbf{0.0\% accuracy}---the models cannot classify unseen categories under any condition. More intriguingly, the predicted vocabulary distributions reveal systematic biases: when ``Sports'' is held out, 92.6\% of predictions go to ``World''; when ``Sci/Tech'' is held out, 72.6\% go to ``Business.'' These confusion patterns suggest that fine-tuning creates \emph{semantic neighborhoods} where held-out categories are systematically mapped to the semantically closest training category. We formalize this via a confusion proximity matrix and validate that the confusions reflect genuine semantic relationships (Sports $\to$ World: international sports; Sci/Tech $\to$ Business: tech industry coverage). Our results establish that fine-tuning on Qwen2.5-0.5B completely destroys zero-shot generalization---the model cannot generate any label absent from training data, even when the label is a common English word present in pre-training.
 \end{abstract}
 \begin{IEEEkeywords}
 zero-shot transfer, leave-one-out evaluation, generalization, domain lock-in, news classification
@@ -87,9 +87,9 @@ World & 500 & Moderate? & Overlaps all categories \\
 \toprule
 \textbf{Held-Out} & \textbf{Accuracy} & \textbf{Train Time} & \textbf{n=500} & \textbf{Dominant Prediction} \\
 \midrule
-Business & \textbf{0.0\%} & 11.1m & 500 & World (54.6\%) \\
-Sci/Tech & \textbf{0.0\%} & 11.4m & 500 & Business (71.6\%) \\
-Sports & \textbf{0.0\%} & 11.1m & 500 & World (94.4\%) \\
+Business & \textbf{0.0\%} & 11.1m & 500 & World (56.8\%) \\
+Sci/Tech & \textbf{0.0\%} & 11.4m & 500 & Business (72.6\%) \\
+Sports & \textbf{0.0\%} & 11.1m & 500 & World (92.6\%) \\
 World & \textbf{0.0\%} & 11.0m & 500 & Sci/Tech (56.8\%) \\
 \bottomrule
 \end{tabular}
@@ -124,16 +124,16 @@ World & Sci/Tech (58.6) & Business (36.0) & Sports (5.4) \\
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_confusion_proximity.pdf}
-\caption{Confusion proximity matrix. Arrows show dominant confusion direction. Line width indicates confusion strength. Sports → World (94.4\%) is the strongest confusion.}
+\caption{Confusion proximity matrix. Arrows show dominant confusion direction. Line width indicates confusion strength. Sports $\to$ World (92.6\%) is the strongest confusion.}
 \label{fig:confusion}
 \end{figure}
 
 The distributions are non-uniform and semantically meaningful:
 \begin{itemize}
-\item \textbf{Sports $\to$ World (94.4\%)}: International sports coverage overlaps ``World'' news. Near-unanimous confusion.
-\item \textbf{Sci/Tech $\to$ Business (71.6\%)}: Technology industry articles frequently discuss business aspects (earnings, IPOs, market impact).
-\item \textbf{World $\to$ Sci/Tech (56.8\%)}: News about international tech policy, space programs, and scientific discoveries.
-\item \textbf{Business $\to$ World (54.6\%)}: International business and trade news overlaps ``World.''
+\item \textbf{Sports $\to$ World (92.6\%)}: International sports coverage overlaps ``World'' news. Near-unanimous confusion.
+\item \textbf{Sci/Tech $\to$ Business (72.6\%)}: Technology industry articles frequently discuss business aspects (earnings, IPOs, market impact).
+\item \textbf{World $\to$ Sci/Tech (58.6\%)}: News about international tech policy, space programs, and scientific discoveries.
+\item \textbf{Business $\to$ World (56.8\%)}: International business and trade news overlaps ``World.''
 \end{itemize}
 
 \subsection{Confusion Proximity Matrix}
@@ -168,18 +168,18 @@ For Qwen2.5-0.5B with QLoRA rank 64, vocabulary collapse is \emph{complete}: the
 \toprule
 \textbf{Held-Out} & \textbf{Nearest Neighbor} & \textbf{Interpretation} \\
 \midrule
-Sports & World (94.4\%) & International sports \\
-Sci/Tech & Business (71.6\%) & Tech industry \\
-World & Sci/Tech (56.8\%) & Global tech policy \\
-Business & World (54.6\%) & Int'l trade/economics \\
+Sports & World (92.6\%) & International sports \\
+Sci/Tech & Business (72.6\%) & Tech industry \\
+World & Sci/Tech (58.6\%) & Global tech policy \\
+Business & World (56.8\%) & Int'l trade/economics \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The confusion patterns form coherent semantic neighborhoods:
 \begin{itemize}
-\item \textbf{Sports is closest to World}: Sports articles frequently mention countries, international events, and geopolitical context---making ``World'' the overwhelming semantic nearest neighbor (94.4\%).
-\item \textbf{Sci/Tech is closest to Business}: Technology coverage in AG News focuses heavily on companies, earnings, IPOs, and market impact---reflecting the tech-industry overlap (71.6\%).
+\item \textbf{Sports is closest to World}: Sports articles frequently mention countries, international events, and geopolitical context---making ``World'' the overwhelming semantic nearest neighbor (92.6\%).
+\item \textbf{Sci/Tech is closest to Business}: Technology coverage in AG News focuses heavily on companies, earnings, IPOs, and market impact---reflecting the tech-industry overlap (72.6\%).
 \item \textbf{Sports is far from Business}: Near-zero confusion ($<$1\%) between Sports and Business reflects genuine semantic distance.
 \item \textbf{World is ambiguous}: World news distributes across Sci/Tech (56.8\%) and Business (37.4\%), reflecting its genuine overlap with both categories.
 \end{itemize}
@@ -304,7 +304,7 @@ Fine-tuning Qwen2.5-0.5B completely destroys zero-shot generalization: all 4 lea
 \subsection{Key Findings}
 \begin{enumerate}
 \item \textbf{Complete vocabulary collapse}: The model cannot generate any label absent from training data (Definition~1).
-\item \textbf{Systematic confusion}: Held-out categories map to semantically nearest training categories (Sports $\to$ World: 94.4\%).
+\item \textbf{Systematic confusion}: Held-out categories map to semantically nearest training categories (Sports $\to$ World: 92.6\%).
 \item \textbf{Semantic neighborhoods}: Confusion patterns reflect genuine semantic relationships, providing insight into model representations.
 \item \textbf{Pre-training erasure}: Common English words (``Sports'', ``Business'') become unreachable after just 3K fine-tuning samples.
 \end{enumerate}

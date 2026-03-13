@@ -60,7 +60,13 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 │   └── p24-cyber-datasets/     # 10p, 9T, 29R ⭐⭐
 └── results/
     ├── paper_results/          # Analysis JSONs + figures
-    └── general_ai/             # Cross-domain datasets + results
+    ├── general_ai/             # Cross-domain datasets + results
+    └── vastai-mar13/           # ⭐ Vast.ai RTX 4090 results (24 files)
+        ├── p9_sft.json         # SFT baseline F1=88.8%
+        ├── p14_lora_s*.json    # 5 seeds: 90.5±1.3%
+        ├── p18_zeroshot_*.json # 4 folds: 0% accuracy all
+        ├── p20_*.json          # 2×2 cross-domain: 0% both dirs
+        └── p23_quant_*.json    # 4/8/16-bit: ±0.2% F1
 ```
 
 ### Lanta HPC
