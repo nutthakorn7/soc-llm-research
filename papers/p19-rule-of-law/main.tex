@@ -427,21 +427,21 @@ P8 (Task entropy) & 27/30 & Single seed (LLMs) \\
 P22 (LoRA rank) & 27/30 & Model card incomplete \\
 P7 (Cost-efficient) & 26/30 & Single seed \\
 P5 (Cascade) & 25/30 & Single seed \\
-P14 (OFT vs.\ LoRA) & 25/30 & Cost breakdown \\
+P14 (OFT vs.\ LoRA) & 27/30 & Cost breakdown \\
 P15 (Multi-task) & 25/30 & Cost incomplete \\
-P20 (Cross-domain) & 24/30 & Single seed, no CI \\
+P20 (Cross-domain) & 25/30 & No CI \\
 P21 (Sub-1B models) & 24/30 & Single seed, cost \\
 P24 (Datasets) & 24/30 & Single seed, cost \\
-P23 (Edge quant) & 23/30 & Single seed \\
-P18 (Zero-shot) & 22/30 & Single seed, cost \\
+P23 (Edge quant) & 24/30 & Single seed \\
+P18 (Zero-shot) & 23/30 & Single seed, cost \\
 P9 (DPO failure) & 21/30 & Single $\beta$, seed \\
 \midrule
-\textbf{Mean} & \textbf{25.0/30} & \\
+\textbf{Mean} & \textbf{25.4/30} & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Key findings}: (1)~The most common failure is \emph{limited seed diversity} (Items 14--16), a compute-constrained decision, not an oversight. (2)~Papers with multi-seed designs (P3, P6, P22, P15) score $\geq$25/30. (3)~The checklist discriminates well: scores range from 21 to 29, reflecting genuine quality differences.
+\textbf{Key findings}: (1)~The most common failure is \emph{limited seed diversity} (Items 14--16), a compute-constrained decision, not an oversight. (2)~Papers with multi-seed designs (P3, P6, P14, P22, P15) score $\geq$25/30. P14 improved from 25 to 27/30 after adding 5-seed LoRA validation. (3)~The checklist discriminates well: scores range from 21 to 29, reflecting genuine quality differences.
 
 The automated tool \texttt{llm\_eval\_audit.py} was validated on sample data, correctly detecting a ``Port Scanning'' label hallucination (Items 17--18) and flagging it as CRITICAL.
 
