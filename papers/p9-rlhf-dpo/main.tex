@@ -93,7 +93,7 @@ Reasoning & SFT (5K) & --- & \$0.60 & 100\% \\
 \end{table}
 
 \subsection{Model and Data}
-\textbf{Model}: Qwen2.5-0.5B-Instruct with QLoRA rank 64. \textbf{SFT}: 5K clean samples, 3 epochs, 18.3 minutes. \textbf{DPO}: 5K auto-generated preference pairs, $\beta = 0.1$, 1 epoch, 70.4 minutes. \textbf{Hardware}: Vast.ai A100.
+\textbf{Model}: Qwen2.5-0.5B-Instruct with QLoRA rank 64. \textbf{SFT}: 5K clean samples, 3 epochs, 18.3 minutes. \textbf{DPO}: 5K auto-generated preference pairs, $\beta = 0.1$, 1 epoch, 70.4 minutes. \textbf{Hardware}: Vast.ai A100 (80\,GB). \textbf{Note}: DPO training was also attempted on RTX 4090 (24\,GB) but consistently crashed due to the dual-model memory requirement (policy\,+\,reference), confirming that DPO is impractical for edge deployment even with sub-1B models.
 
 \section{Results}
 
