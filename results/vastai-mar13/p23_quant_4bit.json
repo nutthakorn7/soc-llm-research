@@ -1,0 +1,12 @@
+{
+  "paper": "P23",
+  "experiment": "quant_4bit",
+  "bits": 4,
+  "f1": 0.8877,
+  "accuracy": 0.888,
+  "vram_gb": 5.27,
+  "avg_latency_ms": 181.7,
+  "train_time_min": 17.9,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "seed": 42
+}
