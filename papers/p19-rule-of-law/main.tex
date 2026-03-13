@@ -1,4 +1,4 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{lmodern}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -9,32 +9,41 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{balance}
 \usepackage{listings}
 
 \lstset{basicstyle=\ttfamily\small, breaklines=true}
+\usepackage{lineno}
+
+\journal{Computers \& Security}
 
 \begin{document}
 
+\begin{frontmatter}
+
 \title{Beyond Accuracy: A Reproducibility Checklist for LLM Evaluation in Applied Domains}
 
-\author{
-\IEEEauthorblockN{Nutthakorn Chalaemwongwan}
-\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
-Bangkok, Thailand\\
-nutthakorn.ch@kmitl.ac.th}
-}
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 
-\maketitle
+\begin{highlights}
+\item 30-item reproducibility checklist for LLM evaluation in applied domains.
+\item Label aliasing inflated F1 by up to 44.3\% --- detected and corrected.
+\item 15-step Perfect Score Suspicion Protocol for anomalous performance claims.
+\item Validated across 14 companion papers (mean audit score: 25.4/30).
+\item Adds only 4--8 hours per paper but prevents misleading publications.
+\end{highlights}
 
 \begin{abstract}
 Large language models (LLMs) have achieved remarkable performance across domain-specific classification tasks, with multiple studies reporting near-perfect F1 scores. However, our experience conducting 17 research experiments across cybersecurity, news, emotion, and legal text classification reveals that standard evaluation practices can mask critical issues: label aliasing inflated F1 by up to 44.3\%, data leakage produced entirely spurious ablation patterns, and extreme class imbalance rendered binary classification metrics meaningless. We propose a 30-item reproducibility checklist organized into 9 categories, including a novel 15-step ``Perfect Score Suspicion Protocol'' for verifying anomalously high performance claims. Our checklist is validated against 6 real case studies where standard evaluation practices failed to detect errors ranging from hallucinated sub-category labels to false hyperparameter sensitivity conclusions. The checklist adds only 4--8 hours per paper but prevents publication of misleading results with real-world consequences in cybersecurity, medical, and legal domains.
 \end{abstract}
 
-\begin{IEEEkeywords}
-reproducibility, LLM evaluation, label aliasing, hallucination audit, cybersecurity NLP
-\end{IEEEkeywords}
+\begin{keyword}
+reproducibility \sep LLM evaluation \sep label aliasing \sep hallucination audit \sep cybersecurity NLP
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}

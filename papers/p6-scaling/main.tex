@@ -1,4 +1,4 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
@@ -8,31 +8,41 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{balance}
 \usepackage{listings}
 \lstset{basicstyle=\small\ttfamily,breaklines=true,frame=single,backgroundcolor=\color{gray!10}}
+\usepackage{lineno}
+
+\journal{Expert Systems with Applications}
 
 \begin{document}
 
+\begin{frontmatter}
+
 \title{1,000 Labels Is All You Need: Non-Monotonic Scaling of Label Compliance in Fine-Tuned LLMs for Cybersecurity Classification}
 
-\author{
-\IEEEauthorblockN{Nutthakorn Chalaemwongwan}
-\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
-Bangkok, Thailand\\
-nutthakorn.ch@kmitl.ac.th}
-}
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 
-\maketitle
+
+\begin{highlights}
+\item Non-monotonic scaling: strict F1 drops from 87.5\% at 1K to 83.6\% at 5K before recovering to 100\% at 20K.
+\item Two learning processes: semantic mastery saturates at 1K; label vocabulary requires 20K samples.
+\item 5K anomaly: MITRE ATT\&CK pre-training knowledge overrides schema labels ($96\times$ more errors).
+\item Reasoning models (DeepSeek-R1, Phi4-mini) achieve perfect compliance at 5K without data scaling.
+\item Practical guidelines: 1K for semantic understanding (\$0.50), 20K for full compliance (\$4.48).
+\end{highlights}
 
 \begin{abstract}
 How many labeled examples does a fine-tuned LLM need to master a domain-specific classification task? We address this question by training Qwen3.5-9B with QLoRA on 1K, 5K, 10K, and 20K samples from the SALAD cybersecurity dataset and discover two distinct learning processes operating on different scales. \emph{Semantic learning}---the ability to correctly classify alerts into attack categories---saturates at just 1K samples (normalized F1 = 100\% at all sizes). \emph{Label vocabulary learning}---the ability to express classifications using exact schema labels---follows a surprising non-monotonic curve: strict F1 drops from 87.5\% at 1K to 83.6\% at 5K before recovering to 97.4\% at 10K and 100\% at 20K. The 5K anomaly produces 4,925 label substitution errors (96$\times$ more than 1K's 51), as additional training capacity enables MITRE ATT\&CK pre-training knowledge to override the task schema (``Reconnaissance'' $\to$ ``Port Scanning''). This phenomenon is stochastic: across 3 seeds at 5K, strict F1 ranges from 83.6\% to 94.0\% (mean $0.886 \pm 0.053$). LoRA hyperparameters modulate the effect: lower ranks (16, 32) achieve perfect compliance on clean data by limiting capacity for pre-training bleed-through. Reasoning-oriented models (DeepSeek-R1, Phi4-mini) achieve perfect strict F1 at 5K without data scaling, suggesting an architectural shortcut. We provide practical guidelines: 1K for semantic understanding (\$0.50), 5K with reasoning models for full compliance (\$3.72), or 20K for architecture-agnostic compliance (\$4.48).
 \end{abstract}
 
-\begin{IEEEkeywords}
-sample efficiency, label hallucination, scaling laws, fine-tuning, cybersecurity NLP, QLoRA, MITRE ATT\&CK
-\end{IEEEkeywords}
+\begin{keyword}
+sample efficiency \sep label hallucination \sep scaling laws \sep fine-tuning \sep cybersecurity NLP \sep QLoRA \sep MITRE ATT\&CK
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -535,5 +545,4 @@ Computing resources provided by the NSTDA Supercomputer Center (ThaiSC) on the L
 \bibitem{p22} N.~Chalaemwongwan, ``Higher Rank, More Hallucination? LoRA Capacity and Label Compliance,'' \emph{Neurocomputing}, 2025.
 \end{thebibliography}
 
-\balance
 \end{document}
