@@ -777,13 +777,21 @@ From our extensive experimental evaluation, we distill several key insights for 
 \textbf{Lesson 5: Always test with multiple seeds at intermediate scales.} At 5K training, a single seed can produce anywhere from 33 to 4,925 errors. Any conclusion drawn from a single seed at this scale is unreliable.
 
 \subsection{Future Work}
+
+Several companion studies extend the findings presented here:
 \begin{enumerate}
-\item \textbf{High-entropy evaluation}: Extend the dual-metric framework to GoEmotions ($H=3.75$ bits, 28 classes) and LedGAR ($H=6.16$ bits, 100 classes) to test whether the label gap phenomenon scales with task complexity.
-\item \textbf{Alignment techniques}: Apply DPO/ORPO to explicitly reward label compliance during training, potentially eliminating hallucination without requiring 20K samples.
-\item \textbf{Constrained decoding}: Enforce valid label vocabulary at inference time using finite-state automata (Outlines, LMQL) to guarantee schema compliance regardless of model tendency.
-\item \textbf{Post-hoc label layers}: Train a lightweight mapping head on top of frozen LLM representations to enforce label vocabulary compliance.
-\item \textbf{Multilingual SOC}: Evaluate label compliance in non-English SOC environments (Thai, Japanese, Arabic), where pre-training vocabulary imbalance may amplify hallucination.
-\item \textbf{Temporal generalization}: Test whether models trained on 2023 attack data maintain label compliance on 2025 attack patterns, evaluating concept drift effects on hallucination.
+\item \textbf{Scaling laws}: Our companion study~\cite{p6} reveals non-monotonic label compliance scaling, where 5K samples produce \emph{more} hallucination than 1K.
+\item \textbf{Alignment techniques}: Companion study~\cite{p9} applies DPO/ORPO to label compliance, discovering catastrophic failure (F1 drops from 88.8\% to 0.0\%).
+\item \textbf{LoRA capacity}: Study~\cite{p22} demonstrates that higher LoRA rank increases hallucination rate, suggesting a capacity-compliance tradeoff.
+\item \textbf{Task complexity}: Study~\cite{p8} formalizes task entropy $H(Y)$ as a predictor of when LLMs outperform traditional ML.
+\item \textbf{Zero-shot transfer}: Study~\cite{p18} shows fine-tuning completely destroys zero-shot generalization to unseen categories.
+\item \textbf{Cross-domain}: Study~\cite{p20} demonstrates symmetric domain lock-in across AG News and GoEmotions.
+\item \textbf{Edge deployment}: Study~\cite{p23} shows quantization (4/8/16-bit) has near-zero effect on label compliance.
+\item \textbf{Multi-task format}: Study~\cite{p15} finds multi-task training provides regularization (+5.7\% F1).
+\item \textbf{Sub-1B models}: Study~\cite{p21} validates that sub-1B parameter models follow the same scaling and compliance patterns.
+\item \textbf{Evaluation methodology}: Study~\cite{p19} proposes a 30-item reproducibility checklist validated across all companion papers.
+\item \textbf{Adapter comparison}: Study~\cite{p14} compares LoRA vs.\ OFT adapters with 5-seed validation.
+\item \textbf{Cost efficiency}: Study~\cite{p7} establishes that full compliance costs only \$0.60 with reasoning architectures.
 \end{enumerate}
 
 %% ===== CONCLUSION =====
@@ -962,6 +970,19 @@ G.~Apruzzese et~al., ``The Role of Machine Learning in Cybersecurity,'' \emph{Di
 
 \bibitem{mitre2024}
 MITRE Corporation, ``MITRE ATT\&CK Framework v14,'' 2024. [Online]. Available: \url{https://attack.mitre.org/}
+
+\bibitem{p6} N.~Chalaemwongwan, ``1,000 Labels Is All You Need: Non-Monotonic Scaling of Label Compliance,'' \emph{Expert Systems with Applications}, 2025.
+\bibitem{p7} N.~Chalaemwongwan, ``\$0.60 Is All You Need: Cost-Efficient LLM Fine-Tuning for SOC Classification,'' \emph{IEEE Access}, 2025.
+\bibitem{p8} N.~Chalaemwongwan, ``When Task Entropy Predicts LLM Necessity: A Decision Framework for SOC Classification,'' \emph{Information Sciences}, 2025.
+\bibitem{p9} N.~Chalaemwongwan, ``Does Alignment Reduce Hallucination? Comparing SFT and DPO for Label Compliance,'' \emph{Transactions on Machine Learning Research}, 2025.
+\bibitem{p14} N.~Chalaemwongwan, ``LoRA vs.\ OFT: Adapter Selection for Label-Compliant SOC Classification,'' \emph{Pattern Recognition}, 2025.
+\bibitem{p15} N.~Chalaemwongwan, ``One Model, Three Tasks: Multi-Task Fine-Tuning for SOC Alert Classification,'' \emph{Applied Soft Computing}, 2025.
+\bibitem{p18} N.~Chalaemwongwan, ``Zero-Shot Generalization Failure in Fine-Tuned LLMs,'' \emph{ACM Trans.\ Knowledge Discovery from Data}, 2025.
+\bibitem{p19} N.~Chalaemwongwan, ``Beyond Accuracy: A Reproducibility Checklist for LLM Evaluation,'' \emph{Computers \& Security}, 2025.
+\bibitem{p20} N.~Chalaemwongwan, ``Cross-Domain Transfer Failure: Domain-Locked Classification in Fine-Tuned LLMs,'' \emph{IEEE Trans.\ Knowledge and Data Engineering}, 2025.
+\bibitem{p21} N.~Chalaemwongwan, ``Sub-1B Models Follow Scaling Laws: Label Compliance in Compact LLMs,'' \emph{Knowledge-Based Systems}, 2025.
+\bibitem{p22} N.~Chalaemwongwan, ``Higher Rank, More Hallucination? LoRA Capacity and Label Compliance,'' \emph{Neurocomputing}, 2025.
+\bibitem{p23} N.~Chalaemwongwan, ``Quantize and Deploy: Edge Quantization for SOC Classification,'' \emph{IEEE Internet of Things Journal}, 2025.
 
 \end{thebibliography}
 
