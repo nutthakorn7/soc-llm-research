@@ -1,0 +1,14 @@
+{
+  "paper": "P18",
+  "held_out": "Sci/Tech",
+  "accuracy": 0.0,
+  "hallucination_rate": 0.0,
+  "n_test": 500,
+  "n_train": 3000,
+  "train_time_min": 11.4,
+  "predicted_vocab": {
+    "Business": 358,
+    "World": 137,
+    "Sports": 5
+  }
+}

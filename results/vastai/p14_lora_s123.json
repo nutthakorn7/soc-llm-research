@@ -1,0 +1,9 @@
+{
+  "paper": "P14",
+  "peft": "LoRA",
+  "seed": 123,
+  "f1": 0.8944,
+  "accuracy": 0.896,
+  "hallucination_rate": 0.0,
+  "train_time_min": 18.9
+}

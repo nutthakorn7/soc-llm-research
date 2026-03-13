@@ -1,0 +1,8 @@
+{
+  "paper": "P9",
+  "method": "DPO",
+  "f1": 0.0,
+  "accuracy": 0.0,
+  "hallucination_rate": 1.0,
+  "train_time_min": 70.4
+}
