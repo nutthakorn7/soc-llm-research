@@ -6,15 +6,16 @@
 
 \begin{document}
 \title{Does Alignment Reduce Hallucination? Comparing SFT and DPO for Label Compliance in SOC Classification}
-\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
+\title{DPO Destroys Label Compliance: Why Alignment Hurts Classification}
+\author{Nutthakorn Chalaemwongwan \\ Department of Computer Engineering, KOSEN-KMITL \\ King Mongkut's Institute of Technology Ladkrabang \\ \texttt{nutthakorn.ch@kmitl.ac.th}}
 \maketitle
 
 \begin{abstract}
 Alignment techniques (DPO, ORPO) are designed to make LLMs follow instructions precisely---but can they eliminate label hallucination in classification? We apply DPO to a model already fine-tuned via SFT for SOC alert classification, using automatically generated preference pairs where correct schema labels are ``chosen'' and hallucinated variants are ``rejected.'' Our results reveal a \textbf{catastrophic failure}: DPO produces F1 = 0.0\% with 100\% hallucination rate---the model degenerates into generating incoherent outputs, completely destroying the classification capability established by SFT. In contrast, the SFT baseline achieves $89.2 \pm 0.7$\% strict F1 (5 seeds) with zero hallucination. We analyze this failure through the lens of \emph{distributional collapse}: DPO's contrastive loss pushes the model away from hallucinated labels so aggressively that it exits the viable classification distribution entirely. When the preference margin between ``Reconnaissance'' and ``Port Scanning'' is narrow (both are semantically related), DPO cannot navigate the fine-grained distinction and instead collapses the output distribution. We compare four paths to perfect compliance: (1)~more SFT data (20K: 100\%), (2)~DPO alignment (catastrophic: 0\%), (3)~reasoning architecture (Phi4-mini: 100\% at \$0.60), and (4)~multi-task format (regularization: +5.7\%). Our finding establishes that alignment is \textbf{not suitable} for label compliance in schema-constrained classification, where the failure mode is vocabulary confusion rather than intent misalignment.
 \end{abstract}
-\begin{IEEEkeywords}
+% Keywords: 
 DPO, alignment, label hallucination, SOC classification, preference optimization, catastrophic failure
-\end{IEEEkeywords}
+
 
 \section{Introduction}
 Supervised fine-tuning (SFT) teaches models \emph{what} to predict but not \emph{how} to express predictions precisely. A model trained on 5K SOC alerts achieves perfect semantic accuracy (normalized F1 = 100\%) while producing hallucinated label variants---it understands the task but expresses labels using pre-training vocabulary rather than the training schema.
@@ -362,4 +363,4 @@ The author declares no conflict of interest.
 \bibitem{tunstall2023} L.~Tunstall et~al., ``Zephyr: Direct Distillation of LM Alignment,'' \emph{arXiv:2310.16944}, 2023.
 \bibitem{ziegler2019} D.~M.~Ziegler et~al., ``Fine-Tuning LMs from Human Preferences,'' \emph{arXiv:1909.08593}, 2019.
 \end{thebibliography}
-\balance\end{document}
+\end{document}
