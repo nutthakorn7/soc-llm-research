@@ -57,7 +57,7 @@ The cost calculation extends beyond training. A production SOC must consider fou
 \item \textbf{API alternative cost}: The cost of using commercial APIs (GPT-4o, Claude) instead.
 \end{enumerate}
 
-We provide the first comprehensive economic analysis of parameter-efficient fine-tuning for SOC alert classification, benchmarking 6 models across all four cost dimensions. Our key findings:
+We provide the first full economic analysis of parameter-efficient fine-tuning for SOC alert classification, benchmarking 6 models across all four cost dimensions. Our key findings:
 \begin{enumerate}
 \item \textbf{Fine-tuning is extremely cheap}: \$0.60--\$3.72 per model, making it 149--181$\times$ cheaper than commercial APIs.
 \item \textbf{Parameter count $\neq$ cost}: The 0.8B model costs 3.7$\times$ more than the 7B model due to architectural overhead.
@@ -72,7 +72,7 @@ The remainder of this paper is organized as follows: Section~II reviews cost-awa
 \section{Related Work}
 
 \subsection{Cost-Aware ML Deployment}
-Cost efficiency in ML has been studied from multiple perspectives. Zheng et~al.~\cite{zheng2022} optimized training cost through spot instance scheduling. Kaplan et~al.~\cite{kaplan2020} established neural scaling laws relating compute to loss. Hoffmann et~al.~\cite{hoffmann2022} (Chinchilla) optimized the compute-data ratio, showing that many models are undertrained relative to their size. FrugalGPT~\cite{chen2023} demonstrated 98\% cost reduction by routing queries across GPT-3.5/4 API tiers based on estimated difficulty. Ong et~al.~\cite{ong2024} proposed RouteLLM for cost-efficient API routing. The Ponemon Institute~\cite{ponemon2023} reported the average data breach costs \$4.45M, establishing the business case for automated SOC classification. None of these works provide a comprehensive TCO model for domain-specific fine-tuning.
+Cost efficiency in ML has been studied from multiple perspectives. Zheng et~al.~\cite{zheng2022} optimized training cost through spot instance scheduling. Kaplan et~al.~\cite{kaplan2020} established neural scaling laws relating compute to loss. Hoffmann et~al.~\cite{hoffmann2022} (Chinchilla) optimized the compute-data ratio, showing that many models are undertrained relative to their size. FrugalGPT~\cite{chen2023} demonstrated 98\% cost reduction by routing queries across GPT-3.5/4 API tiers based on estimated difficulty. Ong et~al.~\cite{ong2024} proposed RouteLLM for cost-efficient API routing. The Ponemon Institute~\cite{ponemon2023} reported the average data breach costs \$4.45M, establishing the business case for automated SOC classification. None of these works provide a detailed TCO model for domain-specific fine-tuning.
 
 \subsection{Parameter-Efficient Fine-Tuning}
 QLoRA~\cite{dettmers2023} cuts GPU memory by 75\% via 4-bit quantization, bringing 7B+ models within reach of a single consumer GPU. LoRA~\cite{hu2022} injects trainable low-rank adapters into frozen weights, keeping $<$1\% of parameters active. Open-weight models like LLaMA~\cite{touvron2023} have made fine-tuning accessible to small teams. Reasoning architectures---Phi-3/Phi-4~\cite{abdin2024} and DeepSeek-R1~\cite{guo2025}---achieve high performance at lower cost by fundamentally changing the cost-quality tradeoff. AdaLoRA~\cite{zhang2023} adaptively allocates rank but does not consider cost-per-F1-point.
@@ -160,7 +160,7 @@ Claude 3.5 Opus & --- & --- & \$672 & $\sim$0.95 & --- & \$163.90 & \\
 \end{figure}
 
 \subsection{The Pareto Frontier}
-The cost-performance landscape reveals a clear Pareto frontier: SVM (\$0, 90.9\%) $\to$ Phi4-mini (\$0.60, 100\%) $\to$ DeepSeek-R1 (\$0.70, 100\%). All other models are Pareto-dominated: they cost more \emph{and} perform worse than at least one frontier model. Notably:
+The cost-performance landscape reveals a clear Pareto frontier: SVM (\$0, 90.9\%) $\to$ Phi4-mini (\$0.60, 100\%) $\to$ DeepSeek-R1 (\$0.70, 100\%). All other models are Pareto-dominated: they cost more \emph{and} perform worse than at least one frontier model. Three patterns stand out:
 \begin{itemize}
 \item \textbf{Phi4-mini dominates} all other LLMs: cheapest training (\$0.60), fastest time (18m), and perfect F1. This is the recommended default.
 \item \textbf{Commercial APIs are dominated}: GPT-4o costs 927$\times$ more than Phi4-mini and achieves \emph{lower} F1 ($\sim$95\% vs.\ 100\%).
@@ -228,7 +228,7 @@ Improving from the SVM baseline (90.9\%) to perfect strict F1 (100\%) costs:
 \item \textbf{GPT-4o ICL}: \$556 / $\sim$4.1 points = \$135.61 per point
 \end{itemize}
 
-Fine-tuning is \textbf{2,055$\times$} more cost-efficient than commercial APIs per F1 point gained over SVM. Moreover, fine-tuned models achieve 100\% strict F1 while ICL achieves only $\sim$95\%, making the comparison even more favorable.
+Fine-tuning is \textbf{2,055$\times$} more cost-efficient than commercial APIs per F1 point gained over SVM. Fine-tuned models achieve 100\% strict F1 while ICL achieves only $\sim$95\%, making the comparison even more favorable.
 
 \subsection{When Is 9.1 Points Worth \$0.60?}
 The marginal value depends on the cost of classification errors. For a SOC processing 100K alerts/day:

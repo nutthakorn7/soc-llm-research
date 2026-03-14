@@ -57,7 +57,7 @@ This paper is organized as follows: Section~II reviews cybersecurity NLP benchma
 \section{Related Work}
 
 \subsection{Cybersecurity NLP Surveys}
-Ferrag et~al.~\cite{ferrag2024} provided the most comprehensive survey of generative AI and LLMs for cybersecurity, covering 6 task categories from threat intelligence to malware analysis, but focused exclusively on model capabilities rather than dataset quality. Motlagh et~al.~\cite{motlagh2024} benchmarked ChatGPT across 5 datasets, observing performance variability (45--92\% F1) that correlates with task complexity---a phenomenon our entropy framework quantifies. Aghaei et~al.~\cite{aghaei2023} introduced SecureBERT, a domain-specific pre-trained model for cybersecurity text. None of these works systematically evaluate the \emph{datasets themselves} for LLM suitability.
+Ferrag et~al.~\cite{ferrag2024} provided the most thorough survey of generative AI and LLMs for cybersecurity, covering 6 task categories from threat intelligence to malware analysis, but focused exclusively on model capabilities rather than dataset quality. Motlagh et~al.~\cite{motlagh2024} benchmarked ChatGPT across 5 datasets, observing performance variability (45--92\% F1) that correlates with task complexity---a phenomenon our entropy framework quantifies. Aghaei et~al.~\cite{aghaei2023} introduced SecureBERT, a domain-specific pre-trained model for cybersecurity text. None of these works systematically evaluate the \emph{datasets themselves} for LLM suitability.
 
 \subsection{Cybersecurity Benchmarks (2024--2025)}
 The past two years have seen a proliferation of cybersecurity benchmarks designed specifically for LLM evaluation:
@@ -68,7 +68,7 @@ The past two years have seen a proliferation of cybersecurity benchmarks designe
 
 \textbf{CyberMetric}~\cite{tihanyi2024}: A Q\&A benchmark evaluating cybersecurity concept understanding. While useful for knowledge assessment, its multiple-choice format limits evaluation of generative capabilities.
 
-\textbf{SecBench}~\cite{liu2024secbench}: A multi-dimensional benchmarking dataset spanning 9 cybersecurity sub-domains. Its scale (10K+ questions) and diversity make it one of the more comprehensive benchmarks.
+\textbf{SecBench}~\cite{liu2024secbench}: A multi-dimensional benchmarking dataset spanning 9 cybersecurity sub-domains. Its scale (10K+ questions) and diversity make it one of the more wide-ranging benchmarks.
 
 \textbf{CS-Eval}~\cite{cseval2024}: A bilingual benchmark with 42 categories organized into knowledge, ability, and application cognitive levels. Its hierarchical structure provides finer-grained difficulty assessment.
 
@@ -82,10 +82,10 @@ A critical gap in all these surveys is the absence of \emph{LLM-specific} diffic
 \subsection{Dataset Difficulty and Complexity}
 Ho and Basu~\cite{ho2002} introduced formal complexity measures for classification based on geometric and statistical properties. Swayamdipta et~al.~\cite{swayamdipta2020} proposed dataset cartography, using training dynamics to identify easy, ambiguous, and hard examples. Ethayarajh et~al.~\cite{ethayarajh2022} critiqued NLP leaderboards for conflating benchmark performance with genuine capability---precisely the problem our grading system addresses.
 
-GLUE~\cite{wang2018glue} and SuperGLUE~\cite{wang2019} established the paradigm of multi-task NLU benchmarks with increasing difficulty. DynaBench~\cite{kiela2021} advocated human-in-the-loop benchmark creation. The HELM framework~\cite{liang2022} introduced holistic evaluation across 42 scenarios. Kapoor and Narayanan~\cite{kapoor2023} demonstrated that data leakage inflates benchmark scores.
+GLUE~\cite{wang2018glue} and SuperGLUE~\cite{wang2019} set the standard for multi-task NLU benchmarks with increasing difficulty. DynaBench~\cite{kiela2021} advocated human-in-the-loop benchmark creation. The HELM framework~\cite{liang2022} introduced holistic evaluation across 42 scenarios. Kapoor and Narayanan~\cite{kapoor2023} demonstrated that data leakage inflates benchmark scores.
 
 \subsection{Fine-Tuning and Evaluation Methods}
-BERT~\cite{devlin2019} established the pre-train/fine-tune paradigm accelerated by the transformer architecture~\cite{vaswani2017}. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable parameter-efficient fine-tuning on consumer hardware. Our companion study~\cite{p3} introduced the strict vs.\ normalized F1 dual-metric framework, revealing that evaluation method choice can mask 25 percentage points of performance difference. Gekhman et~al.~\cite{gekhman2024} showed that fine-tuning on new knowledge paradoxically increases hallucination.
+BERT~\cite{devlin2019} introduced the pre-train/fine-tune approach accelerated by the transformer architecture~\cite{vaswani2017}. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable parameter-efficient fine-tuning on consumer hardware. Our companion study~\cite{p3} introduced the strict vs.\ normalized F1 dual-metric framework, revealing that evaluation method choice can mask 25 percentage points of performance difference. Gekhman et~al.~\cite{gekhman2024} showed that fine-tuning on new knowledge paradoxically increases hallucination.
 
 \textbf{Novelty gap.} No prior work has (1)~provided a 12-dimension difficulty analysis of cybersecurity NLP datasets, (2)~proposed a grading system specifically for LLM suitability, or (3)~demonstrated empirically that most cybersecurity benchmarks are trivially solvable by non-neural methods.
 
@@ -377,7 +377,7 @@ Cybersecurity classification datasets occupy the bottom of the difficulty spectr
 %% ===== EMPIRICAL VALIDATION =====
 \section{Empirical Validation on SALAD}
 
-To validate our grading framework, we present comprehensive results from our companion studies~\cite{p3,p6,p22} on the SALAD dataset (Grade~D).
+To validate our grading framework, we present detailed results from our companion studies~\cite{p3,p6,p22} on the SALAD dataset (Grade~D).
 
 \subsection{LLM Performance on Grade~D Tasks}
 
@@ -453,7 +453,7 @@ Our analysis suggests that many published results on cybersecurity NLP benchmark
 \end{enumerate}
 
 \subsection{Limitations}
-Our analysis has several limitations: (1)~Entropy is computed from label distribution only; conditional entropy $H(Y|X)$ would better capture feature-space difficulty but requires model-specific estimation. (2)~Unique pattern counts are not available for all datasets. (3)~DT/SVM baselines on Q\&A benchmarks (CyberMetric, SecBench, CS-Eval) would require converting free-form answers to classification, which we leave for future work. (4)~Our grading system uses discrete thresholds; a continuous difficulty score might be more nuanced. (5)~The analysis covers 12 datasets; a comprehensive survey would include the 34+ datasets catalogued by Ring et~al.~\cite{ring2019}.
+Our analysis has several limitations: (1)~Entropy is computed from label distribution only; conditional entropy $H(Y|X)$ would better capture feature-space difficulty but requires model-specific estimation. (2)~Unique pattern counts are not available for all datasets. (3)~DT/SVM baselines on Q\&A benchmarks (CyberMetric, SecBench, CS-Eval) would require converting free-form answers to classification, which we leave for future work. (4)~Our grading system uses discrete thresholds; a continuous difficulty score might be more nuanced. (5)~The analysis covers 12 datasets; a full survey would include the 34+ datasets catalogued by Ring et~al.~\cite{ring2019}.
 
 %% ===== CONCLUSION =====
 \section{Conclusion}
@@ -540,13 +540,13 @@ D.~Kiela et~al., ``Dynabench: Rethinking Benchmarking in NLP,'' in \emph{Proc.\ 
 P.~Liang et~al., ``Holistic Evaluation of Language Models,'' \emph{arXiv:2211.09110}, 2022.
 
 \bibitem{liu2024secbench}
-Y.~Liu et~al., ``SecBench: A Comprehensive Multi-Dimensional Benchmarking Dataset for LLMs in Cybersecurity,'' \emph{arXiv:2412.20787}, 2024.
+Y.~Liu et~al., ``SecBench: A Multi-Dimensional Benchmarking Dataset for LLMs in Cybersecurity,'' \emph{arXiv:2412.20787}, 2024.
 
 \bibitem{motlagh2024}
 F.~N.~Motlagh et~al., ``Large Language Models in Cybersecurity: State-of-the-Art,'' \emph{arXiv}, 2024.
 
 \bibitem{moustafa2016}
-N.~Moustafa and J.~Slay, ``UNSW-NB15: A Comprehensive Data Set for NIDS,'' in \emph{Proc.\ MilCIS}, 2015.
+N.~Moustafa and J.~Slay, ``UNSW-NB15: A Large-Scale Data Set for NIDS,'' in \emph{Proc.\ MilCIS}, 2015.
 
 \bibitem{ring2019}
 M.~Ring et~al., ``A Survey of Network-based Intrusion Detection Data Sets,'' \emph{Computers \& Security}, vol.~86, pp.~147--167, 2019.
