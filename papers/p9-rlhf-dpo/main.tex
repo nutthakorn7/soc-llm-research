@@ -10,7 +10,7 @@
 \maketitle
 
 \begin{abstract}
-Alignment techniques (DPO, ORPO) are designed to make LLMs follow instructions precisely---but can they eliminate label hallucination in classification? We apply DPO to a model already fine-tuned via SFT for SOC alert classification, using automatically generated preference pairs where correct schema labels are ``chosen'' and hallucinated variants are ``rejected.'' Our results reveal a \textbf{catastrophic failure}: DPO produces F1 = 0.0\% with 100\% hallucination rate---the model degenerates into generating incoherent outputs, completely destroying the classification capability established by SFT. In contrast, the SFT baseline achieves 88.77\% strict F1 with zero hallucination. We analyze this failure through the lens of \emph{distributional collapse}: DPO's contrastive loss pushes the model away from hallucinated labels so aggressively that it exits the viable classification distribution entirely. When the preference margin between ``Reconnaissance'' and ``Port Scanning'' is narrow (both are semantically related), DPO cannot navigate the fine-grained distinction and instead collapses the output distribution. We compare four paths to perfect compliance: (1)~more SFT data (20K: 100\%), (2)~DPO alignment (catastrophic: 0\%), (3)~reasoning architecture (Phi4-mini: 100\% at \$0.60), and (4)~multi-task format (regularization: +5.7\%). Our finding establishes that alignment is \textbf{not suitable} for label compliance in schema-constrained classification, where the failure mode is vocabulary confusion rather than intent misalignment.
+Alignment techniques (DPO, ORPO) are designed to make LLMs follow instructions precisely---but can they eliminate label hallucination in classification? We apply DPO to a model already fine-tuned via SFT for SOC alert classification, using automatically generated preference pairs where correct schema labels are ``chosen'' and hallucinated variants are ``rejected.'' Our results reveal a \textbf{catastrophic failure}: DPO produces F1 = 0.0\% with 100\% hallucination rate---the model degenerates into generating incoherent outputs, completely destroying the classification capability established by SFT. In contrast, the SFT baseline achieves $89.2 \pm 0.7$\% strict F1 (5 seeds) with zero hallucination. We analyze this failure through the lens of \emph{distributional collapse}: DPO's contrastive loss pushes the model away from hallucinated labels so aggressively that it exits the viable classification distribution entirely. When the preference margin between ``Reconnaissance'' and ``Port Scanning'' is narrow (both are semantically related), DPO cannot navigate the fine-grained distinction and instead collapses the output distribution. We compare four paths to perfect compliance: (1)~more SFT data (20K: 100\%), (2)~DPO alignment (catastrophic: 0\%), (3)~reasoning architecture (Phi4-mini: 100\% at \$0.60), and (4)~multi-task format (regularization: +5.7\%). Our finding establishes that alignment is \textbf{not suitable} for label compliance in schema-constrained classification, where the failure mode is vocabulary confusion rather than intent misalignment.
 \end{abstract}
 \begin{IEEEkeywords}
 DPO, alignment, label hallucination, SOC classification, preference optimization, catastrophic failure
@@ -84,7 +84,7 @@ For each hallucinated prediction, the correct label is ``chosen'' and the halluc
 \toprule
 \textbf{Method} & \textbf{Stage 1} & \textbf{Stage 2} & \textbf{Cost} & \textbf{F1} \\
 \midrule
-SFT (5K) & SFT (5K) & --- & \$0.61 & 88.8\% \\
+SFT (5K) & SFT (5K) & --- & \$0.61 & $89.2 \pm 0.7$\% \\
 SFT (20K) & SFT (20K) & --- & \$4.48 & 100\% \\
 SFT+DPO & SFT (5K) & DPO (5K pref) & \$3.50 & \textbf{0.0\%} \\
 Reasoning & SFT (5K) & --- & \$0.60 & 100\% \\
@@ -106,7 +106,7 @@ Reasoning & SFT (5K) & --- & \$0.60 & 100\% \\
 \toprule
 \textbf{Method} & \textbf{Strict F1} & \textbf{Acc} & \textbf{Halluc Rate} & \textbf{Time} & \textbf{Cost} \\
 \midrule
-SFT (5K) & \textbf{0.888} & 0.888 & 0.0\% & 18.3m & \$0.61 \\
+SFT (5K) & $\mathbf{0.892 \pm 0.007}$ & 0.892 & 0.0\% & 16.3m & \$0.61 \\
 SFT+DPO & 0.000 & 0.000 & 100\% & 70.4m & \$2.35 \\
 \bottomrule
 \end{tabular}
@@ -115,7 +115,7 @@ SFT+DPO & 0.000 & 0.000 & 100\% & 70.4m & \$2.35 \\
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_dpo_collapse.pdf}
-\caption{DPO catastrophic failure. SFT achieves 88.8\% strict F1 with zero hallucination. DPO destroys classification capability entirely: F1 = 0.0\%, hallucination rate = 100\%.}
+\caption{DPO catastrophic failure. SFT achieves $89.2 \pm 0.7$\% strict F1 (5 seeds) with zero hallucination. DPO destroys classification capability entirely: F1 = 0.0\%, hallucination rate = 100\%.}
 \label{fig:collapse}
 \end{figure}
 
@@ -166,7 +166,7 @@ Shellcode & 0.698 & 11 & 3 \\
 \end{tabular}
 \end{table}
 
-The SFT model achieves 88.8\% strict F1 with zero hallucinated label variants---every prediction is a valid schema label. The 814 errors are \emph{misclassifications} (correct vocabulary, wrong category), not vocabulary errors. DPO was tasked with improving accuracy from 88.8\% to 100\%, but instead destroyed it to 0\%.
+The SFT model achieves $89.2 \pm 0.7$\% strict F1 (5 seeds, range 88.4--90.1\%) with zero hallucinated label variants---every prediction is a valid schema label. The remaining errors are \emph{misclassifications} (correct vocabulary, wrong category), not vocabulary errors. DPO was tasked with improving accuracy from 89.2\% to 100\%, but instead destroyed it to 0\%.
 
 \subsection{Preference Pair Quality Assessment}
 
@@ -214,7 +214,7 @@ where $\text{sim}$ is the token-level embedding similarity. High similarity + lo
 \toprule
 \textbf{Path} & \textbf{F1} & \textbf{Cost} & \textbf{Time} & \textbf{Data} & \textbf{Viable?} \\
 \midrule
-SFT (5K) & 88.8\% & \$0.61 & 18m & 5K & Partial \\
+SFT (5K) & $89.2 \pm 0.7$\% & \$0.61 & 16m & 5K & Partial \\
 SFT (20K) & 100\% & \$4.48 & 67m & 20K & \checkmark \\
 SFT+DPO & 0.0\% & \$2.35 & 70m & 5K+5K & $\times$ \\
 Reasoning & 100\% & \$0.60 & 18m & 5K & \checkmark \\
@@ -230,7 +230,7 @@ Multi-task~\cite{p15} & 88.6\% & \$0.61 & 18m & 5K & Partial \\
 \label{fig:paths}
 \end{figure}
 
-The clear winner is \textbf{reasoning architecture} (Phi4-mini): perfect compliance at \$0.60 with only 5K training samples. DPO is the worst option---worse than baseline SFT by 88.8 percentage points.
+The clear winner is \textbf{reasoning architecture} (Phi4-mini): perfect compliance at \$0.60 with only 5K training samples. DPO is the worst option---worse than baseline SFT by 89.2 percentage points.
 
 \section{Discussion}
 
@@ -299,7 +299,7 @@ Our result has implications beyond SOC classification:
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4 (data integrity), 10--12 (strict F1 + failure analysis), 17--18 (100\% hallucination documented), 24 (cost comparison). Fails Items 14--16 (single seed/single $\beta$). Overall: \textbf{21/30 pass}.
 
 \section{Conclusion}
-We present the first application of DPO for label hallucination reduction in classification, discovering catastrophic failure: F1 drops from 88.8\% (SFT) to 0.0\% (SFT+DPO).
+We present the first application of DPO for label hallucination reduction in classification, discovering catastrophic failure: F1 drops from $89.2 \pm 0.7$\% (SFT, 5 seeds) to 0.0\% (SFT+DPO).
 
 \subsection{Key Findings}
 \begin{enumerate}
