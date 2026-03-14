@@ -1,24 +1,44 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance}
 
+\usepackage{lineno}
+
+\journal{Future Generation Computer Systems}
+
 \begin{document}
 \title{Entropy-Aware Cascade: When to Route SOC Alerts from Decision Trees to LLMs}
-\author{
-\IEEEauthorblockN{Nutthakorn Chalaemwongwan}
-\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
-Bangkok, Thailand\\
-nutthakorn.ch@kmitl.ac.th}
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 }
-\maketitle
+\begin{frontmatter}
+
+\begin{highlights}
+\item Entropy-aware cascade reduces LLM calls by up to 80\% on low-entropy tasks.
+\item Decision Tree filters trivial classifications; LLM handles only high-entropy cases.
+\item Cost drops from \$4.48 to \$0.89 with no loss in classification accuracy.
+\item Framework generalizes across cybersecurity, news, emotion, and legal domains.
+\item Task entropy $H(Y)$ is the sole routing criterion --- computable in 30 seconds.
+\end{highlights}
+
+\begin{highlights}
+\item Entropy-aware cascade reduces LLM calls by up to 80\% on low-entropy tasks.
+\item Decision Tree filters trivial classifications; LLM handles only high-entropy cases.
+\item Cost drops from \$4.48 to \$0.89 with no loss in classification accuracy.
+\item Framework generalizes across cybersecurity, news, emotion, and legal domains.
+\item Task entropy $H(Y)$ is the sole routing criterion --- computable in 30 seconds.
+\end{highlights}
 
 \begin{abstract}
 Cascade classifiers route easy cases to cheap models and hard cases to expensive ones---a natural fit for SOC alert classification where LLM inference costs dominate. We implement and evaluate DT$\to$LLM cascades on the SALAD cybersecurity dataset and discover that \textbf{task entropy completely determines cascade utility}. On SALAD ($H=1.24$ bits), the Decision Tree handles 99.9\% of samples with 100\% confidence, rendering the LLM cascade layer dead weight. We formalize this into an entropy-aware cascade policy: if $H(Y)<1.5$ bits, skip the LLM entirely; at $H(Y)=2$--$3$ bits, cascade with $\theta=0.70$--$0.90$ for 30--80\% cost savings; above $H(Y)>5$ bits, deploy LLM-only. Validated across 4 domains spanning $H=1.24$ to 6.16 bits (SALAD, AG~News, GoEmotions, LedGAR), we show that a 30-second entropy calculation predicts cascade utility better than extensive empirical evaluation. Annual cost for a 100K-alert/day SOC drops from \$987 (LLM-only) to \$6 (cascade) with zero F1 loss on low-entropy tasks. We provide a formal cascade utility function (Definition~1) and prove that cascade cost reduction is bounded by $1 - 2^{-H(Y)}$, establishing a theoretical link between information theory and deployment economics.
 \end{abstract}
-\begin{IEEEkeywords}
-cascade classifier, entropy-aware routing, SOC classification, cost optimization, Decision Tree, LLM deployment
-\end{IEEEkeywords}
+\begin{keyword}
+cascade classifier \sep entropy-aware routing \sep SOC classification \sep cost optimization \sep Decision Tree \sep LLM deployment
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -432,5 +452,4 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops
 \bibitem{vsakota2024} Z.~V\v{s}akota et~al., ``Fly-Swat or Cannon? Cost-Effective Language Model Choice via Cascade,'' in \emph{Proc.\ ACL}, 2024.
 \bibitem{wang2023} Z.~Wang et~al., ``Cost-Effective LLM Cascade Inference,'' \emph{arXiv}, 2023.
 \end{thebibliography}
-\balance
 \end{document}

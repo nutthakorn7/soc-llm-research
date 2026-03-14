@@ -1,4 +1,4 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{lmodern}
 
 \usepackage{amsmath,amssymb,amsfonts}
@@ -9,29 +9,48 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{balance}
+
+\usepackage{lineno}
+
+\journal{Information Sciences}
 
 \begin{document}
 
 \title{Task Entropy Predicts LLM Necessity: A Decision Framework for Classifier Selection in Applied Domains}
 
-\author{
-\IEEEauthorblockN{Nutthakorn Chalaemwongwan}
-\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
-Bangkok, Thailand\\
-nutthakorn.ch@kmitl.ac.th}
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 }
 
-\maketitle
+\begin{frontmatter}
+
+\begin{highlights}
+\item Label entropy $H(Y)$ predicts when LLMs outperform traditional ML classifiers.
+\item Traditional ML matches LLMs on tasks with $H < 2$ bits (4 effective classes).
+\item SVM collapses from 90.9\% to 24.3\% as entropy increases from 1.24 to 3.75 bits.
+\item Entropy Decision Function reduces classifier selection from weeks to 30 seconds.
+\item Framework validated across cybersecurity, news, emotion, and legal domains.
+\end{highlights}
+
+\begin{highlights}
+\item Label entropy $H(Y)$ predicts when LLMs outperform traditional ML classifiers.
+\item Traditional ML matches LLMs on tasks with $H < 2$ bits (4 effective classes).
+\item SVM collapses from 90.9\% to 24.3\% as entropy increases from 1.24 to 3.75 bits.
+\item Entropy Decision Function reduces classifier selection from weeks to 30 seconds.
+\item Framework validated across cybersecurity, news, emotion, and legal domains.
+\end{highlights}
 
 \begin{abstract}
 When should practitioners use a large language model instead of a traditional classifier? We propose an entropy-based decision framework that answers this question quantitatively. Across 4 domains spanning label entropy $H(Y)$ from 1.24 to 6.16 bits, we show that traditional ML (Decision Tree, SVM) matches or exceeds LLM performance on low-entropy tasks ($H < 2$ bits) while failing catastrophically on high-entropy tasks ($H > 3$ bits). SVM collapses from 90.9\% ($H=1.24$) to 24.3\% ($H=3.75$)---a 66-point drop explained entirely by entropy. Our framework provides three quantitative predictions validated on SALAD (cybersecurity), AG~News (news), GoEmotions (emotion), and LedGAR (legal): (1) the ML-LLM performance gap as a function of $H(Y)$, (2) the minimum training samples needed for each entropy regime, and (3) the expected hallucination rate. We formalize the Entropy Decision Function (Definition~1) and demonstrate that $H(Y)$ alone---computable in 30 seconds from label frequencies---explains $>$80\% of variance in the ML-LLM gap. The framework reduces classifier selection from weeks of experimentation to a single entropy calculation, saving compute, time, and environmental resources.
 \end{abstract}
 
-\begin{IEEEkeywords}
-task complexity, Shannon entropy, classifier selection, decision framework, LLM evaluation
-\end{IEEEkeywords}
+\begin{keyword}
+task complexity \sep Shannon entropy \sep classifier selection \sep decision framework \sep LLM evaluation
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -431,5 +450,4 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops
 \bibitem{wang2019} A.~Wang et~al., ``SuperGLUE: A Stickier Benchmark for General-Purpose Language Understanding Systems,'' in \emph{Proc.\ NeurIPS}, 2019.
 \end{thebibliography}
 
-\balance
 \end{document}

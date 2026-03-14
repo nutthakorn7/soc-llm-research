@@ -1,19 +1,44 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance,pifont}
 
+\usepackage{lineno}
+
+\journal{Knowledge-Based Systems}
+
 \begin{document}
 \title{Bigger Models Follow Instructions Better: How Model Size Affects Label Hallucination in Fine-Tuned LLMs}
-\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
-\maketitle
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}}
+\begin{frontmatter}
+
+\begin{highlights}
+\item Sub-1B parameter models follow the same scaling and compliance patterns as larger models.
+\item Qwen2.5-0.5B achieves 88.8\% strict F1 --- competitive with 7B+ models on SOC tasks.
+\item Label compliance patterns are architecture-invariant below 1B parameters.
+\item Edge-deployable models enable on-premise SOC classification without cloud dependency.
+\item Training cost under \$1.00 makes sub-1B models practical for resource-constrained teams.
+\end{highlights}
+
+\begin{highlights}
+\item Sub-1B parameter models follow the same scaling and compliance patterns as larger models.
+\item Qwen2.5-0.5B achieves 88.8\% strict F1 --- competitive with 7B+ models on SOC tasks.
+\item Label compliance patterns are architecture-invariant below 1B parameters.
+\item Edge-deployable models enable on-premise SOC classification without cloud dependency.
+\item Training cost under \$1.00 makes sub-1B models practical for resource-constrained teams.
+\end{highlights}
 
 \begin{abstract}
 The conventional wisdom that larger language models produce better results motivates organizations to deploy the biggest model their hardware can support. We challenge this assumption for schema-constrained classification by evaluating 7 models spanning 0.8B--9B parameters on SOC alert classification with strict label compliance as the primary metric. Our central finding: \textbf{model size has near-zero correlation with label compliance} ($R^2 \approx 0.15$). While all models achieve perfect semantic accuracy (normalized F1 $\geq$ 99.9\%), strict F1 varies wildly from 46.1\% (Mistral-7B) to 100\% (DeepSeek-R1-7B, Phi4-mini-3.8B). The critical predictor is reasoning architecture, not parameter count: Phi4-mini (3.8B) achieves perfect compliance while Qwen3-8B (8B) scores only 60.2\%. We identify a \emph{negative knowledge effect} where pre-training on MITRE ATT\&CK taxonomy \emph{hurts} compliance by introducing competing label vocabularies. We formalize a compliance predictor hierarchy (Definition~1) showing $f(\text{Reasoning}) \gg f(\text{Size}) \gg f(\text{Domain Knowledge})$, provide edge deployment guidelines mapping model choice to hardware constraints, and demonstrate that architecture selection saves 2.4$\times$ the parameters compared to brute-force scaling. For practitioners: deploy Phi4-mini (3.8B, 24GB VRAM) for perfect compliance at minimal cost, or SmolLM2 (1.7B, 16GB) with post-processing for sub-24GB devices.
 \end{abstract}
 
-\begin{IEEEkeywords}
-model size, label hallucination, edge deployment, reasoning architecture, SOC classification, small language models
-\end{IEEEkeywords}
+\begin{keyword}
+model size \sep label hallucination \sep edge deployment \sep reasoning architecture \sep SOC classification \sep small language models
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -443,5 +468,4 @@ Computing resources provided by the NSTDA Supercomputer Center (ThaiSC) on the L
 \bibitem{yang2024} A.~Yang et~al., ``Qwen2.5 Technical Report,'' \emph{arXiv:2412.15115}, 2024.
 \bibitem{zhou2023} C.~Zhou et~al., ``LIMA: Less Is More for Alignment,'' in \emph{Proc.\ NeurIPS}, 2023.
 \end{thebibliography}
-\balance
 \end{document}

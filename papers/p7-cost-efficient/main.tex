@@ -1,4 +1,4 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
@@ -8,29 +8,39 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{hyperref}
-\usepackage{balance}
+
+\usepackage{lineno}
+
+\journal{Journal of Information Security and Applications}
 
 \begin{document}
 
+\begin{frontmatter}
+
 \title{\$0.60 Is All You Need: Cost-Efficient LLM Fine-Tuning for SOC Alert Classification}
 
-\author{
-\IEEEauthorblockN{Nutthakorn Chalaemwongwan}
-\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
-Bangkok, Thailand\\
-nutthakorn.ch@kmitl.ac.th}
-}
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 
-\maketitle
+\begin{highlights}
+\item Full label compliance achieved at only \$0.60 using reasoning architectures.
+\item Phi4-mini achieves 100\% strict F1 at 8$\times$ lower cost than data scaling.
+\item Cost-performance Pareto frontier across 11 LLMs and 4 training strategies.
+\item Reasoning models eliminate label hallucination without additional training data.
+\item Practical deployment guidelines for resource-constrained SOC environments.
+\end{highlights}
 
 \begin{abstract}
 Deploying LLMs in Security Operations Centers raises a fundamental cost question: when is fine-tuning worth the investment over traditional ML or commercial APIs? We benchmark 6 fine-tuned LLMs (0.8B--9B parameters) on training cost, inference throughput, and strict label compliance using NVIDIA A100 GPUs. The cheapest model with perfect strict F1 is Phi4-mini at \textbf{\$0.60} (18 minutes). Fine-tuning is 149--181$\times$ cheaper than commercial LLM APIs (GPT-4o: \$556, Claude Opus: \$672 for equivalent 9,851-sample evaluation), while achieving \emph{higher} accuracy. We discover an architecture cost paradox: Qwen3.5-0.8B (smallest model) costs \$2.24 due to visual encoder overhead---3.7$\times$ more than the 7B DeepSeek-R1 at \$0.70. Parameter count is not a reliable cost predictor. Traditional ML baselines (SVM: \$0.00, F1=90.9\%) remain the most cost-efficient option when strict compliance is not required. We propose a hybrid DT$\to$LLM cascade that handles 99.5\% of alerts via Decision Tree, reducing LLM inference to 0.5\% of traffic with zero quality loss. We formalize a Total Cost of Ownership model (Definition~1) showing annual costs of \$6 for a 100K-alert/day SOC with perfect F1---0.003\% of the commercial API alternative. Our four-dimensional cost analysis (training + inference + opportunity + API alternative) provides the first comprehensive economic framework for LLM deployment in SOC automation.
 \end{abstract}
 
-\begin{IEEEkeywords}
-cost efficiency, LLM fine-tuning, SOC classification, QLoRA, parameter-efficient, inference optimization
-\end{IEEEkeywords}
+\begin{keyword}
+cost efficiency \sep LLM fine-tuning \sep SOC classification \sep QLoRA \sep parameter-efficient \sep inference optimization
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -463,5 +473,4 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops
 \bibitem{zheng2022} L.~Zheng et~al., ``Spot-Serving: Cost-Efficient ML Inference on Spot Instances,'' in \emph{Proc.\ OSDI}, 2022.
 \end{thebibliography}
 
-\balance
 \end{document}

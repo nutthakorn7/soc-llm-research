@@ -1,20 +1,45 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx,textcomp,xcolor,booktabs,url,hyperref,balance}
 
+\usepackage{lineno}
+
+\journal{Applied Soft Computing}
+
 \begin{document}
 \title{One Model, Three Tasks: Multi-Task Fine-Tuning Provides Implicit Regularization Against Label Hallucination in SOC Classification}
-\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
-\maketitle
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}}
+\begin{frontmatter}
+
+\begin{highlights}
+\item Multi-task format provides implicit regularization for label compliance (+5.7\% F1).
+\item Single model handles classification, triage, and severity assessment simultaneously.
+\item Format regularization prevents label hallucination without additional training data.
+\item Joint training creates shared representations that improve compliance.
+\item Practical deployment: one model replaces three task-specific classifiers.
+\end{highlights}
+
+\begin{highlights}
+\item Multi-task format provides implicit regularization for label compliance (+5.7\% F1).
+\item Single model handles classification, triage, and severity assessment simultaneously.
+\item Format regularization prevents label hallucination without additional training data.
+\item Joint training creates shared representations that improve compliance.
+\item Practical deployment: one model replaces three task-specific classifiers.
+\end{highlights}
 
 \begin{abstract}
 SOC alert processing requires simultaneous classification, triage, and attack category identification---tasks traditionally handled by separate models or sequential pipelines. We compare multi-task fine-tuning (one model, all dimensions in a single pass) against single-task specialists on Qwen3.5-0.8B using QLoRA across 3 random seeds. Multi-task models match single-task performance on low-entropy dimensions (Classification $H=0.083$, Triage $H=0.834$) and provide \textbf{implicit regularization} on the challenging Attack Category dimension ($H=1.24$): multi-task mean strict F1 = $0.886 \pm 0.053$ vs.\ single-task = $0.829 \pm 0.052$ across 3 seeds. At the most divergent seed (999), multi-task produces 33 errors vs.\ single-task's 1,107---a \textbf{33$\times$ reduction}. We identify \emph{format learning} as the mechanism: the structured output schema $\langle$field: value $|$ field: value$\rangle$ constrains vocabulary selection, suppressing pre-training knowledge bleed-through. We formalize this as Format Regularization (Definition~1) and show it reduces hallucinated label vocabulary by $1.39\times$ on average. Multi-task deployment halves infrastructure complexity (1~model vs.\ 3) and reduces latency (1~inference pass vs.\ 3), with no accuracy penalty on easy tasks and a consistent advantage on hard tasks.
 \end{abstract}
 
-\begin{IEEEkeywords}
-multi-task learning, SOC classification, seed sensitivity, label compliance, implicit regularization, format learning
-\end{IEEEkeywords}
+\begin{keyword}
+multi-task learning \sep SOC classification \sep seed sensitivity \sep label compliance \sep implicit regularization \sep format learning
+\end{keyword}
+
+\end{frontmatter}
 
 %% ===== INTRODUCTION =====
 \section{Introduction}
@@ -394,5 +419,4 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops
 \bibitem{yu2020} T.~Yu et~al., ``Gradient Surgery for Multi-Task Learning,'' in \emph{Proc.\ NeurIPS}, 2020.
 \bibitem{zhang2022} Y.~Zhang and Q.~Yang, ``A Survey on Multi-Task Learning,'' \emph{IEEE TKDE}, vol.~34, no.~12, 2022.
 \end{thebibliography}
-\balance
 \end{document}

@@ -1,18 +1,43 @@
-\documentclass[journal]{IEEEtran}
+\documentclass[review,3p]{elsarticle}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx,textcomp,xcolor,booktabs,multirow,url,hyperref,balance}
 
+\usepackage{lineno}
+
+\journal{Pattern Recognition}
+
 \begin{document}
 \title{LoRA vs.\ OFT: Does Orthogonal Fine-Tuning Reduce Label Hallucination in Security Classification?}
-\author{\IEEEauthorblockN{Nutthakorn Chalaemwongwan}\IEEEauthorblockA{Department of Computer Engineering, KOSEN-KMITL\\ King Mongkut's Institute of Technology Ladkrabang\\ Bangkok, Thailand\\ nutthakorn.ch@kmitl.ac.th}}
-\maketitle
+\author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\ead{nutthakorn.ch@kmitl.ac.th}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}}
+\begin{frontmatter}
+
+\begin{highlights}
+\item First systematic comparison of LoRA vs.\\ OFT adapters for classification compliance.
+\item 5-seed validation reveals adapter-specific variance patterns.
+\item LoRA achieves $90.5 \\pm 1.3$\% strict F1 across 5 random seeds.
+\item Adapter selection methodology for label-compliant fine-tuning.
+\item Both adapters achieve zero hallucination rate on AG News classification.
+\end{highlights}
+
+\begin{highlights}
+\item First systematic comparison of LoRA vs.\\ OFT adapters for classification compliance.
+\item 5-seed validation reveals adapter-specific variance patterns.
+\item LoRA achieves $90.5 \\pm 1.3$\% strict F1 across 5 random seeds.
+\item Adapter selection methodology for label-compliant fine-tuning.
+\item Both adapters achieve zero hallucination rate on AG News classification.
+\end{highlights}
 
 \begin{abstract}
 LoRA adds low-rank weight updates ($W'=W+BA$) while OFT applies orthogonal rotations ($W'=RW$), preserving angular relationships between weight vectors. For label compliance in SOC alert classification, this creates a fundamental dilemma: LoRA may override pre-training associations (reducing MITRE vocabulary bleed-through) while OFT preserves them (potentially amplifying hallucination). We compare both methods on Qwen2.5-0.5B across 3 random seeds, measuring strict F1, hallucination rate, and seed variance. Our results confirm the \textbf{preservation hypothesis}: LoRA achieves mean strict F1 = $0.901 \pm 0.017$ vs.\ OFT's $0.834 \pm 0.098$---a 6.7-point advantage with $5.8\times$ lower variance. At the most divergent seed (123), LoRA achieves 89.4\% while OFT collapses to 71.1\%. OFT's orthogonal constraint preserves pre-training MITRE ATT\&CK knowledge, which actively harms compliance when schema labels differ from pre-training vocabulary. We introduce the \emph{Preservation-Compliance Score} (PCS), a combined metric for PEFT evaluation, and establish that additive updates (LoRA) are strictly superior to rotational updates (OFT) for schema-constrained classification. OFT also costs 1.7$\times$ more and uses 1.2$\times$ more VRAM, making it Pareto-dominated.
 \end{abstract}
-\begin{IEEEkeywords}
-LoRA, OFT, orthogonal fine-tuning, label compliance, PEFT comparison
-\end{IEEEkeywords}
+\begin{keyword}
+LoRA \sep OFT \sep orthogonal fine-tuning \sep label compliance \sep PEFT comparison
+\end{keyword}
+
+\end{frontmatter}
 
 \section{Introduction}
 Parameter-efficient fine-tuning (PEFT) methods adapt pre-trained models by modifying a small subset of parameters. LoRA~\cite{hu2022} and OFT~\cite{qiu2023} represent two philosophically different approaches to this adaptation:
