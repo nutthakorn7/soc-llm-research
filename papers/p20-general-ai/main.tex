@@ -300,12 +300,12 @@ The router approach uses a lightweight classifier (TF-IDF + logistic regression)
 P18~\cite{p18} & Zero-shot class & 0\% accuracy & Retrain w/ class \\
 P20 (this) & Cross-domain & 0\% F1 & Separate model \\
 P9~\cite{p9} & After DPO & 0\% F1 & Discard DPO \\
-P14~\cite{p14} & OFT s123 & 71\% F1 & Switch to LoRA \\
+P14~\cite{p14} & LoRA$\approx$OFT & 90.5\% F1 & Both equivalent \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Fine-tuned LLMs fail at every type of generalization test: novel classes (P18), novel domains (P20), and even post-alignment (P9). The common thread: 0.5B models with QLoRA have insufficient capacity to maintain pre-training knowledge alongside fine-tuned behavior. Only P14's OFT partially preserves pre-training---at the cost of compliance instability.
+Fine-tuned LLMs fail at every type of generalization test: novel classes (P18), novel domains (P20), and even post-alignment (P9). The common thread: 0.5B models with QLoRA have insufficient capacity to maintain pre-training knowledge alongside fine-tuned behavior. P14's OFT matches LoRA ($90.5 \pm 1.3$\% vs.\ $89.2 \pm 0.7$\%, $p = 0.11$), indicating that adapter geometry does not affect compliance.
 
 \subsection{Practical Decision Framework}
 

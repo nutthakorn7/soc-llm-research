@@ -216,12 +216,12 @@ All predictions overestimated transfer capability. We hypothesized that distinct
 P18 (this) & Held-out class & Complete & 0.5B \\
 P20~\cite{p20} & Cross-domain & Complete & 0.5B \\
 P9~\cite{p9} & After DPO & Complete & 0.5B \\
-P14~\cite{p14} & OFT Seed 123 & Partial (10 halluc) & 0.5B \\
+P14~\cite{p14} & LoRA$\approx$OFT & Complete (0 halluc) & 0.5B \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Vocabulary collapse is consistent across 4 independent studies for Qwen2.5-0.5B: the model can only generate labels present in its fine-tuning data. The 10 hallucinated labels in P14's OFT experiment are the sole exception, and they occur precisely because OFT's orthogonal constraint partially preserves pre-training vocabulary.
+Vocabulary collapse is consistent across 4 independent studies for Qwen2.5-0.5B: the model can only generate labels present in its fine-tuning data. P14's updated 5-seed OFT results show zero hallucination across all runs, consistent with this pattern. Both LoRA and OFT achieve complete vocabulary lock-in on 0.5B models.
 
 \section{Discussion}
 
@@ -279,7 +279,7 @@ At 0.5B with rank 64: $\frac{33.6\text{M}}{500\text{M}} = 6.7\%$ $\to$ complete 
 
 \textbf{Single seed}: Seed 42 only. Different initializations may produce slightly different confusion distributions.
 
-\textbf{QLoRA only}: Full fine-tuning adapts all parameters and may produce even more severe vocabulary collapse. OFT (P14) produces less collapse due to orthogonal preservation.
+\textbf{QLoRA only}: Full fine-tuning adapts all parameters and may produce even more severe vocabulary collapse. OFT (P14) produces equivalent collapse to LoRA; both fully constrain vocabulary to fine-tuning labels.
 
 \subsection{Broader Impact}
 Our results have implications beyond news classification:
