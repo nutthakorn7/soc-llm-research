@@ -128,7 +128,7 @@ All training subsets are stratified by attack category to maintain class distrib
 
 \begin{table}[h]
 \centering
-\caption{Training Configuration}
+\caption{Training configuration shared across all scaling experiments: QLoRA, Qwen2.5-0.5B, rank 64, 3 epochs}
 \label{tab:config}
 \begin{tabular}{ll}
 \toprule
@@ -490,7 +490,7 @@ All experiments use publicly available models from HuggingFace with fixed QLoRA 
 
 \begin{table}[h]
 \centering
-\caption{Training Cost by Size (A100 80GB, \$2/hr)}
+\caption{Training cost breakdown by dataset size on A100 80GB at \$2/hr, showing linear cost scaling with samples}
 \label{tab:costscale}
 \begin{tabular}{rrrr}
 \toprule

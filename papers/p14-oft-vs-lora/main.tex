@@ -75,7 +75,7 @@ Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity. The UNSW-NB15 d
 \section{Experimental Setup}
 
 \begin{table}[h]
-\centering\caption{LoRA vs.\ OFT Configuration}
+\centering\caption{LoRA vs.\ OFT experimental configuration: base model, update rules, target modules, seeds, and hardware}
 \label{tab:config}
 \begin{tabular}{lcc}
 \toprule & \textbf{LoRA} & \textbf{OFT} \\
@@ -139,7 +139,7 @@ OFT  & 0.888 & 0.912 & 0.894 & \textbf{0.921} & 0.908 & $\mathbf{0.905 \pm 0.013
 \subsection{Hallucination Analysis}
 
 \begin{table}[h]
-\centering\caption{Hallucination Rate by Method and Seed}
+\centering\caption{Hallucination rate by method and seed: both LoRA and OFT achieve zero off-schema predictions across all 10 runs}
 \label{tab:halluc}
 \begin{tabular}{lcccc}
 \toprule
@@ -156,7 +156,7 @@ Zero hallucination across all 10 runs. On AG News ($H = 2.0$ bits, 4 well-separa
 \subsection{Hypothesis Testing}
 
 \begin{table}[h]
-\centering\caption{Hypothesis Evaluation}
+\centering\caption{Hypothesis evaluation results: H3 (null) confirmed---adapter geometry does not affect label compliance ($p=0.11$)}
 \label{tab:hypothesis}
 \begin{tabular}{lcc}
 \toprule
@@ -174,7 +174,7 @@ H3 is confirmed: the adapter geometry (additive vs.\ rotational) does not signif
 \subsection{Statistical Analysis}
 
 \begin{table}[h]
-\centering\caption{Statistical Summary}
+\centering\caption{Statistical summary of LoRA vs.\ OFT comparison: means, standard deviations, range, and Welch's $t$-test results}
 \label{tab:stats}
 \begin{tabular}{lcc}
 \toprule
@@ -202,7 +202,7 @@ We introduce a reporting metric for PEFT comparisons that accounts for both perf
 \end{equation}
 
 \begin{table}[h]
-\centering\caption{Equivalence-Adjusted Score}
+\centering\caption{Equivalence-Adjusted Score (EAS) combining mean F1 and stability: LoRA achieves higher EAS due to lower variance}
 \label{tab:eas}
 \begin{tabular}{lccc}
 \toprule
@@ -240,7 +240,7 @@ Quantization level & P23~\cite{p23} & None ($\Delta < 1\%$) \\
 
 \subsection{Connection to Companion Studies}
 \begin{table}[h]
-\centering\caption{PEFT Configuration Guidance Across Studies}
+\centering\caption{PEFT configuration guidance synthesized across companion studies: rank, quantization, adapter type, and model size effects}
 \label{tab:cross}
 \begin{tabular}{lll}
 \toprule

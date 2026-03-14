@@ -90,7 +90,7 @@ SOC environments naturally present multi-task scenarios: classification, severit
 \subsection{Model and Training}
 \begin{table}[h]
 \centering
-\caption{Training Configuration}
+\caption{Training configuration for multi-task and single-task experiments: model, LoRA rank, epochs, and data splits}
 \label{tab:config}
 \begin{tabular}{ll}
 \toprule
@@ -116,7 +116,7 @@ The SALAD dataset provides 3 classification dimensions per alert:
 
 \begin{table}[h]
 \centering
-\caption{SALAD Task Dimensions}
+\caption{SALAD task dimensions showing the three classification levels, their class counts, and entropy values}
 \label{tab:dims}
 \begin{tabular}{lcrr}
 \toprule
@@ -259,7 +259,7 @@ Three patterns emerge:
 
 \begin{table}[h]
 \centering
-\caption{Aggregate MT vs.\ ST Comparison}
+\caption{Aggregate multi-task vs.\ single-task comparison across 5 seeds: mean F1, variance, and hallucination rates}
 \label{tab:aggregate}
 \begin{tabular}{lcc}
 \toprule
@@ -302,7 +302,7 @@ Our companion study~\cite{p21} showed that reasoning-trained models (Phi4-mini, 
 
 \begin{table}[h]
 \centering
-\caption{Anti-Hallucination Mechanisms: Spectrum}
+\caption{Anti-hallucination mechanisms across the research spectrum: from prompt engineering to architectural constraints}
 \label{tab:spectrum}
 \begin{tabular}{lcc}
 \toprule
@@ -319,7 +319,7 @@ Reasoning architecture~\cite{p21} & Strong & Reasoning model \\
 
 \begin{table}[h]
 \centering
-\caption{Operational Deployment Comparison}
+\caption{Operational deployment comparison: multi-task reduces model count from 3 to 1 while maintaining compliance}
 \label{tab:deploy}
 \begin{tabular}{lccccc}
 \toprule

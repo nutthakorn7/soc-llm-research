@@ -79,7 +79,7 @@ For each hallucinated prediction, the correct label is ``chosen'' and the halluc
 \subsection{Training Pipeline}
 
 \begin{table}[h]
-\centering\caption{Four Paths to Label Compliance}
+\centering\caption{Four paths to label compliance: SFT, DPO, prompt engineering, and structured output, with their tradeoffs}
 \label{tab:pipeline}
 \begin{tabular}{lccrr}
 \toprule
@@ -101,7 +101,7 @@ Reasoning & SFT (5K) & --- & \$0.60 & 100\% \\
 \subsection{Catastrophic DPO Failure}
 
 \begin{table}[h]
-\centering\caption{SFT vs.\ DPO Results}
+\centering\caption{SFT vs.\ DPO head-to-head comparison: F1, hallucination rate, and compliance across 5 seeds}
 \label{tab:results}
 \begin{tabular}{lccccc}
 \toprule
@@ -125,7 +125,7 @@ SFT+DPO & 0.000 & 0.000 & 100\% & 70.4m & \$2.35 \\
 \subsection{Failure Analysis}
 
 \begin{table}[h]
-\centering\caption{DPO Output Distribution (Sample)}
+\centering\caption{DPO output distribution showing the catastrophic vocabulary collapse where the model fixates on a single label}
 \label{tab:outputs}
 \begin{tabular}{lr}
 \toprule
@@ -147,7 +147,7 @@ The DPO model does not produce \emph{any} valid label---neither correct nor hall
 To understand what DPO destroyed, we examine the SFT model's output quality:
 
 \begin{table}[h]
-\centering\caption{SFT Baseline Per-Class Performance}
+\centering\caption{SFT baseline per-class strict F1 performance across all attack categories, showing class-level variation}
 \label{tab:sft}
 \begin{tabular}{lccr}
 \toprule

@@ -100,7 +100,7 @@ Decision Trees produce calibrated probability estimates via leaf-node class freq
 
 \begin{table}[h]
 \centering
-\caption{DT Confidence Calibration on SALAD}
+\caption{Decision Tree confidence calibration on SALAD, showing the relationship between predicted confidence and actual accuracy}
 \label{tab:calibration}
 \begin{tabular}{ccc}
 \toprule
@@ -130,7 +130,7 @@ Optimal $\theta$ depends on: (1)~the cost ratio $C_\text{LLM}/C_\text{DT}$, (2)~
 
 \begin{table}[h]
 \centering
-\caption{Cascade on SALAD: LLM Adds Zero Value}
+\caption{Cascade results on SALAD: the Decision Tree alone achieves perfect accuracy, making the LLM stage unnecessary}
 \label{tab:salad}
 \begin{tabular}{ccccr}
 \toprule
@@ -163,7 +163,7 @@ To understand why the cascade is unnecessary, we analyze the DT's internal behav
 
 \begin{table}[h]
 \centering
-\caption{DT Diagnostic: Why SALAD is Trivial}
+\caption{Decision Tree diagnostic analysis explaining why SALAD's low entropy ($H=0.083$) makes it trivially separable}
 \label{tab:diagnostic}
 \begin{tabular}{lr}
 \toprule
@@ -234,7 +234,7 @@ We observe a consistent pattern: DT filter rate ($\alpha$) decreases monotonical
 
 \begin{table}[h]
 \centering
-\caption{Entropy vs.\ DT Filter Rate}
+\caption{Relationship between task entropy and Decision Tree filter rate: lower entropy enables higher DT coverage}
 \label{tab:filter}
 \begin{tabular}{lccc}
 \toprule
@@ -255,7 +255,7 @@ Based on our cross-domain analysis, we propose a quantitative cascade policy:
 
 \begin{table}[h]
 \centering
-\caption{Entropy-Based Cascade Decision Framework}
+\caption{Entropy-based cascade decision framework: when to use DT-only, cascade, or LLM-only based on $H(Y)$}
 \label{tab:policy}
 \begin{tabular}{ccp{4cm}}
 \toprule

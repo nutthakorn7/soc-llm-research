@@ -53,7 +53,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 \section{Experimental Setup}
 
 \begin{table}[h]
-\centering\caption{Quantization Configurations}
+\centering\caption{Quantization configurations for 4/8/16-bit experiments: method, VRAM usage, training time, cost, and inference latency}
 \label{tab:config}
 \begin{tabular}{ccccrr}
 \toprule \textbf{Bits} & \textbf{Method} & \textbf{VRAM} & \textbf{Train Time} & \textbf{Cost} & \textbf{Latency} \\
@@ -103,7 +103,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 \subsection{The Capacity-Compliance Hypothesis: Refuted}
 
 \begin{table}[h]
-\centering\caption{Capacity-Compliance: Rank vs.\ Quantization}
+\centering\caption{Capacity-compliance comparison: rank reduction (structural $\mathcal{C}_S$) affects compliance while quantization (representational $\mathcal{C}_R$) does not}
 \label{tab:hypothesis}
 \begin{tabular}{llcc}
 \toprule
@@ -157,7 +157,7 @@ The maximum per-class range across quantization levels is \textbf{0.004}---negli
 \subsection{Operational Metrics}
 
 \begin{table}[h]
-\centering\caption{Operational Comparison}
+\centering\caption{Operational comparison across quantization levels: VRAM, latency, training time, cost, and throughput metrics}
 \label{tab:operational}
 \begin{tabular}{cccccc}
 \toprule

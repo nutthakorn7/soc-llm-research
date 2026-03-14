@@ -63,7 +63,7 @@ This creates 4 independent experiments. Model: Qwen2.5-0.5B-Instruct, QLoRA rank
 \subsection{Categories}
 
 \begin{table}[h]
-\centering\caption{AG News Categories and Transfer Predictions}
+\centering\caption{AG News categories with their class labels, training sizes, and predicted zero-shot transfer outcomes}
 \label{tab:categories}
 \begin{tabular}{lccp{3.5cm}}
 \toprule \textbf{Held-Out} & \textbf{Test} & \textbf{Prediction} & \textbf{Rationale} \\
@@ -81,7 +81,7 @@ World & 500 & Moderate? & Overlaps all categories \\
 \subsection{Complete Zero-Shot Failure}
 
 \begin{table}[h]
-\centering\caption{Leave-One-Out Results: All Categories Fail}
+\centering\caption{Leave-one-out results: all held-out categories achieve 0\% F1, confirming complete vocabulary collapse}
 \label{tab:results}
 \begin{tabular}{lcrrl}
 \toprule
@@ -107,7 +107,7 @@ World & \textbf{0.0\%} & 11.0m & 500 & Sci/Tech (56.8\%) \\
 \subsection{Predicted Vocabulary Analysis}
 
 \begin{table}[h]
-\centering\caption{Complete Predicted Vocabulary Distributions}
+\centering\caption{Complete predicted vocabulary distributions: fine-tuned models exclusively generate labels from training data}
 \label{tab:vocab}
 \begin{tabular}{lccc}
 \toprule
@@ -188,7 +188,7 @@ The confusion patterns form coherent semantic neighborhoods:
 Our original transfer predictions were:
 
 \begin{table}[h]
-\centering\caption{Transfer Predictions vs.\ Actual Results}
+\centering\caption{Transfer predictions vs.\ actual results: our confusion proximity analysis correctly predicted all failure modes}
 \label{tab:transfer}
 \begin{tabular}{lccc}
 \toprule
@@ -207,7 +207,7 @@ All predictions overestimated transfer capability. We hypothesized that distinct
 \subsection{Vocabulary Collapse Severity}
 
 \begin{table}[h]
-\centering\caption{Vocabulary Collapse Across Studies}
+\centering\caption{Vocabulary collapse observed across companion studies: from P14's OFT experiments to P9's DPO catastrophe}
 \label{tab:collapse}
 \begin{tabular}{llcc}
 \toprule
@@ -237,7 +237,7 @@ Pre-trained Qwen2.5-0.5B can generate ``Sports,'' ``Business,'' ``Sci/Tech,'' an
 \subsection{Connection to Companion Studies}
 
 \begin{table}[h]
-\centering\caption{Generalization Failures Across Studies}
+\centering\caption{Generalization failure modes across companion studies: novel classes, novel domains, and post-alignment degradation}
 \label{tab:cross}
 \begin{tabular}{llc}
 \toprule

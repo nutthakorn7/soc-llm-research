@@ -122,7 +122,7 @@ All other parameters held constant: 3 epochs, cosine schedule, batch 8 $\times$ 
 
 \begin{table}[h]
 \centering
-\caption{Trainable Parameters per Rank}
+\caption{Trainable parameters per LoRA rank configuration: from 0.8M (rank 8) to 6.6M (rank 128) on Qwen2.5-0.5B}
 \label{tab:params}
 \begin{tabular}{rrrr}
 \toprule
@@ -220,7 +220,7 @@ This reveals an interaction: higher-capacity configurations are more vulnerable 
 
 \begin{table}[h]
 \centering
-\caption{Rank-32 Performance: A Leakage Artifact}
+\caption{Rank-32 performance analysis before and after data leakage correction: 100\% F1 was a leakage artifact}
 \label{tab:r32}
 \begin{tabular}{lccc}
 \toprule

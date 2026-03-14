@@ -60,7 +60,7 @@ Sun et~al.~\cite{sun2023} compared GPT-4 vs.\ fine-tuned models but not cross-do
 
 \begin{table}[h]
 \centering
-\caption{Cross-Domain Evaluation Suite}
+\caption{Cross-domain evaluation suite: AG News and GoEmotions with their class counts, entropy, and domain characteristics}
 \label{tab:domains}
 \begin{tabular}{llrccc}
 \toprule
@@ -95,7 +95,7 @@ Legal & LedGAR & 100 & 6.21 & .243 & .654 \\
 
 \begin{table}[h]
 \centering
-\caption{In-Domain AG News Results}
+\caption{In-domain AG News results: Qwen2.5-0.5B achieves strong F1 when training and test domains match}
 \label{tab:indomain}
 \begin{tabular}{lcccc}
 \toprule
@@ -190,7 +190,7 @@ This is distinct from P18's vocabulary collapse (held-out labels have zero proba
 
 \begin{table}[h]
 \centering
-\caption{Vocabulary Leakage Classification}
+\caption{Vocabulary leakage classification: categorizing cross-domain errors by whether leaked labels come from source or pre-training}
 \label{tab:leakage}
 \begin{tabular}{lccc}
 \toprule
@@ -217,7 +217,7 @@ The leaked labels cluster into two types: (1)~training labels (Sports, Sci/Tech,
 
 \begin{table}[h]
 \centering
-\caption{Traditional ML Performance by Task Entropy}
+\caption{Traditional ML performance by task entropy: SVM and DT effectiveness degrades as entropy increases}
 \label{tab:entropy}
 \begin{tabular}{lcccr}
 \toprule
@@ -272,7 +272,7 @@ Since fine-tuned models are domain-locked, multi-domain deployment requires a ro
 
 \begin{table}[h]
 \centering
-\caption{Domain Routing Options}
+\caption{Domain routing decision matrix: in-domain fine-tuning, few-shot, or traditional ML based on available resources}
 \label{tab:routing}
 \begin{tabular}{lccc}
 \toprule
