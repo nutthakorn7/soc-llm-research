@@ -36,7 +36,7 @@
 \end{highlights}
 
 \begin{abstract}
-Large language models (LLMs) have achieved remarkable performance across domain-specific classification tasks, with multiple studies reporting near-perfect F1 scores. However, our experience conducting 17 research experiments across cybersecurity, news, emotion, and legal text classification reveals that standard evaluation practices can mask critical issues: label aliasing inflated F1 by up to 44.3\%, data leakage produced entirely spurious ablation patterns, and extreme class imbalance rendered binary classification metrics meaningless. We propose a 30-item reproducibility checklist organized into 9 categories, including a novel 15-step ``Perfect Score Suspicion Protocol'' for verifying anomalously high performance claims. Our checklist is validated against 6 real case studies where standard evaluation practices failed to detect errors ranging from hallucinated sub-category labels to false hyperparameter sensitivity conclusions. The checklist adds only 4--8 hours per paper but prevents publication of misleading results with real-world consequences in cybersecurity, medical, and legal domains.
+Large language models (LLMs) have achieved remarkable performance across domain-specific classification tasks, with multiple studies reporting near-perfect F1 scores. However, our experience conducting 17 research experiments across cybersecurity, news, emotion, and legal text classification reveals that standard evaluation practices can mask critical issues: label aliasing inflated F1 by up to 44.3\%, data leakage produced entirely spurious ablation patterns, and extreme class imbalance rendered binary classification metrics meaningless. We propose a 30-item reproducibility checklist organized into 9 categories, including a 15-step ``Perfect Score Suspicion Protocol'' for verifying anomalously high performance claims. Our checklist is validated against 6 real case studies where standard evaluation practices failed to detect errors ranging from hallucinated sub-category labels to false hyperparameter sensitivity conclusions. The checklist adds only 4--8 hours per paper but prevents publication of misleading results with real-world consequences in cybersecurity, medical, and legal domains.
 \end{abstract}
 
 \begin{keyword}
@@ -79,7 +79,7 @@ The remainder of this paper is organized as follows: Section~II reviews the repr
 \subsection{The Reproducibility Crisis}
 Baker~\cite{baker2016} documented that 70\% of researchers failed to reproduce others' work and 50\% failed to reproduce their own, calling this a ``crisis'' in science. In ML specifically, Pineau et~al.~\cite{pineau2021} proposed reproducibility guidelines subsequently adopted by NeurIPS, ICML, and ICLR as submission checklists. Kapoor and Narayanan~\cite{kapoor2023} demonstrated that data leakage is the primary driver of irreproducible ML results, documenting 329 papers with leakage across 17 scientific fields. Arp et~al.~\cite{arp2022} catalogued critical pitfalls in ML-based security evaluation, including temporal bias, unrealistic base rates, and label inconsistency.
 
-For LLMs, the reproducibility challenge is compounded by: (1)~non-deterministic generation even with fixed seeds (due to GPU parallelism), (2)~extreme prompt sensitivity, (3)~pipeline complexity (tokenizer $\to$ quantization $\to$ generation $\to$ parsing $\to$ evaluation), and (4)~the novel failure mode of \emph{label vocabulary hallucination}.
+For LLMs, the reproducibility challenge is compounded by: (1)~non-deterministic generation even with fixed seeds (due to GPU parallelism), (2)~extreme prompt sensitivity, (3)~pipeline complexity (tokenizer $\to$ quantization $\to$ generation $\to$ parsing $\to$ evaluation), and (4)~the failure mode of \emph{label vocabulary hallucination}.
 
 \subsection{LLM Evaluation Frameworks}
 HELM~\cite{liang2022} provides comprehensive general LLM evaluation across 42 scenarios but is designed for benchmark comparison, not domain-specific fine-tuning validation. Chang et~al.~\cite{chang2024} surveyed evaluation methodologies, identifying metric selection and benchmark design as critical gaps. Dodge et~al.~\cite{dodge2019} advocated reporting experimental variance and confidence intervals, showing that unreported variance masks true model differences. Bouthillier et~al.~\cite{bouthillier2021} demonstrated that accounting for variance in benchmarks changes model rankings in 30\% of cases.
@@ -464,7 +464,7 @@ We present the first evaluation checklist specifically designed for LLM experime
 \item \textbf{Label-hallucination-specific items} (17--20): First checklist to address label vocabulary hallucination, catching the 44.3-point alias inflation.
 \item \textbf{Perfect Score Protocol}: First escalating verification framework with formal definition of ``genuine'' perfect scores (Definition~1).
 \item \textbf{Real-world validation}: Every item linked to a real failure, not hypothetical risks.
-\item \textbf{Comparison with existing frameworks}: 5 novel items not present in Pineau~\cite{pineau2021} or HELM~\cite{liang2022}.
+\item \textbf{Comparison with existing frameworks}: 5 items not present in Pineau~\cite{pineau2021} or HELM~\cite{liang2022}.
 \end{enumerate}
 
 \subsection{Tiered Adoption Guidelines}
