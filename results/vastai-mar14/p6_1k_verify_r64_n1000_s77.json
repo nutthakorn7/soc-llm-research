@@ -1,0 +1,12 @@
+{
+  "prefix": "p6_1k_verify",
+  "seed": 77,
+  "rank": 64,
+  "train_size": 1000,
+  "f1": 0.896,
+  "hallucination_rate": 0.0,
+  "n_halluc": 0,
+  "n_errors": 104,
+  "train_time_min": 3.3,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct"
+}

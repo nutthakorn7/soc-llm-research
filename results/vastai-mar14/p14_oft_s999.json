@@ -1,0 +1,9 @@
+{
+  "paper": "P14",
+  "peft": "OFT",
+  "seed": 999,
+  "f1": 0.9083,
+  "accuracy": 0.909,
+  "hallucination_rate": 0.0,
+  "train_time_min": 17.8
+}

@@ -1,0 +1,11 @@
+{
+  "prefix": "p23_8bit",
+  "seed": 77,
+  "bits": 8,
+  "f1": 0.902,
+  "accuracy": 0.902,
+  "hallucination_rate": 0.0,
+  "train_time_min": 52.1,
+  "n_test": 1000,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct"
+}

@@ -1,0 +1,9 @@
+{
+  "prefix": "p8_ml_svm",
+  "seed": 42,
+  "accuracy": 0.87,
+  "f1_macro": 0.8694,
+  "model": "SVM",
+  "n_train": 5000,
+  "n_test": 1000
+}

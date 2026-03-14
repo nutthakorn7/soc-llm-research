@@ -1,0 +1,12 @@
+{
+  "prefix": "p22_verify",
+  "seed": 77,
+  "rank": 16,
+  "train_size": 5000,
+  "f1": 0.907,
+  "hallucination_rate": 0.0,
+  "n_halluc": 0,
+  "n_errors": 93,
+  "train_time_min": 17.2,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct"
+}

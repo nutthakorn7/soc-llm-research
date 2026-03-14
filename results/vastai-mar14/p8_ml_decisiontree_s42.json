@@ -1,0 +1,9 @@
+{
+  "prefix": "p8_ml_decisiontree",
+  "seed": 42,
+  "accuracy": 0.698,
+  "f1_macro": 0.6967,
+  "model": "DecisionTree",
+  "n_train": 5000,
+  "n_test": 1000
+}
