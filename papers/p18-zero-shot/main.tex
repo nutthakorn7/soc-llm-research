@@ -25,7 +25,7 @@ Classification taxonomies evolve continuously. A news classification system depl
 
 For traditional ML (SVM, Decision Tree), the answer is definitively no---these models can only predict labels from the training set. LLMs offer a unique potential: pre-training on trillions of tokens includes knowledge of virtually every classification label. Can this knowledge survive fine-tuning?
 
-We test this with a controlled leave-one-out protocol on AG News, training on 3 of 4 categories and testing exclusively on the held-out category. The results are unambiguous: \textbf{zero-shot generalization is completely destroyed by fine-tuning}, even for a model that demonstrably knew these labels before fine-tuning.
+We test this with a controlled leave-one-out protocol on AG News, training on 3 of 4 categories and testing exclusively on the held-out category. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation. The results are unambiguous: \textbf{zero-shot generalization is completely destroyed by fine-tuning}, even for a model that demonstrably knew these labels before fine-tuning.
 
 Our contributions:
 \begin{enumerate}

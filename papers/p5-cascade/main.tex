@@ -199,7 +199,7 @@ To validate that entropy predicts cascade utility, we analyze 4 domains spanning
 \textbf{Domain} & $\mathbf{H(Y)}$ & \textbf{DT F1} & \textbf{Uncertain\%} & \textbf{Cascade?} \\
 \midrule
 SALAD & 1.24 & .874 & $<$1\% & No \\
-AG News & 2.00 & .581 & $\sim$15\% & Yes ($\theta$=0.90) \\
+AG News & 2. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.00 & .581 & $\sim$15\% & Yes ($\theta$=0.90) \\
 GoEmotions & 3.75 & .173 & $\sim$60\% & Yes ($\theta$=0.70) \\
 LedGAR & 6.16 & .183 & $\sim$50\% & No (LLM only) \\
 \bottomrule
@@ -389,7 +389,7 @@ The entropy-aware cascade policy generalizes to any classification task with a r
 %% ===== CONCLUSION =====
 \section{Conclusion}
 
-We present the first entropy-aware cascade framework for SOC alert classification, demonstrating that task entropy completely determines cascade utility.
+We present an entropy-aware cascade framework for SOC alert classification, demonstrating that task entropy completely determines cascade utility.
 
 \subsection{Key Findings}
 \begin{enumerate}
