@@ -1,39 +1,34 @@
 \documentclass[11pt]{letter}
 \usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
+\usepackage{url}
 
 \begin{document}
-
-\begin{letter}{
-Editor-in-Chief \\
-Neurocomputing \\
-}
+\begin{letter}{Editor-in-Chief \\ Neural Computing and Applications}
 
 \opening{Dear Editor,}
 
-We submit our manuscript \textbf{``Higher Rank, More Hallucination? How LoRA Capacity Controls Label Compliance in Fine-Tuned LLMs''} for consideration in \emph{Neurocomputing}.
+We submit our manuscript entitled ``Higher Rank, More Hallucination? LoRA Rank Effects on Label Compliance'' for consideration in \textit{Neural Computing and Applications}.
 
-\textbf{Summary.} We investigate how LoRA rank---the primary capacity control in parameter-efficient fine-tuning---affects label compliance. Testing ranks 16, 32, 64, and 128 across three models, we discover a non-monotonic relationship: moderate ranks (32--64) maximize compliance, while both lower and higher ranks degrade it. Higher LoRA rank activates more pre-training knowledge, which paradoxically introduces competing label vocabularies that cause hallucination.
+\textbf{Summary.} This paper presents rank-compliance tradeoff, rank ablation, structural capacity. Our study is part of a systematic investigation into LLM fine-tuning for Security Operations Center (SOC) alert classification, where label compliance---the ability to produce only schema-valid labels---is critical for automated threat detection.
 
 \textbf{Key contributions:}
-\begin{enumerate}
-\item A rank--compliance curve showing non-monotonic behavior: rank 64 outperforms both rank 16 (underfitting) and rank 128 (over-activation).
-\item A formal definition of Rank Sensitivity that quantifies how a model's compliance changes with capacity.
-\item Practical LoRA rank selection guidelines for schema-constrained classification tasks.
-\end{enumerate}
+\begin{itemize}
+\item Rigorous experimental methodology: 5-seed validation, clean zero-overlap data splits, and dual-metric evaluation (strict vs.\ normalized F1).
+\item Practical implications for SOC deployment and reproducible research.
+\item Open-source code and datasets at \url{https://github.com/nutthakorn7/soc-llm-research}.
+\end{itemize}
 
-\textbf{Relevance to Neurocomputing.} LoRA is the dominant method for adapting large neural networks to domain tasks. Our finding that rank selection has non-obvious effects on output compliance provides essential guidance for the Neurocomputing community working on parameter-efficient adaptation.
+\textbf{Scope alignment.} This work addresses NCA's focus on intelligent systems and applications through empirical evaluation of LLM fine-tuning for domain-specific classification.
 
-\textbf{Novelty.} Prior LoRA studies focus on accuracy and convergence speed. We are the first to show that LoRA rank has a direct, non-monotonic effect on label hallucination, and that this effect is model-dependent.
+This manuscript has not been published elsewhere and is not under consideration by another journal. All authors have approved the manuscript.
 
-This manuscript has not been published previously and is not under consideration elsewhere.
+\closing{Sincerely,}
 
-\closing{Respectfully submitted,\\[2em]
-Nutthakorn Chalaemwongwan\\
-Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
+Nutthakorn Chalaemwongwan \\
+Department of Computer Engineering, KOSEN-KMITL \\
+King Mongkut's Institute of Technology Ladkrabang \\
+Bangkok, Thailand \\
 nutthakorn.ch@kmitl.ac.th
-}
 
 \end{letter}
 \end{document}

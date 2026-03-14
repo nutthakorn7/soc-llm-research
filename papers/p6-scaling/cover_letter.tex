@@ -1,39 +1,34 @@
 \documentclass[11pt]{letter}
 \usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
+\usepackage{url}
 
 \begin{document}
-
-\begin{letter}{
-Editor-in-Chief \\
-Expert Systems with Applications \\
-}
+\begin{letter}{Editor-in-Chief \\ Expert Systems with Applications}
 
 \opening{Dear Editor,}
 
-We submit our manuscript \textbf{``1K Labels Is All You Need: Non-Monotonic Scaling Laws for Label Compliance in Fine-Tuned LLMs''} for consideration in \emph{Expert Systems with Applications}.
+We submit our manuscript entitled ``1K Labels Is All You Need: Non-Monotonic Scaling Laws for Label Compliance'' for consideration in \textit{Expert Systems with Applications}.
 
-\textbf{Summary.} We study how training data volume affects label compliance in fine-tuned LLMs for SOC alert classification. We discover a non-monotonic scaling law: increasing training data from 1K to 5K samples \emph{worsens} label compliance before improving at 20K---a ``knowledge activation valley'' where models activate pre-training associations that compete with fine-tuning labels. At 1K samples, Qwen3.5-0.8B achieves near-perfect compliance; at 5K, compliance drops by 40.6 percentage points before recovering.
+\textbf{Summary.} This paper presents non-monotonic scaling, 5K anomaly, label compliance scaling laws. Our study is part of a systematic investigation into LLM fine-tuning for Security Operations Center (SOC) alert classification, where label compliance---the ability to produce only schema-valid labels---is critical for automated threat detection.
 
 \textbf{Key contributions:}
-\begin{enumerate}
-\item Discovery of non-monotonic scaling: strict F1 follows an inverted-U pattern, contradicting the assumption that more data always helps.
-\item A 4-regime scaling framework (cold start $\to$ compliance $\to$ activation valley $\to$ recovery) validated across multiple seeds.
-\item Evidence that semantic accuracy and label compliance scale independently---a finding with implications for all LLM fine-tuning applications.
-\end{enumerate}
+\begin{itemize}
+\item Rigorous experimental methodology: 5-seed validation, clean zero-overlap data splits, and dual-metric evaluation (strict vs.\ normalized F1).
+\item Practical implications for SOC deployment and reproducible research.
+\item Open-source code and datasets at \url{https://github.com/nutthakorn7/soc-llm-research}.
+\end{itemize}
 
-\textbf{Relevance to ESWA.} This work provides directly actionable guidance for practitioners deploying expert systems: selecting training data volume is not a simple ``more is better'' decision. Our scaling framework enables practitioners to predict compliance behavior and avoid the activation valley, directly improving expert system reliability.
+\textbf{Scope alignment.} This work addresses ESWA's focus on intelligent systems and applications through empirical evaluation of LLM fine-tuning for domain-specific classification.
 
-\textbf{Novelty.} While neural scaling laws (Kaplan et al., 2020; Hoffmann et al., 2022) focus on loss and perplexity, no prior work has characterized scaling behavior for label compliance---the gap between what a model \emph{means} and what it \emph{says}.
+This manuscript has not been published elsewhere and is not under consideration by another journal. All authors have approved the manuscript.
 
-This manuscript has not been published previously and is not under consideration elsewhere.
+\closing{Sincerely,}
 
-\closing{Respectfully submitted,\\[2em]
-Nutthakorn Chalaemwongwan\\
-Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
+Nutthakorn Chalaemwongwan \\
+Department of Computer Engineering, KOSEN-KMITL \\
+King Mongkut's Institute of Technology Ladkrabang \\
+Bangkok, Thailand \\
 nutthakorn.ch@kmitl.ac.th
-}
 
 \end{letter}
 \end{document}

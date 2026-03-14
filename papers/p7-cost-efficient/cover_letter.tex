@@ -1,39 +1,34 @@
 \documentclass[11pt]{letter}
 \usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
+\usepackage{url}
 
 \begin{document}
-
-\begin{letter}{
-Editor-in-Chief \\
-IEEE Access \\
-}
+\begin{letter}{Editor-in-Chief \\ Journal of Information Security and Applications}
 
 \opening{Dear Editor,}
 
-We submit our manuscript \textbf{``\$0.60 Is All You Need: Cost-Efficient LLM Fine-Tuning Achieves Perfect SOC Alert Classification''} for consideration in \emph{IEEE Access}.
+We submit our manuscript entitled ``$0.60 Is All You Need: Cost-Efficient LLM Fine-Tuning for SOC'' for consideration in \textit{Journal of Information Security and Applications}.
 
-\textbf{Summary.} We present a cost analysis of LLM fine-tuning for SOC alert classification, revealing that a single \$0.60 training run (4 GPU-minutes on A100) achieves 100\% strict F1. We compare 7 deployment strategies spanning Decision Trees (\$0), fine-tuned LLMs (\$0.50--\$2.24), and commercial APIs (\$200K+/year), showing that the cost-performance landscape contradicts the assumption that larger, more expensive models produce better results.
+\textbf{Summary.} This paper presents cost analysis, $0.60 training cost, Pareto frontier. Our study is part of a systematic investigation into LLM fine-tuning for Security Operations Center (SOC) alert classification, where label compliance---the ability to produce only schema-valid labels---is critical for automated threat detection.
 
 \textbf{Key contributions:}
-\begin{enumerate}
-\item An architecture paradox: SVM (0 parameters) outperforms Mistral-7B (7 billion parameters) on strict F1.
-\item A formal Total Cost of Ownership model covering training, inference, and maintenance.
-\item Evidence that a DT$\to$LLM cascade reduces annual SOC cost by 165$\times$ while maintaining 100\% F1.
-\end{enumerate}
+\begin{itemize}
+\item Rigorous experimental methodology: 5-seed validation, clean zero-overlap data splits, and dual-metric evaluation (strict vs.\ normalized F1).
+\item Practical implications for SOC deployment and reproducible research.
+\item Open-source code and datasets at \url{https://github.com/nutthakorn7/soc-llm-research}.
+\end{itemize}
 
-\textbf{Relevance to IEEE Access.} This work makes LLM-based SOC classification accessible to resource-constrained organizations. The finding that \$0.60 achieves perfect classification---compared to \$200K+ for API-based approaches---has immediate practical value for the broad IEEE Access readership.
+\textbf{Scope alignment.} This work addresses JISA's focus on information security through empirical evaluation of LLM fine-tuning for domain-specific classification.
 
-\textbf{Novelty.} Prior cost analyses focus on training large models from scratch. We are the first to formally model the total cost of ownership for fine-tuned LLM deployment in cybersecurity and to demonstrate that the break-even point against commercial APIs occurs within a single inference run.
+This manuscript has not been published elsewhere and is not under consideration by another journal. All authors have approved the manuscript.
 
-This manuscript has not been published previously and is not under consideration elsewhere.
+\closing{Sincerely,}
 
-\closing{Respectfully submitted,\\[2em]
-Nutthakorn Chalaemwongwan\\
-Department of Computer Engineering, KOSEN-KMITL\\
-King Mongkut's Institute of Technology Ladkrabang\\
+Nutthakorn Chalaemwongwan \\
+Department of Computer Engineering, KOSEN-KMITL \\
+King Mongkut's Institute of Technology Ladkrabang \\
+Bangkok, Thailand \\
 nutthakorn.ch@kmitl.ac.th
-}
 
 \end{letter}
 \end{document}
