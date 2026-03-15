@@ -1,0 +1,12 @@
+{
+  "paper": "p21",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "seed": 77,
+  "f1": 0.9154,
+  "accuracy": 0.916,
+  "hallucination_count": 1,
+  "n_test": 1000,
+  "train_minutes": 121,
+  "source": "recovered_from_colab_screenshot",
+  "domain": "ag_news"
+}

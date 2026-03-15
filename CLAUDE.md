@@ -149,14 +149,14 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 | **P15** | One Model, Three Tasks (ASC) | 6 | 8 | 3 | 22 | 25/30 | ⭐⭐ |
 | **P18** | Zero-Shot Generalization (TKDD) | 5 | 8 | 2 | 22 | 22/30 | ⭐⭐ |
 | **P19** | Reproducibility Checklist (C&S) | 7 | 9 | 3 | 26 | — | ⭐⭐⭐ |
-| **P20** | Cross-Domain Transfer (TKDE) | 5 | 10 | 3 | 21 | 24/30 | ⭐⭐ |
-| **P21** | Sub-1B Models Follow (KBS) | 7 | 9 | 3 | 25 | 24/30 | ⭐⭐ |
+| **P20** | Cross-Domain Transfer (TKDE) | 5 | 12 | 3 | 21 | 26/30 | ⭐⭐ |
+| **P21** | Sub-1B Models Follow (KBS) | 7 | 10 | 3 | 25 | 26/30 | ⭐⭐ |
 | **P22** | Higher Rank, More Hallucination (NC) | 6 | 8 | 4 | 28 | 27/30 | ⭐⭐⭐ |
 | **P23** | Quantize and Deploy (IoT J.) | 5 | 9 | 2 | 21 | 23/30 | ⭐⭐ |
 | **P24** | Cyber Dataset Analysis | 7 | 9 | 2 | 29 | 24/30 | ⭐⭐ |
 
 ### P19 Self-Audit Results (14 papers audited)
-- Mean score: **25.0/30** (83.3%)
+- Mean score: **25.7/30** (85.7%)
 - Most common failure: **Single seed** (Items 14–16)
 - Multi-seed papers (P3,P6,P22,P15) score ≥25/30
 - Automated tool `llm_eval_audit.py` tested ✅

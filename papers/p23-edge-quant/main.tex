@@ -86,7 +86,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 \midrule
 4-bit & $0.894 \pm 0.007$ & 0.884--0.901 & 0 & 5 \\
 8-bit & $\mathbf{0.902 \pm 0.006}$ & 0.896--0.910 & 0 & 5 \\
-16-bit & $0.888$ & --- & 0 & 1 \\
+16-bit & $0.909 \pm 0.011$ & 0.888--0.919 & 0 & 5 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -94,11 +94,11 @@ This distinction is critical: generative hallucination arises from accumulated q
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_quant_compliance.pdf}
-\caption{Quantization has near-zero effect on label compliance. 4-bit ($89.4 \pm 0.7$\%) and 8-bit ($90.2 \pm 0.6$\%) achieve overlapping F1 ranges with zero hallucination across all 10 runs.}
+\caption{Quantization has near-zero effect on label compliance. 4-bit ($89.4 \pm 0.7$\%), 8-bit ($90.2 \pm 0.6$\%), and 16-bit ($90.9 \pm 1.1$\%) achieve overlapping F1 ranges with zero hallucination across all 15 runs.}
 \label{fig:compliance}
 \end{figure}
 
-\textbf{Key finding}: The difference between 4-bit and 8-bit quantization is \textbf{0.8 percentage points} ($p = 0.12$, Welch's $t$-test, n.s.). Both achieve zero hallucinated labels across all seeds. The variance is remarkably low ($\sigma \leq 0.007$), confirming that quantization introduces negligible stochastic effects on compliance.
+\textbf{Key finding}: The difference between 4-bit and 16-bit quantization is \textbf{1.5 percentage points} ($p = 0.06$, Welch's $t$-test, n.s.). All three quantization levels achieve zero hallucinated labels across all 15 runs. The variance is remarkably low ($\sigma \leq 0.011$), confirming that quantization introduces negligible stochastic effects on compliance.
 
 \subsection{The Capacity-Compliance Hypothesis: Refuted}
 
@@ -110,7 +110,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 \textbf{Source} & \textbf{Capacity Type} & \textbf{Affects F1?} & \textbf{Mechanism} \\
 \midrule
 P22: Rank 16$\to$64 & Subspace dim & \textbf{Yes} ($-$16.4 pts) & Update pathways \\
-P23: 4$\to$16 bit & Precision & \textbf{No} ($\pm$0.2 pts) & Representation \\
+P23: 4$\to$16 bit & Precision & \textbf{No} ($\pm$1.5 pts) & Representation \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -289,7 +289,7 @@ Our compliance-neutral finding for Qwen2.5-0.5B predicts that quantization remai
 \item Therefore, the condition $\frac{\Delta}{2} \ll \min|p_i - p_j|$ holds more easily for larger models.
 \end{itemize}
 
-We predict: Qwen2.5-7B at 4-bit will achieve identical F1 to 16-bit ($\sim$91.1\%, from P20 in-domain result), making 4-bit the universal deployment recommendation.
+We predict: Qwen2.5-7B at 4-bit will achieve identical F1 to 16-bit ($\sim$92.0\%, from P20 multi-seed in-domain result), making 4-bit the universal deployment recommendation.
 
 \subsection{Limitations}
 \textbf{Single model}: Qwen2.5-0.5B only. Larger models may show different patterns, though our theoretical analysis predicts they should show the same compliance neutrality or better.

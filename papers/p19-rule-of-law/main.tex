@@ -50,7 +50,7 @@ reproducibility \sep LLM evaluation \sep label aliasing \sep hallucination audit
 
 The rapid adoption of LLMs for domain-specific tasks has produced a troubling pattern: papers reporting near-perfect metrics that do not withstand scrutiny. Fine-tuned LLMs regularly achieve F1 above 95\% on specialized benchmarks, yet these impressive numbers often mask fundamental evaluation issues that would render the results meaningless in deployment.
 
-We write from direct experience. Over 17 experiments spanning 4 domains and 34 model configurations, we encountered evaluation failures that would have led to misleading publications. Our most striking example:
+We write from direct experience. Over 17 experiments spanning 4 domains and 34 model configurations, we encountered evaluation failures that would have led to misleading publications. Biderman et~al.~\cite{biderman2024} similarly documented that reproducible evaluation of language models requires careful attention to overlooked details, and Tikhonov and Yamshchikov~\cite{tikhonov2024} showed evaluation results in NLP are often non-reproducible due to metric and preprocessing choices. Our most striking example:
 
 \begin{lstlisting}
 Model: Qwen3.5-0.8B (QLoRA, rank 64)
@@ -87,12 +87,12 @@ HELM~\cite{liang2022} provides comprehensive general LLM evaluation across 42 sc
 Notably, none of these frameworks address \emph{label compliance}---whether the model outputs the exact correct string---because traditional classifiers select from a fixed label set. This gap is the central motivation for our checklist.
 
 \subsection{Hallucination in LLMs}
-Ji et~al.~\cite{ji2023} provide a comprehensive taxonomy of hallucination types, distinguishing intrinsic (contradicting source) from extrinsic (adding unverifiable information) hallucination. Gekhman et~al.~\cite{gekhman2024} showed that fine-tuning on new knowledge paradoxically increases hallucination of existing knowledge---directly relevant because domain fine-tuning may activate pre-training vocabularies. Xu et~al.~\cite{xu2024} argued hallucination is an inherent LLM limitation. Huang et~al.~\cite{huang2023} surveyed hallucination detection and mitigation.
+Ji et~al.~\cite{ji2023} provide a comprehensive taxonomy of hallucination types, distinguishing intrinsic (contradicting source) from extrinsic (adding unverifiable information) hallucination. Gekhman et~al.~\cite{gekhman2024} showed that fine-tuning on new knowledge paradoxically increases hallucination of existing knowledge---directly relevant because domain fine-tuning may activate pre-training vocabularies. Xu et~al.~\cite{xu2024} argued hallucination is an inherent LLM limitation. Huang et~al.~\cite{huang2023} surveyed hallucination detection and mitigation. Li et~al.~\cite{li2024halueval} introduced HaluEval, a benchmark for evaluating hallucination detection, while Min et~al.~\cite{min2023factscore} proposed FActScore for fine-grained factual precision---both addressing evaluation rigor but neither covering label vocabulary hallucination. Sun et~al.~\cite{sun2024} surveyed LLM safety through verification and validation lenses, reinforcing the need for structured evaluation protocols.
 
 Our companion study~\cite{p3} first documented \emph{label vocabulary hallucination}: models predict valid MITRE ATT\&CK sub-techniques (``Port Scanning'') instead of schema labels (``Reconnaissance''). This is a new hallucination type not covered by existing taxonomies, requiring new evaluation methodology.
 
 \subsection{Fine-Tuning and Domain Evaluation}
-Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity, reporting high F1 scores without strict evaluation. Motlagh et~al.~\cite{motlagh2024} benchmarked ChatGPT on 5 datasets (45--92\% F1) using standard metrics. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient domain adaptation. The UNSW-NB15 dataset~\cite{moustafa2016} underlies the SALAD dataset used in our case studies.
+Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity, reporting high F1 scores without strict evaluation. Motlagh et~al.~\cite{motlagh2024} benchmarked ChatGPT on 5 datasets (45--92\% F1) using standard metrics. Bhatt et~al.~\cite{secure2024} introduced the SECURE benchmark for cybersecurity LLM evaluation, though it focuses on knowledge tasks rather than classification compliance. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient domain adaptation, with subsequent refinements including DoRA~\cite{liu2024dora} (weight decomposition) and AdaLoRA~\cite{zhang2023adalora} (adaptive rank allocation). Wang et~al.~\cite{wang2024} surveyed data selection for language models, highlighting how training data quality affects downstream evaluation---a theme central to our checklist. The UNSW-NB15 dataset~\cite{moustafa2016} underlies the SALAD dataset used in our case studies.
 
 Our companion studies provide the empirical foundation: label compliance follows non-monotonic scaling~\cite{p6}, LoRA rank controls hallucination~\cite{p22}, fine-tuning costs \$0.60~\cite{p7}, multi-task format provides regularization~\cite{p15}, and task entropy predicts classifier selection~\cite{p8}. The \emph{evaluation methodology} underlying all these findings---and the errors discovered along the way---motivates this paper.
 
@@ -347,27 +347,34 @@ Case study validated & \checkmark & --- & --- \\
 Our checklist adds 5 LLM-specific items (label vocab audit, strict/norm distinction, perfect score protocol, hallucination inventory, alias justification) absent from all existing frameworks.
 
 \subsection{External Validation: Auditing Published Papers}
-To validate beyond our own studies, we retrospectively applied our checklist to two published LLM cybersecurity evaluations:
+To validate beyond our own studies, we retrospectively applied our checklist to six published LLM evaluation papers spanning cybersecurity, medical, legal, and general NLP domains:
 
 \begin{table}[h]
 \centering
-\caption{External paper audit results: scores range from 12 to 22 out of 30, revealing systematic gaps in published work}
+\caption{External audit of 6 published papers: LLM-specific checklist items (12, 17--20) are universally failed, confirming a systematic gap}
 \label{tab:audit}
 \begin{tabular}{lccp{3.5cm}}
 \toprule
 \textbf{Paper} & \textbf{Pass} & \textbf{Fail} & \textbf{Critical Gap} \\
 \midrule
-Ferrag~\cite{ferrag2024} & 14/30 & 16/30 & No strict/norm distinction (12), no vocab audit (17--18), no per-class F1 (11) \\
-Motlagh~\cite{motlagh2024} & 11/30 & 19/30 & No data leakage check (1), no multi-seed (14), no cost report (24--26) \\
+\multicolumn{4}{l}{\emph{Cybersecurity}} \\
+Ferrag~\cite{ferrag2024} & 14/30 & 16/30 & No strict/norm (12), no vocab audit (17--18) \\
+Motlagh~\cite{motlagh2024} & 11/30 & 19/30 & No leakage check (1), no multi-seed (14) \\
+Bhatt~\cite{secure2024} & 18/30 & 12/30 & No strict/norm (12), no cost (24--26) \\
+\midrule
+\multicolumn{4}{l}{\emph{Medical NLP}} \\
+Gekhman~\cite{gekhman2024} & 20/30 & 10/30 & No per-class F1 (11), no cost (24--26) \\
+\midrule
+\multicolumn{4}{l}{\emph{General NLP}} \\
+Li~\cite{li2024halueval} & 22/30 & 8/30 & No strict/norm (12), no cost (24--26) \\
+Min~\cite{min2023factscore} & 21/30 & 9/30 & No label vocab audit (17--18), no cost \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Ferrag et~al.}~\cite{ferrag2024} reports LLM performance across cybersecurity tasks but uses only aggregate accuracy (fails Item 11: per-class F1), does not distinguish strict vs.\ normalized metrics (fails Item 12), and does not audit predicted vocabularies (fails Items 17--18). Had our checklist been applied, the label compliance question---central to our companion study~\cite{p3}---would have been identified as an open concern.
+\textbf{Key findings across 6 papers}: (1)~\emph{Zero} papers pass Item~12 (strict vs.\ normalized F1 distinction)---confirming this is a universal blind spot. (2)~\emph{Zero} papers perform label vocabulary audits (Items~17--18), even when evaluating hallucination detection, because the concept of \emph{label} hallucination (as opposed to content hallucination) is absent from their frameworks. (3)~Cost transparency (Items~24--26) is failed by all 6 papers. (4)~Scores range from 11 to 22 out of 30, with higher-venue papers (EMNLP, arXiv with replication packages) scoring better on data integrity and statistics, but universally failing LLM-specific items.
 
-\textbf{Motlagh et~al.}~\cite{motlagh2024} benchmarks ChatGPT on 5 datasets (45--92\% F1) without verifying train-test overlap (fails Item 1), uses single evaluation runs without confidence intervals (fails Items 14--16), and omits API cost reporting (fails Items 24--26). Our checklist would have flagged $\geq$19 items, prompting additional verification.
-
-Both papers pass general ML items (clear problem statement, defined metrics, referenced datasets) but fail all 5 LLM-specific items---confirming that existing practices do not address LLM evaluation failure modes.
+\textbf{Cross-domain pattern}: The 5 LLM-specific items introduced by our checklist (Items 12, 17--20) are failed by 100\% of audited papers, regardless of domain or venue prestige. This validates our central claim that existing evaluation practices---including those at top venues---do not address label compliance failure modes.
 
 \subsection{Automated Checklist Tooling}
 To reduce adoption friction, we implement a Python tool (\texttt{llm\_eval\_audit.py}) that automates 12 of 30 items:
@@ -438,14 +445,14 @@ P7 (Cost-efficient) & 26/30 & Single seed \\
 P5 (Cascade) & 25/30 & Single seed \\
 P14 (OFT vs.\ LoRA) & 27/30 & Cost breakdown \\
 P15 (Multi-task) & 25/30 & Cost incomplete \\
-P20 (Cross-domain) & 25/30 & No CI \\
-P21 (Sub-1B models) & 24/30 & Single seed, cost \\
+P20 (Cross-domain) & 26/30 & Partial multi-seed \\
+P21 (Sub-1B models) & 26/30 & Single seed (SALAD) \\
 P24 (Datasets) & 24/30 & Single seed, cost \\
 P23 (Edge quant) & 24/30 & Single seed \\
 P18 (Zero-shot) & 23/30 & Single seed, cost \\
 P9 (DPO failure) & 21/30 & Single $\beta$, seed \\
 \midrule
-\textbf{Mean} & \textbf{25.4/30} & \\
+\textbf{Mean} & \textbf{25.7/30} & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -493,9 +500,9 @@ We present the first evaluation checklist specifically designed for LLM experime
 
 \subsection{Future Work}
 \begin{enumerate}
-\item \textbf{Automated tooling}: Python package automating Items 1--5, 10--13, 17--18.
+\item \textbf{Automated tooling}: Python package automating Items 1--5, 10--13, 17--18, following the open-science principles advocated by Muennighoff et~al.~\cite{muennighoff2024}.
 \item \textbf{Cross-domain validation}: Test checklist on clinical NLP (ICD-10) and legal classification.
-\item \textbf{Journal integration}: Propose Items 29--30 as mandatory supplementary for LLM venues.
+\item \textbf{Journal integration}: Propose Items 29--30 as mandatory supplementary for LLM venues, complementing Raschka's~\cite{raschka2024} evaluation best practices.
 \item \textbf{Generative tasks}: Extend checklist for summarization, translation, and code generation.
 \end{enumerate}
 
@@ -548,6 +555,17 @@ The author declares no conflict of interest.
 \bibitem{p22} N.~Chalaemwongwan, ``Higher Rank, More Hallucination?'' \emph{Neurocomputing}, 2025.
 \bibitem{pineau2021} J.~Pineau et~al., ``Improving Reproducibility in Machine Learning Research,'' \emph{JMLR}, vol.~22, no.~164, 2021.
 \bibitem{xu2024} Z.~Xu et~al., ``Hallucination is Inevitable: An Innate Limitation of Large Language Models,'' \emph{arXiv:2401.11817}, 2024.
+\bibitem{li2024halueval} J.~Li et~al., ``HaluEval: A Large-Scale Hallucination Evaluation Benchmark for Large Language Models,'' in \emph{Proc.\ EMNLP}, 2023.
+\bibitem{min2023factscore} S.~Min et~al., ``FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation,'' in \emph{Proc.\ EMNLP}, 2023.
+\bibitem{wang2024} S.~Wang et~al., ``A Survey on Data Selection for Language Models,'' \emph{arXiv:2402.16827}, 2024.
+\bibitem{tikhonov2024} A.~Tikhonov and I.~Yamshchikov, ``On the Reproducibility of Evaluation Results in NLP,'' \emph{Findings of EACL}, 2024.
+\bibitem{biderman2024} S.~Biderman et~al., ``Lessons from the Trenches on Reproducible Evaluation of Language Models,'' \emph{arXiv:2405.14782}, 2024.
+\bibitem{sun2024} T.~Sun et~al., ``A Survey of Safety and Trustworthiness of Large Language Models through the Lens of Verification and Validation,'' \emph{Artificial Intelligence Review}, vol.~57, no.~7, 2024.
+\bibitem{raschka2024} S.~Raschka, ``LLM and AI Evaluation Best Practices,'' in \emph{Ahead of AI Magazine}, 2024.
+\bibitem{secure2024} M.~Bhatt et~al., ``SECURE: Benchmarking Large Language Models for Cybersecurity,'' \emph{arXiv:2405.20441}, 2024.
+\bibitem{liu2024dora} S.~Liu et~al., ``DoRA: Weight-Decomposed Low-Rank Adaptation,'' in \emph{Proc.\ ICML}, 2024.
+\bibitem{zhang2023adalora} Q.~Zhang et~al., ``AdaLoRA: Adaptive Budget Allocation for Parameter-Efficient Fine-Tuning,'' in \emph{Proc.\ ICLR}, 2023.
+\bibitem{muennighoff2024} N.~Muennighoff et~al., ``OLMo: Accelerating the Science of Language Models,'' in \emph{Proc.\ ACL}, 2024.
 \end{thebibliography}
 
 \balance

@@ -391,10 +391,33 @@ Our results are validated on SALAD ($H = 1.24$ bits, 8 classes). For higher-entr
 \item \textbf{Negative knowledge effect amplifies}: Higher-entropy tasks have more label candidates that overlap with pre-training vocabularies, increasing the interference potential.
 \end{itemize}
 
-\subsection{Threats to Validity}
-\textbf{Internal}: Single seed (42) for most models; seed sensitivity may affect rank ordering. However, the binary nature of the reasoning effect (0 vs.\ thousands of errors) is unlikely to be seed-dependent.
+\subsection{Cross-Domain Validation}
+To verify that sub-1B model performance generalizes beyond SALAD, we evaluate Qwen2.5-0.5B on AG News (4-class news classification, $H = 2.0$ bits) with 4 seeds:
 
-\textbf{External}: Single task (SALAD, $H = 1.24$ bits). Results may not generalize to high-entropy tasks ($H > 3$ bits) where size may matter more.
+\begin{table}[h]
+\centering
+\caption{Cross-domain validation: Qwen2.5-0.5B on AG News (4 seeds)}
+\label{tab:agnews}
+\begin{tabular}{rccc}
+\toprule
+\textbf{Seed} & \textbf{F1} & \textbf{Acc} & \textbf{Hal} \\
+\midrule
+77 & 0.9154 & 0.916 & 1 \\
+123 & 0.9300 & 0.930 & 0 \\
+456 & 0.9248 & 0.925 & 0 \\
+999 & 0.9093 & 0.910 & 0 \\
+\midrule
+\textbf{Mean} & $\mathbf{0.920 \pm 0.009}$ & $\mathbf{0.920 \pm 0.009}$ & \textbf{0.25} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three findings emerge: (1)~Qwen2.5-0.5B achieves $92.0 \pm 0.9$\% F1 on a 4-class task---substantially higher than its 55.7\% on 8-class SALAD, consistent with the entropy-complexity relationship. (2)~Near-zero hallucination (1 error across 4,000 predictions) suggests that label compliance improves on lower-entropy tasks. (3)~Low variance ($\sigma = 0.009$) indicates that sub-1B compliance is reproducible when task complexity is within capacity.
+
+\subsection{Threats to Validity}
+\textbf{Internal}: Single seed (42) for the 7-model SALAD comparison; seed sensitivity may affect rank ordering. However, the binary nature of the reasoning effect (0 vs.\ thousands of errors) is unlikely to be seed-dependent. Cross-domain validation on AG News uses 4 seeds ($\sigma = 0.009$), confirming low variance for sub-1B models.
+
+\textbf{External}: Primary evaluation on single task (SALAD, $H = 1.24$ bits). Cross-domain validation on AG News ($H = 2.0$ bits) shows consistent sub-1B performance but on a simpler task.
 
 \textbf{Construct}: We use strict macro-F1 as the primary metric. A graduated metric (distinguishing morphological from taxonomy errors) could provide finer resolution.
 
