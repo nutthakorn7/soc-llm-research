@@ -402,20 +402,20 @@ To verify that sub-1B model performance generalizes beyond SALAD, we evaluate Qw
 \toprule
 \textbf{Seed} & \textbf{F1} & \textbf{Acc} & \textbf{Hal} \\
 \midrule
-77 & 0.9154 & 0.916 & 1 \\
-123 & 0.9300 & 0.930 & 0 \\
-456 & 0.9248 & 0.925 & 0 \\
-999 & 0.9093 & 0.910 & 0 \\
+77 & 0.9067 & 0.908 & 0 \\
+123 & 0.8945 & 0.896 & 0 \\
+456 & 0.9207 & 0.921 & 0 \\
+999 & 0.9044 & 0.905 & 0 \\
 \midrule
-\textbf{Mean} & $\mathbf{0.920 \pm 0.009}$ & $\mathbf{0.920 \pm 0.009}$ & \textbf{0.25} \\
+\textbf{Mean} & $\mathbf{0.907 \pm 0.011}$ & $\mathbf{0.907 \pm 0.010}$ & \textbf{0.0} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Three findings emerge: (1)~Qwen2.5-0.5B achieves $92.0 \pm 0.9$\% F1 on a 4-class task---substantially higher than its 55.7\% on 8-class SALAD, consistent with the entropy-complexity relationship. (2)~Near-zero hallucination (1 error across 4,000 predictions) suggests that label compliance improves on lower-entropy tasks. (3)~Low variance ($\sigma = 0.009$) indicates that sub-1B compliance is reproducible when task complexity is within capacity.
+Three findings emerge: (1)~Qwen2.5-0.5B achieves $90.7 \pm 1.1$\% F1 on a 4-class task---substantially higher than its 55.7\% on 8-class SALAD, consistent with the entropy-complexity relationship. (2)~Zero hallucination (0 errors across 4,000 predictions) suggests that label compliance improves on lower-entropy tasks. (3)~Low variance ($\sigma = 0.011$) indicates that sub-1B compliance is reproducible when task complexity is within capacity.
 
 \subsection{Threats to Validity}
-\textbf{Internal}: Single seed (42) for the 7-model SALAD comparison; seed sensitivity may affect rank ordering. However, the binary nature of the reasoning effect (0 vs.\ thousands of errors) is unlikely to be seed-dependent. Cross-domain validation on AG News uses 4 seeds ($\sigma = 0.009$), confirming low variance for sub-1B models.
+\textbf{Internal}: Single seed (42) for the 7-model SALAD comparison; seed sensitivity may affect rank ordering. However, the binary nature of the reasoning effect (0 vs.\ thousands of errors) is unlikely to be seed-dependent. Cross-domain validation on AG News uses 4 seeds ($\sigma = 0.011$), confirming low variance for sub-1B models.
 
 \textbf{External}: Primary evaluation on single task (SALAD, $H = 1.24$ bits). Cross-domain validation on AG News ($H = 2.0$ bits) shows consistent sub-1B performance but on a simpler task.
 

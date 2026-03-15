@@ -1,0 +1,15 @@
+{
+  "paper": "p21",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "seed": 123,
+  "f1": 0.8945,
+  "accuracy": 0.896,
+  "hallucination_count": 0,
+  "n_test": 1000,
+  "train_minutes": 86,
+  "domain": "ag_news",
+  "config": "p23_standardized",
+  "prompt": "Classify this news article. Reply with ONLY the category name.",
+  "max_length": 512,
+  "text_trunc": 400
+}
