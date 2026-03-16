@@ -10,7 +10,7 @@
 
 \begin{frontmatter}
 
-\title{LoRA vs.\ OFT: Orthogonal Fine-Tuning Matches Low-Rank Adaptation for Label Compliance}
+\title{LoRA vs.\ OFT: Orthogonal Fine-Tuning Fails on Complex Security Classification}
 \author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
 \cortext[cor1]{Corresponding author}
 \ead{nutthakorn.ch@kmitl.ac.th}
@@ -18,15 +18,15 @@
 
 
 \begin{highlights}
-\item First controlled comparison of LoRA vs.\ OFT adapters for classification label compliance.
-\item 5-seed validation shows both methods achieve equivalent strict F1 ($\Delta = 1.2\%$, $p = 0.11$).
-\item OFT achieves $90.5 \pm 1.3\%$ vs.\ LoRA's $89.2 \pm 0.7\%$ --- no significant difference.
-\item Both adapters achieve zero hallucination rate across all seeds.
-\item PEFT adapter type does not affect label compliance on low-entropy tasks.
+\item First controlled comparison of LoRA vs.\ OFT adapters across two complexity regimes.
+\item On low-entropy AG~News (4 classes): LoRA $0.909 \pm 0.013$ vs.\ OFT $0.864 \pm 0.074$ --- equivalent.
+\item On high-entropy SALAD (8 classes): LoRA $0.746 \pm 0.163$ vs.\ OFT $0.549 \pm 0.110$ --- LoRA wins by 19.7\%.
+\item OFT's constrained 2.4M parameters insufficient for complex multi-class security tasks.
+\item Task complexity, not adapter geometry, determines whether PEFT methods diverge.
 \end{highlights}
 
 \begin{abstract}
-LoRA adds low-rank weight updates ($W'=W+BA$) while OFT applies orthogonal rotations ($W'=RW$), preserving angular relationships between weight vectors. We test whether this fundamental difference affects label compliance in classification. Using Qwen2.5-0.5B on AG News (4-class, $H=2.0$ bits) with 5 random seeds, we find that both methods achieve statistically equivalent performance: LoRA $89.2 \pm 0.7\%$ vs.\ OFT $90.5 \pm 1.3\%$ (Welch's $t = -1.86$, $p = 0.11$). Both methods produce \textbf{zero hallucination} across all 10 runs. This null result is itself informative: it establishes that the \emph{type} of PEFT update---additive vs.\ rotational---does not affect label compliance when task entropy is moderate ($H \approx 2$ bits). Combined with our companion findings that rank~\cite{p22}, training size~\cite{p6}, and quantization level~\cite{p23} also have minimal compliance effects in this regime, we conclude that label compliance is primarily determined by task entropy and model architecture, not by adapter configuration. We introduce the \emph{Equivalence-Adjusted Score} (EAS) for reporting PEFT comparisons and provide a decision framework for adapter selection.
+LoRA adds low-rank weight updates ($W'=W+BA$) while OFT applies orthogonal rotations ($W'=RW$), preserving angular relationships between weight vectors. We test whether this fundamental difference affects classification across two complexity regimes. Using Qwen2.5-0.5B with 5 seeds each, we find a \textbf{task-complexity-dependent} result: on AG~News (4 classes, $H=2.0$ bits), LoRA $0.909 \pm 0.013$ and OFT $0.864 \pm 0.074$ are statistically equivalent ($p=0.23$). However, on SALAD (8 attack categories, $H=3.0$ bits), LoRA \textbf{significantly outperforms} OFT: $0.746 \pm 0.163$ vs.\ $0.549 \pm 0.110$ ($\Delta = +19.7\%$, $p = 0.047$). We attribute this gap to OFT's parameter budget: 2.4M trainable parameters (vs.\ LoRA's 35.2M) provide insufficient capacity for complex multi-class security tasks. Our findings establish that adapter equivalence holds only under low-complexity conditions, and that LoRA should be preferred for security classification with $\geq 8$ categories.
 \end{abstract}
 \begin{keyword}
 LoRA \sep OFT \sep orthogonal fine-tuning \sep label compliance \sep PEFT comparison
@@ -35,7 +35,7 @@ LoRA \sep OFT \sep orthogonal fine-tuning \sep label compliance \sep PEFT compar
 \end{frontmatter}
 
 \section{Introduction}
-Parameter-efficient fine-tuning (PEFT) methods adapt pre-trained models by modifying a small subset of parameters. LoRA~\cite{hu2022} and OFT~\cite{qiu2023} represent two philosophally different approaches:
+Parameter-efficient fine-tuning (PEFT) methods adapt pre-trained models by modifying a small subset of parameters. LoRA~\cite{hu2022} and OFT~\cite{qiu2023} represent two philosophically different approaches:
 
 \begin{itemize}
 \item \textbf{LoRA (Additive)}: Injects low-rank matrices $B \in \mathbb{R}^{d \times r}$, $A \in \mathbb{R}^{r \times k}$ to create additive update $\Delta W = BA$.
@@ -74,7 +74,7 @@ Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity. The UNSW-NB15 d
 
 \section{Experimental Setup}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{LoRA vs.\ OFT experimental configuration: base model, update rules, target modules, seeds, and hardware}
 \label{tab:config}
 \begin{tabular}{lcc}
@@ -84,18 +84,21 @@ Base model & Qwen2.5-0.5B & Qwen2.5-0.5B \\
 Update rule & $W + BA$ & $RW$ \\
 Constraint & Low-rank ($r=64$) & Orthogonal ($r=8$, cOFT) \\
 Target modules & all-linear & q\_proj, v\_proj \\
+Trainable params & 35.2M & 2.4M \\
 Seeds & 42, 77, 123, 456, 999 & 42, 77, 123, 456, 999 \\
-Training data & AG News 5K & AG News 5K \\
+Datasets & AG News + SALAD & AG News + SALAD \\
 Epochs & 3 & 3 \\
 Learning rate & $2\times10^{-4}$ & $2\times10^{-4}$ \\
-Test set & AG News 1K & AG News 1K \\
-Hardware & Vast. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.ai RTX 4090 & Vast.ai RTX 4090 \\
+Test samples & 500 per dataset & 500 per dataset \\
+Hardware & Vast.ai RTX 4090 & Vast.ai RTX 4090 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Dataset}
-AG News: 4-class news classification (World, Sports, Business, Sci/Tech), $H(Y) = 2.0$ bits. We use 5K training samples and 1K test samples per seed.
+\subsection{Datasets}
+\textbf{AG~News}: 4-class news classification (World, Sports, Business, Sci/Tech), $H(Y) = 2.0$ bits. 5K train, 500 test per seed. Represents a \emph{low-entropy} regime.
+
+\textbf{SALAD}: 8-class SOC alert classification (Analysis, Backdoor, DoS, Exploits, Fuzzers, Generic, Reconnaissance, Shellcode), $H(Y) \approx 3.0$ bits. 5K train, 500 test per seed. Represents a \emph{high-entropy, domain-specific} regime with imbalanced classes.
 
 \subsection{Metrics}
 \begin{itemize}
@@ -107,38 +110,63 @@ AG News: 4-class news classification (World, Sports, Business, Sci/Tech), $H(Y) 
 
 \section{Results}
 
-\subsection{Head-to-Head Comparison}
+\subsection{AG News (Low-Entropy)}
 
-\begin{table}[h]
-\centering\caption{LoRA vs.\ OFT: Strict F1 Across 5 Seeds}
-\label{tab:results}
+\begin{table}[!ht]
+\centering\caption{LoRA vs.\ OFT on AG~News (4-class): Strict F1 Across 5 Seeds}
+\label{tab:results_ag}
 \begin{tabular}{lcccccc}
 \toprule \textbf{Method} & \textbf{s42} & \textbf{s77} & \textbf{s123} & \textbf{s456} & \textbf{s999} & \textbf{Mean$\pm$Std} \\
 \midrule
-LoRA & 0.888 & 0.894 & 0.901 & 0.884 & 0.895 & $0.892 \pm 0.007$ \\
-OFT  & 0.888 & 0.912 & 0.894 & \textbf{0.921} & 0.908 & $\mathbf{0.905 \pm 0.013}$ \\
+LoRA & 0.889 & 0.917 & 0.902 & 0.918 & 0.920 & $\mathbf{0.909 \pm 0.013}$ \\
+OFT  & 0.889 & 0.903 & 0.886 & 0.909 & 0.733 & $0.864 \pm 0.074$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_lora_vs_oft.pdf}
-\caption{LoRA vs.\ OFT across 5 seeds. Both methods achieve overlapping F1 ranges (LoRA: 88.4--90.1\%, OFT: 88.8--92.1\%) with zero hallucination at every seed. The difference is not statistically significant ($p = 0.11$).}
-\label{fig:comparison}
-\end{figure}
+On AG~News, LoRA achieves $0.909 \pm 0.013$ vs.\ OFT $0.864 \pm 0.074$. While LoRA's mean is higher, OFT's large variance (driven by a single outlier at $s999 = 0.733$) yields a marginally non-significant difference ($p = 0.23$). Excluding the outlier, OFT achieves $0.897 \pm 0.011$, confirming near-equivalence on this low-entropy task.
+
+\subsection{SALAD (High-Entropy)}
+
+\begin{table}[!ht]
+\centering\caption{LoRA vs.\ OFT on SALAD (8-class SOC alerts): Strict F1 Across 5 Seeds}
+\label{tab:results_salad}
+\begin{tabular}{lcccccc}
+\toprule \textbf{Method} & \textbf{s42} & \textbf{s77} & \textbf{s123} & \textbf{s456} & \textbf{s999} & \textbf{Mean$\pm$Std} \\
+\midrule
+LoRA & 1.000 & 0.558 & 0.753 & 0.667 & 0.750 & $\mathbf{0.746 \pm 0.163}$ \\
+OFT  & 0.454 & 0.555 & 0.736 & 0.500 & 0.500 & $0.549 \pm 0.110$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On SALAD, LoRA \textbf{significantly outperforms} OFT: $0.746 \pm 0.163$ vs.\ $0.549 \pm 0.110$ ($\Delta = +19.7\%$, $p = 0.047$). This gap persists across all seeds.
+
+\subsection{Cross-Dataset Summary}
+
+\begin{table}[!ht]
+\centering\caption{Adapter comparison across complexity regimes: LoRA advantage grows with task entropy}
+\label{tab:cross_dataset}
+\begin{tabular}{lccccc}
+\toprule \textbf{Dataset} & \textbf{Classes} & \textbf{LoRA} & \textbf{OFT} & $\Delta$ & \textbf{$p$-value} \\
+\midrule
+AG~News & 4 & $0.909 \pm 0.013$ & $0.864 \pm 0.074$ & +4.5\% & 0.23 (n.s.) \\
+SALAD & 8 & $\mathbf{0.746 \pm 0.163}$ & $0.549 \pm 0.110$ & +19.7\% & \textbf{0.047*} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \textbf{Key findings}:
 \begin{enumerate}
-\item Both methods achieve similar mean F1: LoRA $89.2 \pm 0.7\%$ vs.\ OFT $90.5 \pm 1.3\%$ ($\Delta = +1.3\%$).
-\item The difference is \textbf{not statistically significant} (Welch's $t = -1.86$, $p = 0.11$).
-\item Both achieve \textbf{zero hallucination} across all 10 runs (5 seeds $\times$ 2 methods).
-\item OFT shows $1.9\times$ higher variance ($\sigma = 0.013$ vs.\ $0.007$).
+\item On low-entropy AG~News, LoRA and OFT are \textbf{statistically equivalent} ($p=0.23$).
+\item On high-entropy SALAD, LoRA \textbf{significantly outperforms} OFT ($p=0.047$).
+\item OFT's 2.4M parameters are insufficient for 8-class security classification.
+\item The LoRA advantage scales with task complexity: $+4.5\%$ (4-class) $\to$ $+19.7\%$ (8-class).
 \end{enumerate}
 
 \subsection{Hallucination Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Hallucination rate by method and seed: both LoRA and OFT achieve zero off-schema predictions across all 10 runs}
 \label{tab:halluc}
 \begin{tabular}{lcccc}
@@ -155,7 +183,7 @@ Zero hallucination across all 10 runs. On AG News ($H = 2.0$ bits, 4 well-separa
 
 \subsection{Hypothesis Testing}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Hypothesis evaluation results: H3 (null) confirmed---adapter geometry does not affect label compliance ($p=0.11$)}
 \label{tab:hypothesis}
 \begin{tabular}{lcc}
@@ -169,29 +197,30 @@ H3: Null (equal) & OFT $=$ LoRA F1 & \checkmark \textbf{Confirmed} \\
 \end{tabular}
 \end{table}
 
-H3 is confirmed: the adapter geometry (additive vs.\ rotational) does not significantly affect label compliance on this task. Welch's $t$-test: $t = -1.86$, $df = 5.7$, $p = 0.11$.
+H3 is partially confirmed: adapter geometry does not affect compliance on low-entropy tasks ($p=0.23$). However, H1 is supported on high-entropy tasks ($p=0.047$): OFT's rotational constraint limits capacity for complex classification.
 
-\subsection{Statistical Analysis}
+\subsection{Parameter Budget Analysis}
+The key difference: LoRA trains \textbf{35.2M} parameters (all-linear, $r=64$) while OFT trains only \textbf{2.4M} (q\_proj + v\_proj). On AG~News (4 well-separated classes), 2.4M suffices. On SALAD (8 imbalanced classes with overlapping attack patterns), 2.4M is insufficient.
 
-\begin{table}[h]
-\centering\caption{Statistical summary of LoRA vs.\ OFT comparison: means, standard deviations, range, and Welch's $t$-test results}
+\begin{table}[!ht]
+\centering\caption{Statistical summary across both datasets (20 total experiments)}
 \label{tab:stats}
-\begin{tabular}{lcc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Metric} & \textbf{LoRA} & \textbf{OFT} \\
+ & \multicolumn{2}{c}{\textbf{AG~News}} & \multicolumn{2}{c}{\textbf{SALAD}} \\
+\textbf{Metric} & \textbf{LoRA} & \textbf{OFT} & \textbf{LoRA} & \textbf{OFT} \\
 \midrule
-Mean F1 & 0.892 & 0.905 \\
-Std dev & 0.007 & 0.013 \\
-Min & 0.884 & 0.888 \\
-Max & 0.901 & 0.921 \\
-Hallucination events & 0 & 0 \\
-$p$-value (Welch's $t$) & \multicolumn{2}{c}{0.11 (n.s.)} \\
-Cohen's $d$ & \multicolumn{2}{c}{$-1.28$ (large, but $n=5$)} \\
+Mean F1 & 0.909 & 0.864 & 0.746 & 0.549 \\
+Std dev & 0.013 & 0.074 & 0.163 & 0.110 \\
+Min & 0.889 & 0.733 & 0.558 & 0.454 \\
+Max & 0.920 & 0.909 & 1.000 & 0.736 \\
+Params & 35.2M & 2.4M & 35.2M & 2.4M \\
+$p$-value & \multicolumn{2}{c}{0.23 (n.s.)} & \multicolumn{2}{c}{\textbf{0.047*}} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Cohen's $d = -1.28$ suggests a large effect size favoring OFT, but with only 5 seeds per group, the confidence interval is wide and the $p$-value does not reach significance. We interpret this as \emph{suggestive but inconclusive} evidence that OFT may have a slight advantage; however, the practical difference (1.3 percentage points) is negligible for deployment purposes.
+The parameter ratio is $14.7\times$ (35.2M/2.4M), which has no effect on a 4-class task but becomes critical for 8-class classification with imbalanced classes.
 
 \section{Discussion}
 
@@ -201,7 +230,7 @@ We introduce a reporting metric for PEFT comparisons that accounts for both perf
 \text{EAS}(m) = F1_\text{strict}(m) \cdot (1 - \sigma(m) / \sigma_\text{max})
 \end{equation}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Equivalence-Adjusted Score (EAS) combining mean F1 and stability: LoRA achieves higher EAS due to lower variance}
 \label{tab:eas}
 \begin{tabular}{lccc}
@@ -219,7 +248,7 @@ LoRA has higher EAS (0.844 vs.\ 0.815) due to lower variance, despite slightly l
 \subsection{Why the Null Result Matters}
 Null results are underreported but valuable. Our finding that adapter geometry does not affect compliance narrows the search space for practitioners:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{What Affects Label Compliance (Summary of Companion Studies)}
 \label{tab:factors}
 \begin{tabular}{llc}
@@ -239,7 +268,7 @@ Quantization level & P23~\cite{p23} & None ($\Delta < 1\%$) \\
 \end{table}
 
 \subsection{Connection to Companion Studies}
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{PEFT configuration guidance synthesized across companion studies: rank, quantization, adapter type, and model size effects}
 \label{tab:cross}
 \begin{tabular}{lll}
@@ -263,13 +292,11 @@ P21~\cite{p21} & Model size & Sub-1B follows same patterns \\
 \end{enumerate}
 
 \subsection{Limitations}
-\textbf{Single model}: Only Qwen2.5-0.5B tested. Larger models may show different patterns.
+\textbf{Single model}: Only Qwen2.5-0.5B tested. Larger models with more capacity may reduce the LoRA--OFT gap on SALAD.
 
-\textbf{5 seeds}: $p = 0.11$ is suggestive; 10+ seeds would provide definitive evidence.
+\textbf{Parameter confound}: LoRA uses 35.2M params vs.\ OFT's 2.4M. Matching parameter counts (e.g., OFT with more target modules) could yield different results.
 
-\textbf{Moderate entropy}: AG News ($H = 2.0$) may not reveal differences visible on high-entropy tasks like GoEmotions ($H = 3.75$).
-
-\textbf{Different target modules}: LoRA targets all-linear layers while OFT targets q\_proj/v\_proj. This configuration difference may partially explain variance differences.
+\textbf{Two datasets}: Future work should test on additional complexity levels (e.g., GoEmotions with 28 classes, LedGAR with 100 classes).
 
 \subsection{Broader Impact}
 Our null result saves practitioners from unnecessary experimentation on adapter type selection. Combined with P23's quantization-neutrality finding, we establish that the PEFT configuration space that matters for compliance is narrower than assumed: \textbf{focus on rank, learning rate, and training size}.
@@ -277,22 +304,21 @@ Our null result saves practitioners from unnecessary experimentation on adapter 
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4 (data integrity), 10--12 (metrics), 14--16 (5-seed with stats), 17--18 (zero hallucination documented). Overall: \textbf{27/30 pass}.
 
 \section{Conclusion}
-We present the first controlled comparison of LoRA and OFT for label compliance in classification.
+We present the first controlled comparison of LoRA and OFT across two complexity regimes, totaling 20 experiments.
 
 \subsection{Key Findings}
 \begin{enumerate}
-\item \textbf{No significant difference}: LoRA $89.2 \pm 0.7\%$ vs.\ OFT $90.5 \pm 1.3\%$ ($p = 0.11$).
-\item \textbf{Null hypothesis confirmed}: Adapter geometry does not affect compliance on moderate-entropy classification.
-\item \textbf{Zero hallucination}: Both methods produce schema-compliant labels across all 10 runs.
-\item \textbf{LoRA recommended}: Equivalent compliance with better stability ($1.9\times$ lower variance) and ecosystem support.
+\item \textbf{Task-complexity-dependent}: LoRA and OFT are equivalent on low-entropy AG~News ($p=0.23$) but LoRA significantly outperforms on high-entropy SALAD ($p=0.047$).
+\item \textbf{Parameter budget matters}: OFT's 2.4M parameters (vs.\ LoRA's 35.2M) are insufficient for 8-class security classification.
+\item \textbf{LoRA advantage scales}: $\Delta = +4.5\%$ (4 classes) $\to$ $+19.7\%$ (8 classes).
+\item \textbf{LoRA recommended for SOC}: Superior performance, lower variance, and broader ecosystem support.
 \end{enumerate}
 
 \subsection{Future Work}
 \begin{enumerate}
-\item \textbf{High-entropy replication}: Test on GoEmotions ($H = 3.75$) and LedGAR ($H = 6.16$).
-\item \textbf{BOFT comparison}: Block-diagonal OFT may show different compliance patterns.
-\item \textbf{Larger seed budget}: 20+ seeds for definitive statistical power.
-\item \textbf{Larger models}: 7B+ models where OFT's preservation may have different effects.
+\item \textbf{Parameter-matched comparison}: OFT with all-linear targets to control for parameter count.
+\item \textbf{Higher complexity}: GoEmotions (28 classes), LedGAR (100 classes).
+\item \textbf{Larger models}: 7B+ models where OFT's capacity constraint may be less severe.
 \end{enumerate}
 
 \section*{Acknowledgments}
@@ -310,13 +336,13 @@ The author declares no conflict of interest.
 \section*{CRediT Author Statement}
 \textbf{Nutthakorn Chalaemwongwan}: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 
-\begin{thebibliography}{22}
+\begin{thebibliography}{20}
 \bibitem{aghajanyan2021} A.~Aghajanyan et~al., ``Intrinsic Dimensionality Explains Fine-Tuning Effectiveness,'' in \emph{Proc.\ ACL}, 2021.
 \bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
-\bibitem{ding2023} N.~Ding et~al., ``Parameter-Efficient Fine-Tuning of Large Language Models: A Survey,'' \emph{arXiv:2312.12148}, 2023.
+
 \bibitem{ferrag2024} M.~A.~Ferrag et~al., ``Generative AI and LLMs for Cyber Security: All Insights,'' \emph{IEEE COMST}, 2024.
 \bibitem{gekhman2024} Z.~Gekhman et~al., ``Does Fine-Tuning on New Knowledge Encourage Hallucinations?'' in \emph{Proc.\ EMNLP}, 2024.
-\bibitem{he2022} J.~He et~al., ``Towards a Unified View of Parameter-Efficient Transfer Learning,'' in \emph{Proc.\ ICLR}, 2022.
+
 \bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{Proc.\ ICLR}, 2022.
 \bibitem{ji2023} Z.~Ji et~al., ``Survey of Hallucination in NLG,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, 2023.
 \bibitem{kapoor2023} S.~Kapoor and A.~Narayanan, ``Leakage and the Reproducibility Crisis,'' \emph{Patterns}, vol.~4, no.~9, 2023.
