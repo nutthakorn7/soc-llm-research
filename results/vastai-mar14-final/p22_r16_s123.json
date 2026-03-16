@@ -1,0 +1,14 @@
+{
+  "paper": "P22",
+  "exp": "p22_r16",
+  "peft": "lora",
+  "actual": "PeftType.LORA",
+  "seed": 123,
+  "rank": 16,
+  "qbit": 4,
+  "f1": 0.898,
+  "acc": 0.898,
+  "hal": 0,
+  "n": 1000,
+  "min": 12
+}

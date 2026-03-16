@@ -1,0 +1,14 @@
+{
+  "paper": "p24",
+  "dataset": "goemo",
+  "seed": 123,
+  "dt_f1_macro": 0.189,
+  "svm_f1_macro": 0.2827,
+  "rf_f1_macro": 0.2397,
+  "kmeans_ari": 0.0197,
+  "entropy": 3.8895,
+  "n_labels": 28,
+  "n_train": 5000,
+  "n_test": 1000,
+  "unique_patterns": 4997
+}

@@ -1,0 +1,2 @@
+paper,peft_type,dataset,seed,strict_f1,accuracy,train_min,trainable_params,gpu,ts
+P14,lora,ag_news,456,0.9157,0.916,8.9,35192832,NVIDIA GeForce RTX 4090,2026-03-15T19:05:15.788258

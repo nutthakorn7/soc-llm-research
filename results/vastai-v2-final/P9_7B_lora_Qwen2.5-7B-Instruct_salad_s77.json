@@ -1,0 +1,14 @@
+{
+  "paper": "P9_7B",
+  "model": "Qwen2.5-7B-Instruct",
+  "peft": "lora",
+  "dataset": "salad",
+  "seed": 77,
+  "strict_f1": 1.0,
+  "accuracy": 1.0,
+  "train_min": 37.1,
+  "params": 80740352,
+  "use_4bit": true,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T15:12:37.661090"
+}

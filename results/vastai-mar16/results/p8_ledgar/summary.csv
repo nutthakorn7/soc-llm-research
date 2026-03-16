@@ -1,0 +1,4 @@
+paper,dataset,seed,strict_f1,accuracy,train_min,n_classes,gpu,ts
+P8,ledgar,42,0.6536,0.796,9.3,98,NVIDIA GeForce RTX 4090,2026-03-15T19:17:43.776360
+P8,ledgar,77,0.579,0.788,9.3,98,NVIDIA GeForce RTX 4090,2026-03-15T19:29:55.093860
+P8,ledgar,123,0.6203,0.784,9.0,96,NVIDIA GeForce RTX 4090,2026-03-15T19:41:53.041279

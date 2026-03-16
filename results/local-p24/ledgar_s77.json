@@ -1,0 +1,14 @@
+{
+  "paper": "p24",
+  "dataset": "ledgar",
+  "seed": 77,
+  "dt_f1_macro": 0.2094,
+  "svm_f1_macro": 0.6948,
+  "rf_f1_macro": 0.6501,
+  "kmeans_ari": 0.2081,
+  "entropy": 6.2018,
+  "n_labels": 100,
+  "n_train": 5000,
+  "n_test": 1000,
+  "unique_patterns": 5000
+}

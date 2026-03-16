@@ -1,0 +1,47 @@
+{
+  "paper": "p5",
+  "seed": 77,
+  "dataset": "ag_news",
+  "dt_f1_macro": 0.5595,
+  "svm_f1_macro": 0.869,
+  "rf_f1_macro": 0.7898,
+  "n_train": 5000,
+  "n_test": 1000,
+  "cascade_thresholds": {
+    "0.5": {
+      "dt_handles_pct": 0.563,
+      "dt_acc_on_handled": 0.7673,
+      "llm_needed_pct": 0.437
+    },
+    "0.6": {
+      "dt_handles_pct": 0.563,
+      "dt_acc_on_handled": 0.7673,
+      "llm_needed_pct": 0.437
+    },
+    "0.7": {
+      "dt_handles_pct": 0.501,
+      "dt_acc_on_handled": 0.8064,
+      "llm_needed_pct": 0.499
+    },
+    "0.8": {
+      "dt_handles_pct": 0.471,
+      "dt_acc_on_handled": 0.828,
+      "llm_needed_pct": 0.529
+    },
+    "0.9": {
+      "dt_handles_pct": 0.417,
+      "dt_acc_on_handled": 0.8273,
+      "llm_needed_pct": 0.583
+    },
+    "0.95": {
+      "dt_handles_pct": 0.373,
+      "dt_acc_on_handled": 0.8257,
+      "llm_needed_pct": 0.627
+    },
+    "0.99": {
+      "dt_handles_pct": 0.337,
+      "dt_acc_on_handled": 0.819,
+      "llm_needed_pct": 0.663
+    }
+  }
+}

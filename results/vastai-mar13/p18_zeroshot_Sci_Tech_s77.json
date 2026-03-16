@@ -1,0 +1,11 @@
+{
+  "prefix": "p18_Sci_Tech",
+  "seed": 77,
+  "f1": 0.0,
+  "accuracy": 0.0,
+  "hallucination_rate": 0.0,
+  "train_time_min": 9.6,
+  "n_test": 500,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "held_out": "Sci/Tech"
+}

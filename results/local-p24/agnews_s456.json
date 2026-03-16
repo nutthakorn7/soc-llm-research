@@ -1,0 +1,14 @@
+{
+  "paper": "p24",
+  "dataset": "agnews",
+  "seed": 456,
+  "dt_f1_macro": 0.5087,
+  "svm_f1_macro": 0.8629,
+  "rf_f1_macro": 0.7962,
+  "kmeans_ari": 0.0619,
+  "entropy": 1.9995,
+  "n_labels": 4,
+  "n_train": 5000,
+  "n_test": 1000,
+  "unique_patterns": 5000
+}

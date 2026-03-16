@@ -1,0 +1,12 @@
+{
+  "paper": "P23_bench",
+  "quant": "8bit",
+  "n_samples": 300,
+  "avg_ms": 2461.1,
+  "p50_ms": 2400.8,
+  "p99_ms": 3584.3,
+  "throughput_hr": 1463.0,
+  "vram_gb": 10.34,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T05:33:20.361709"
+}

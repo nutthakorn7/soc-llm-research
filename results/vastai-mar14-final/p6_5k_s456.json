@@ -1,0 +1,14 @@
+{
+  "paper": "P6",
+  "exp": "p6_5k",
+  "peft": "lora",
+  "actual": "PeftType.LORA",
+  "seed": 456,
+  "rank": 64,
+  "qbit": 4,
+  "f1": 0.912,
+  "acc": 0.912,
+  "hal": 0,
+  "n": 1000,
+  "min": 7
+}

@@ -1,0 +1,14 @@
+{
+  "paper": "P14",
+  "exp": "p14_oft",
+  "peft": "oft",
+  "actual": "PeftType.OFT",
+  "seed": 42,
+  "block_size": 8,
+  "qbit": 4,
+  "f1": 0.838,
+  "acc": 0.838,
+  "hal": 1,
+  "n": 1000,
+  "min": 8
+}

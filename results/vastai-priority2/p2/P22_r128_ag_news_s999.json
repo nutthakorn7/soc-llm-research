@@ -1,0 +1,14 @@
+{
+  "paper": "P22",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "rank": 128,
+  "dataset": "ag_news",
+  "seed": 999,
+  "strict_f1": 0.9248,
+  "accuracy": 0.926,
+  "train_min": 7.5,
+  "params": 70385664,
+  "tag": "",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T08:58:16.233073"
+}

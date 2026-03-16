@@ -1,0 +1,11 @@
+{
+  "paper": "P8",
+  "domain": "ag_news",
+  "seed": 77,
+  "strict_f1": 0.9178,
+  "accuracy": 0.919,
+  "model": "Qwen2.5-0.5B-Instruct",
+  "train_n": 5000,
+  "test_n": 1000,
+  "n_classes": 4
+}

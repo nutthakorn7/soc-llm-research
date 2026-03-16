@@ -1,0 +1,14 @@
+{
+  "paper": "P14",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "peft": "oft",
+  "dataset": "salad",
+  "seed": 999,
+  "strict_f1": 0.5,
+  "accuracy": 0.984,
+  "train_min": 6.3,
+  "params": 2386944,
+  "use_4bit": false,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T12:54:43.579020"
+}

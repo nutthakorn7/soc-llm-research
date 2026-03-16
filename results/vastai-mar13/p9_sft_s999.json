@@ -1,0 +1,10 @@
+{
+  "prefix": "p9_sft",
+  "seed": 999,
+  "f1": 0.895,
+  "accuracy": 0.895,
+  "hallucination_rate": 0.0,
+  "train_time_min": 16.0,
+  "n_test": 1000,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct"
+}

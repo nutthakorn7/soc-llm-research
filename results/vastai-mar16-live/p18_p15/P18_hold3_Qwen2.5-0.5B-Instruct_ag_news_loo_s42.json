@@ -1,0 +1,14 @@
+{
+  "paper": "P18_hold3",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "dataset": "ag_news_loo",
+  "seed": 42,
+  "strict_f1": 0.0,
+  "accuracy": 0.0,
+  "train_min": 6.7,
+  "params": 35192832,
+  "train_classes": "[0, 1, 2]",
+  "test_classes": "[3]",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T13:25:25.364794"
+}
