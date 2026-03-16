@@ -22,24 +22,24 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 /Users/pop7/Code/Lanta/
 ├── CLAUDE.md
 ├── scripts/
-│   ├── train.sh                # Qwen3.5-9B 50K (4 GPUs)
+│   ├── train.sh                # Qwen3.5-9B 50K (4 GPUs) [Lanta]
+│   ├── kaggle_q1_batch1.py     # ⭐ Kaggle: seeds + P8 (autosave)
+│   ├── vast_q1.sh              # Vast.ai: P8 LedGAR + P9 DPO β
+│   ├── vast_remaining.py       # ⭐ P8 LedGAR + P6 + P9 DPO fix
+│   ├── vast_orpo.py            # ⭐ P9 ORPO λ sweep (manual impl)
+│   ├── vast_p6_9b.py           # ⭐ P6 7B QLoRA scaling
+│   ├── vast_v2_extra.py        # P14 OFT + P9 7B
+│   ├── download_all_vastai.sh  # ⭐ One-shot download from all machines
 │   ├── eval.sh                 # Eval: predict on clean_test (4h limit)
 │   ├── fast_eval.sh            # ⚡ Faster eval (batch=8, tokens=150)
 │   ├── baselines.py            # DT/RF/GBM/SVM baselines
 │   ├── calc_f1.py              # Per-task F1 from predictions
 │   ├── sanity_check.py         # 5-agent reviewer suite
-│   ├── orchestrator.sh         # Auto: training→eval→F1 pipeline
-│   ├── sync_and_f1.sh          # One-command: sync + calc all F1
-│   ├── cascade_v2.py           # Fixed DT→LLM cascade + vLLM latency
+│   ├── train_crossdomain.py    # Cross-domain QLoRA (PyTorch loop)
 │   ├── zero_shot_transfer.py   # P18: Leave-one-category-out
 │   ├── cross_domain_analysis.py# General AI: entropy across 4 domains
 │   ├── llm_eval_audit.py       # P19: Automated 12/30 checklist tool
 │   ├── generate_all_figures.py # All 42 paper figure PDFs (matplotlib)
-│   ├── generate_figures.py     # Paper-ready HTML charts + tables
-│   ├── generate_latex.py       # 5 LaTeX tables from analysis
-│   ├── generate_model_card.py  # Responsible AI model card
-│   ├── clustering_analysis.py  # K-Means/DBSCAN + MI features
-│   ├── adversarial_test.py     # Perturbation robustness
 │   ├── training_cost.py        # GPU hours, cost, CO₂
 │   └── train_*.sh              # Per-model training scripts
 ├── papers/                     # 15 LaTeX papers (all ≥6 pages)
@@ -58,15 +58,16 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 │   ├── p22-lora-rank/          # 7p, 8T, 28R ⭐⭐⭐
 │   ├── p23-edge-quant/         # 7p, 9T, 21R ⭐⭐
 │   └── p24-cyber-datasets/     # 10p, 9T, 29R ⭐⭐
-└── results/
-    ├── paper_results/          # Analysis JSONs + figures
-    ├── general_ai/             # Cross-domain datasets + results
-    └── vastai-mar13/           # ⭐ Vast.ai RTX 4090 results (24 files)
-        ├── p9_sft.json         # SFT baseline F1=88.8%
-        ├── p14_lora_s*.json    # 5 seeds: 90.5±1.3%
-        ├── p18_zeroshot_*.json # 4 folds: 0% accuracy all
-        ├── p20_*.json          # 2×2 cross-domain: 0% both dirs
-        └── p23_quant_*.json    # 4/8/16-bit: ±0.2% F1
+└── results/                    # ⭐ 156+ files (see results/README.md)
+    ├── master_results.csv      # ALL results consolidated (99 exps)
+    ├── kaggle-mar16/            # P8 AG News/GoEmotions, P20/P21
+    ├── vastai-priority1/        # P14 LoRA ×10
+    ├── vastai-priority2/        # P15, P22, P23
+    ├── vastai-mar16-live/       # P9 DPO, P18 LOO, P15
+    ├── vastai-v2-final/         # P14 OFT ×10, P9 7B ×3
+    ├── vastai-remaining/        # P8 LedGAR, P6 0.5B
+    ├── vastai-orpo/             # P9 ORPO λ sweep
+    └── README.md                # Folder guide + summary table
 ```
 
 ### Lanta HPC
@@ -135,25 +136,25 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 - **Epochs**: 3
 - **Key flag**: `--quantization_method bnb` (NOT `bitsandbytes`)
 
-## Paper Portfolio (Mar 13, 2026 — ALL COMPILED ✅ 96 PAGES)
+## Paper Portfolio (Mar 17, 2026 — Q1 DATA COLLECTION COMPLETE)
 
-| # | Paper | Pages | Tables | Figs | Refs | P19 | Status |
-|---|---|:---:|:---:|:---:|:---:|:---:|---|
-| **P3** | Mind the Label Gap (IEEE TDSC) | 14 | 23 | 4 | 40 | 29/30 | ⭐⭐⭐ Flagship |
-| **P5** | Entropy-Aware Cascade (FGCS) | 6 | 8 | 3 | 22 | 25/30 | ⭐⭐ |
-| **P6** | 1K Labels Is All You Need (ESWA) | 8 | 11 | 4 | 33 | 28/30 | ⭐⭐⭐ |
-| **P7** | $0.60 Is All You Need (IEEE Access) | 6 | 10 | 4 | 24 | 26/30 | ⭐⭐ |
-| **P8** | Entropy Predicts LLM (IS) | 6 | 7 | 3 | 28 | 27/30 | ⭐⭐⭐ |
-| **P9** | DPO Destroys Classification (TMLR) | 5 | 7 | 2 | 21 | 21/30 | ⭐⭐ |
-| **P14** | LoRA vs. OFT (PR) | 5 | 10 | 2 | 22 | 25/30 | ⭐⭐ |
-| **P15** | One Model, Three Tasks (ASC) | 6 | 8 | 3 | 22 | 25/30 | ⭐⭐ |
-| **P18** | Zero-Shot Generalization (TKDD) | 5 | 8 | 2 | 22 | 22/30 | ⭐⭐ |
-| **P19** | Reproducibility Checklist (C&S) | 7 | 9 | 3 | 26 | — | ⭐⭐⭐ |
-| **P20** | Cross-Domain Transfer (TKDE) | 5 | 12 | 3 | 21 | 26/30 | ⭐⭐ |
-| **P21** | Sub-1B Models Follow (KBS) | 7 | 10 | 3 | 25 | 26/30 | ⭐⭐ |
-| **P22** | Higher Rank, More Hallucination (NC) | 6 | 8 | 4 | 28 | 27/30 | ⭐⭐⭐ |
-| **P23** | Quantize and Deploy (IoT J.) | 5 | 9 | 2 | 21 | 23/30 | ⭐⭐ |
-| **P24** | Cyber Dataset Analysis | 7 | 9 | 2 | 29 | 24/30 | ⭐⭐ |
+| # | Paper | Mean F1 | Q1 Status |
+|---|---|---|---|
+| **P3** | Mind the Label Gap (IEEE TDSC) | — | ⭐⭐⭐ Ready |
+| **P5** | Entropy-Aware Cascade (FGCS) | — | ⭐⭐ |
+| **P6** | 1K Labels Is All You Need (ESWA) | 0.918 (0.5B) | ✅ 0.5B done, 7B running |
+| **P7** | $0.60 Is All You Need (IEEE Access) | — | ⭐⭐ |
+| **P8** | Entropy Predicts LLM (IS) | 0.91/0.42/0.62 | ✅ 3 datasets ×5 seeds |
+| **P9** | DPO Destroys Classification (TMLR) | SFT 0.75→DPO 0.87 | ✅ β sweep + ORPO running |
+| **P14** | LoRA vs. OFT (PR) | LoRA 0.91/OFT 0.86 | ✅ 20 exps (LoRA>>OFT) |
+| **P15** | One Model, Three Tasks (ASC) | **0.906±0.017** | ✅ 5 seeds done |
+| **P18** | Zero-Shot Generalization (TKDD) | 0.000 (all folds) | ✅ Domain Lock-In proven |
+| **P19** | Reproducibility Checklist (C&S) | — | ⭐⭐⭐ |
+| **P20** | Cross-Domain Transfer (TKDE) | 0.91/0.55 | ✅ |
+| **P21** | Sub-1B Models Follow (KBS) | 0.910 | ⭐⭐ |
+| **P22** | Higher Rank, More Hallucination (NC) | 0.881 | ✅ r=4→128 done |
+| **P23** | Quantize and Deploy (IoT J.) | **0.909** (4=16bit) | ✅ No quant loss |
+| **P24** | Cyber Dataset Analysis | — | ⭐⭐ |
 
 ### P19 Self-Audit Results (14 papers audited)
 - Mean score: **25.7/30** (85.7%)
@@ -168,21 +169,59 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 > See `.agents/workflows/paper-finalize.md`
 
 ## Workflow
+
+### Kaggle (free, T4 GPU)
 ```bash
-# Upload script
-ssh lanta "cat > /project/.../scripts/script.sh" < scripts/script.sh
+# Copy kaggle_q1_batch1.py into Kaggle notebook, run cells
+# Results autosave to /kaggle/working/q1_results/summary.csv
+```
 
-# Submit training
-ssh lanta 'cd /project/lt200473-ttctvs/soc-finetune && sbatch scripts/train.sh'
+### Vast.ai (paid, RTX 4090 / A100)
+⚠️ **CRITICAL: ต้องใช้ standalone `.py` + supervisord — ห้ามใช้ bash heredoc + nohup**
 
-# Monitor all jobs
-ssh lanta 'squeue -u lm2002'
+```bash
+# 1. เช่า GPU (4090 ~$0.30/h, A100 ~$1.50/h)
+#    Image: pytorch/pytorch:2.4.0-cuda12.1-cudnn9-devel, Disk: 30GB
 
-# Run P19 automated audit
+# 2. Upload data + script (.py ไม่ใช่ .sh)
+scp -P <PORT> data/train_5k_clean.json data/test_held_out.json root@<HOST>:/workspace/salad_data/
+scp -P <PORT> scripts/vast_p9.py root@<HOST>:/workspace/
+
+# 3. Verify data (ต้องทำทุกครั้ง!)
+ssh -p <PORT> root@<HOST> 'python3 -c "import json; d=json.load(open(\"/workspace/salad_data/train_5k_clean.json\")); print(f\"OK: {len(d)} samples\")"'
+
+# 4. Setup supervisord (persistent — ไม่ตายตอน SSH disconnect)
+ssh -p <PORT> root@<HOST> 'cat > /etc/supervisor/conf.d/job.conf << EOF
+[program:job]
+command=python3 /workspace/vast_p9.py
+directory=/workspace
+stdout_logfile=/workspace/job.log
+stderr_logfile=/workspace/job.log
+autostart=true
+autorestart=false
+startsecs=5
+EOF
+supervisorctl reread && supervisorctl update'
+
+# 5. Check progress (ได้ตลอด ไม่ต้องค้าง SSH)
+ssh -p <PORT> root@<HOST> 'supervisorctl status; tail -5 /workspace/job.log; nvidia-smi --query-gpu=memory.used --format=csv,noheader'
+
+# 6. Download results + destroy instance
+scp -P <PORT> -r root@<HOST>:/workspace/results/ results/vastai/
+# แล้ว destroy ที่ https://cloud.vast.ai/instances/
+```
+
+### Vast.ai — Known Issues
+| ปัญหา | สาเหตุ | แก้ไข |
+|--------|--------|-------|
+| `nohup` + SSH disconnect → process ตาย | Vast.ai kill child processes | ใช้ **supervisord** แทน |
+| Bash heredoc `<< 'EOF'` ไม่ทำงาน | Shell escaping issues | เขียน **standalone .py** แทน |
+| wget GitHub → empty file (0 bytes) | Rate limit / network | **SCP ตรงจาก local** + verify ทุกครั้ง |
+| `auto-gptq` install ล้มเหลว | Build dependency missing | ลบออก, ใช้ bitsandbytes แทน |
+
+### P19 Automated Audit
+```bash
 python3 scripts/llm_eval_audit.py --train train.jsonl --test test.jsonl --preds preds.jsonl --labels labels.txt
-
-# Sync results
-rsync -avz --exclude='*.safetensors' --exclude='checkpoint-*' lanta:/project/.../outputs/ results/
 ```
 
 ## Known Issues
@@ -200,6 +239,9 @@ rsync -avz --exclude='*.safetensors' --exclude='checkpoint-*' lanta:/project/...
 - **LlamaFactory batch gen is slow** (~2h for 9B eval). Use `fast_eval.sh` (batch=8, tokens=150) for 2-3× speedup
 - LlamaFactory predict requires: `jieba`, `nltk`, `rouge_chinese`, `rouge_score`, `sacrebleu`
 - **`wc -l` shows 0** for single-line JSON — use `python3 -c "len(json.load(...))"` instead
+- **TRL 0.29 removed `ORPOTrainer` and `max_prompt_length`** — implement ORPO manually, use `max_length` only in DPOConfig
+- **Qwen2.5-9B-Instruct is gated on HF** — needs HF token, or use 7B instead
+- **P9 7B F1=1.0 (all 3 seeds)** — verified genuine: SALAD has only 35 unique test patterns, 7B memorizes all
 
 ## Acknowledgment Template (ใส่ทุก paper ที่ใช้ Lanta)
 > The authors acknowledge the NSTDA Supercomputer Center (ThaiSC) and the National Science and Technology Development Agency (NSTDA), National e-Science Infrastructure Consortium, Ministry of Higher Education, Science, Research and Innovation (MHESI), Thailand, for providing the LANTA High-Performance Computing (HPC) system (8.15 PFlop/s, HPE Cray EX, 704 NVIDIA A100 GPUs) that has contributed to the research results reported within this paper.
