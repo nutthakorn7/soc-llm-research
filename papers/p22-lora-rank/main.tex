@@ -65,7 +65,7 @@ The remainder of this paper is organized as follows: Section~II reviews LoRA var
 \subsection{LoRA and Variants}
 Hu et~al.~\cite{hu2022} introduced LoRA, representing weight updates as a low-rank product $\Delta W = BA$ with rank $r$ controlling the update expressiveness. Building on the transformer architecture~\cite{vaswani2017}, LoRA freezes pre-trained weights and trains only the low-rank matrices, keeping $<$1\% of parameters active. Neural scaling laws~\cite{kaplan2020} describe how pre-training improves with data and compute, while LIMA~\cite{zhou2023} showed that fine-tuning needs far fewer samples than pre-training.
 
-Several LoRA variants address different aspects: AdaLoRA~\cite{zhang2023} adaptively allocates rank across layers based on importance scores. QLoRA~\cite{dettmers2023} adds 4-bit NF4 quantization for single-GPU fine-tuning of 7B+ models. DoRA~\cite{liu2024} decomposes weight updates into magnitude and direction components for improved stability. A comprehensive survey of LLM capabilities~\cite{zhao2023} highlights that evaluation methodology remains a challenge---a theme central to our work. None of these studies examine rank's effect on \emph{label compliance} as distinct from accuracy.
+Several LoRA variants address different aspects: AdaLoRA~\cite{zhang2023} adaptively allocates rank across layers based on importance scores. QLoRA~\cite{dettmers2023} adds 4-bit NF4 quantization for single-GPU fine-tuning of 7B+ models. DoRA~\cite{liu2024} decomposes weight updates into magnitude and direction components for improved stability. VeRA~\cite{kopiczko2024} reduces trainable parameters further by sharing random projections across layers. Biderman et~al.~\cite{biderman2024} systematically compared LoRA to full fine-tuning, finding that LoRA ``learns less and forgets less''---directly relevant to our rank-compliance analysis. Hayou et~al.~\cite{hayou2024} provided theoretical foundations for LoRA initialization and rank selection. A comprehensive survey of LLM capabilities~\cite{zhao2023} highlights that evaluation methodology remains a challenge---a theme central to our work. None of these studies examine rank's effect on \emph{label compliance} as distinct from accuracy.
 
 \subsection{Safety and Compliance in Fine-Tuning}
 Hsu et~al.~\cite{safelora2024} introduced Safe LoRA at NeurIPS 2024, projecting LoRA weights into a safety-aligned subspace to prevent behavioral degradation during fine-tuning. Their work addresses behavioral safety (harmful outputs); ours addresses \emph{label safety} (schema compliance). The mechanisms may be related: both involve constraining the update subspace to prevent undesirable pre-training behavior from surfacing.
@@ -120,9 +120,9 @@ All other parameters held constant: 3 epochs, cosine schedule, batch 8 $\times$ 
 
 \subsection{Trainable Parameters}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
-\caption{Trainable parameters per LoRA rank configuration: from 0.8M (rank 8) to 6.6M (rank 128) on Qwen2.5-0.5B}
+\caption{Trainable parameters per LoRA rank configuration: from 8.4M (rank 16) to 67.1M (rank 128) on Qwen3.5-9B}
 \label{tab:params}
 \begin{tabular}{rrrr}
 \toprule
@@ -143,7 +143,7 @@ Training time increases sublinearly with rank (1.42$\times$ from rank 16 to 128)
 
 \subsection{Rank Ablation: Clean Data}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Rank vs.\ Strict F1 on Clean Data (LR=$2\times10^{-4}$)}
 \label{tab:rank-clean}
@@ -182,7 +182,7 @@ where $r_\text{safe} = 32$ and $r_\text{override} \approx 128$ for Qwen3.5-9B on
 
 \subsection{Rank Ablation: Noisy Data}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Rank vs.\ Strict F1 on Noisy/Leaked Data (LR=$2\times10^{-4}$)}
 \label{tab:rank-noisy}
@@ -218,7 +218,7 @@ This reveals an interaction: higher-capacity configurations are more vulnerable 
 
 \subsection{The Rank-32 Leakage Case Study}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Rank-32 performance analysis before and after data leakage correction: 100\% F1 was a leakage artifact}
 \label{tab:r32}
@@ -237,7 +237,7 @@ A previously reported rank-32 anomaly (F1=36.0\%) was \textbf{100\% attributable
 
 \subsection{Learning Rate Ablation}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Learning Rate vs.\ Strict F1 (Clean Data, Rank=64)}
 \label{tab:lr-clean}
@@ -263,7 +263,7 @@ Learning rate has a monotonic effect: lower LR $\to$ better compliance. At rank 
 
 \subsection{Combined Effects: Paths to Perfect Compliance}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{All Configurations Achieving Perfect Compliance (Clean)}
 \label{tab:best}
@@ -282,7 +282,7 @@ Three paths achieve perfect compliance: reduce rank (path of least resistance), 
 
 \subsection{Effect Size Comparison}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Relative Effect Sizes on Label Compliance}
 \label{tab:effects}
@@ -299,6 +299,45 @@ Rank (16 vs.\ 64) & 16.4 pts & Lower $>$ Higher$^*$ \\
 \end{table}
 
 The priority hierarchy is clear: \textbf{data quality} (27.9 pts) $>$ \textbf{learning rate} (24.6 pts) $>$ \textbf{rank} (16.4 pts). Fixing data quality has nearly double the impact of rank selection.
+
+
+\subsection{Cross-Domain Verification (AG News)}
+
+To verify that rank effects generalize beyond cybersecurity, we evaluate on AG~News (4-class) and cross-reference with SALAD (8-class) using Qwen2.5-0.5B-Instruct with 4-bit QLoRA across 5 random seeds per configuration.
+
+\begin{table}[!ht]
+\centering
+\caption{Cross-domain rank verification: AG~News (5 seeds per rank)}
+\label{tab:cross-domain}
+\begin{tabular}{rccc}
+\toprule
+\textbf{Rank} & \textbf{F1 (mean $\pm$ std)} & \textbf{Halluc.} & \textbf{Params} \\
+\midrule
+16 & $0.908 \pm 0.022$ & 0 & 1.1M \\
+32 & $0.906 \pm 0.018$ & 0 & 2.1M \\
+64 & $0.909 \pm 0.013$ & 0 & 4.2M \\
+128 & $0.910 \pm 0.020$ & 0 & 8.4M \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+AG~News is \textbf{rank-saturated}: all ranks from 16 to 128 achieve equivalent F1 ($0.906$--$0.910$, $\Delta < 0.4\%$) with zero hallucination. This confirms that on low-entropy tasks ($H=2.0$ bits), the rank-compliance tradeoff observed on SALAD with Qwen3.5-9B does not manifest---the 0.5B model lacks sufficient pre-training knowledge to hallucinate MITRE taxonomy terms.
+
+\begin{table}[!ht]
+\centering
+\caption{SALAD rank scaling: r=4 vs r=128 (5 seeds)}
+\label{tab:salad-rank}
+\begin{tabular}{rccc}
+\toprule
+\textbf{Rank} & \textbf{F1 (mean $\pm$ std)} & \textbf{$\Delta$ from r=4} \\
+\midrule
+4 & $0.583 \pm 0.164$ & --- \\
+128 & $\mathbf{0.852 \pm 0.136}$ & +26.9\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Contrary to the Qwen3.5-9B result (where lower rank = better compliance), the 0.5B model on SALAD shows the \emph{opposite}: r=128 outperforms r=4 by 26.9\%. This suggests that the rank-compliance tradeoff (Definition~1) is \textbf{model-size-dependent}: smaller models need higher rank for capacity, while larger models need lower rank to suppress pre-training vocabulary.
 
 %% ===== DISCUSSION =====
 \section{Discussion}
@@ -326,7 +365,7 @@ Our results have methodological implications for the broader PEFT community:
 
 \subsection{Connection to Companion Studies}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cross-Study Connections to Rank-Compliance}
 \label{tab:connections}
@@ -385,7 +424,7 @@ We present the first systematic study of LoRA rank's effect on label compliance,
 The rank-compliance tradeoff has implications for any schema-constrained LoRA application: medical coding (ICD-10), legal classification, financial reporting, and industrial automation. Definition~1 provides a testable framework, and our data quality findings reinforce the importance of reproducible ML evaluation~\cite{kapoor2023}.
 
 \section*{Reproducibility Statement}
-All experiments use Qwen3.5-9B from HuggingFace with LlamaFactory v0.9.2 on NVIDIA A100 80GB. Clean data splits and evaluation code at \url{https://github.com/nutthakorn/soc-label-gap}.
+All experiments use Qwen3.5-9B from HuggingFace with LlamaFactory v0.9.2 on NVIDIA A100 80GB. Clean data splits and evaluation code at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4, 10--12, 14--16 (3 seeds), 17--18, 23--24. Fails Item 21. Overall: \textbf{27/30 pass}.
 
@@ -402,17 +441,20 @@ This study uses publicly available, anonymized datasets containing no personally
 \section*{Declaration of Competing Interest}
 The author declares no conflict of interest.
 
-\begin{thebibliography}{28}
+\begin{thebibliography}{32}
 \bibitem{aghajanyan2021} A.~Aghajanyan et~al., ``Intrinsic Dimensionality Explains Effectiveness of Language Model Fine-Tuning,'' in \emph{Proc.\ ACL}, 2021.
 \bibitem{arp2022} D.~Arp et~al., ``Dos and Don'ts of Machine Learning in Computer Security,'' in \emph{Proc.\ USENIX Security}, 2022.
+\bibitem{biderman2024} D.~Biderman et~al., ``LoRA Learns Less and Forgets Less,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
 \bibitem{ferrag2024} M.~A.~Ferrag et~al., ``Generative AI and LLMs for Cybersecurity: A Thorough Survey,'' \emph{IEEE COMST}, 2024.
 \bibitem{gekhman2024} Z.~Gekhman et~al., ``Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?'' in \emph{Proc.\ EMNLP}, 2024.
+\bibitem{hayou2024} S.~Hayou et~al., ``LoRA+: Efficient Low Rank Adaptation of Large Models,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{Proc.\ ICLR}, 2022.
 \bibitem{huang2023} L.~Huang et~al., ``A Survey on Hallucination in Large Language Models,'' \emph{arXiv:2311.05232}, 2023.
 \bibitem{ji2023} Z.~Ji et~al., ``Survey of Hallucination in Natural Language Generation,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, 2023.
 \bibitem{kaplan2020} J.~Kaplan et~al., ``Scaling Laws for Neural Language Models,'' \emph{arXiv:2001.08361}, 2020.
 \bibitem{kapoor2023} S.~Kapoor and A.~Narayanan, ``Leakage and the Reproducibility Crisis in ML-Based Science,'' \emph{Patterns}, vol.~4, no.~9, 2023.
+\bibitem{kopiczko2024} D.~J.~Kopiczko et~al., ``VeRA: Vector-Based Random Matrix Adaptation,'' in \emph{Proc.\ ICLR}, 2024.
 \bibitem{liu2024} S.~Liu et~al., ``DoRA: Weight-Decomposed Low-Rank Adaptation,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15: A Wide-ranging Network Data Set,'' in \emph{Proc.\ MilCIS}, 2016.
 \bibitem{ouyang2022} L.~Ouyang et~al., ``Training Language Models to Follow Instructions with Human Feedback,'' in \emph{Proc.\ NeurIPS}, 2022.
@@ -433,5 +475,4 @@ The author declares no conflict of interest.
 \bibitem{zhou2023} C.~Zhou et~al., ``LIMA: Less Is More for Alignment,'' in \emph{Proc.\ NeurIPS}, 2023.
 \end{thebibliography}
 
-\balance
 \end{document}
