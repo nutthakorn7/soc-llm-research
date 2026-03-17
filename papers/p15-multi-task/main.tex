@@ -12,16 +12,8 @@
 \author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
 \cortext[cor1]{Corresponding author}
 \ead{nutthakorn.ch@kmitl.ac.th}
-\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 \begin{frontmatter}
-
-\begin{highlights}
-\item Multi-task format provides implicit regularization for label compliance (+5.7\% F1).
-\item Single model handles classification, triage, and severity assessment simultaneously.
-\item Format regularization prevents label hallucination without additional training data.
-\item Joint training creates shared representations that improve compliance.
-\item Practical deployment: one model replaces three task-specific classifiers.
-\end{highlights}
 
 \begin{highlights}
 \item Multi-task format provides implicit regularization for label compliance (+5.7\% F1).
@@ -88,7 +80,7 @@ SOC environments naturally present multi-task scenarios: classification, severit
 \section{Experimental Setup}
 
 \subsection{Model and Training}
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training configuration for multi-task and single-task experiments: model, LoRA rank, epochs, and data splits}
 \label{tab:config}
@@ -114,7 +106,7 @@ We chose Qwen3.5-0.8B deliberately: at 0.8B parameters, it is the smallest model
 \subsection{Task Dimensions}
 The SALAD dataset provides 3 classification dimensions per alert:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{SALAD task dimensions showing the three classification levels, their class counts, and entropy values}
 \label{tab:dims}
@@ -155,7 +147,7 @@ Test set: 9,851 held-out samples. Primary metric: strict macro-F1 (exact string 
 
 \subsection{Easy Dimensions: No Difference}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Classification and Triage: MT $\approx$ ST (All Seeds)}
 \label{tab:easy}
@@ -175,7 +167,7 @@ Both MT and ST achieve perfect strict F1 on Classification and Triage across all
 
 \subsection{Hard Dimension: Multi-Task Wins}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Attack Category Strict F1: Seed-by-Seed Comparison}
 \label{tab:atk}
@@ -220,7 +212,7 @@ The seed variance ($\text{std} \approx 0.05$) is large relative to the MT-ST gap
 
 \subsection{Hallucination Error Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Hallucination Patterns by Configuration and Seed}
 \label{tab:halluc}
@@ -257,7 +249,7 @@ Three patterns emerge:
 
 \subsection{Aggregate Statistics}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Aggregate multi-task vs.\ single-task comparison across 5 seeds: mean F1, variance, and hallucination rates}
 \label{tab:aggregate}
@@ -300,7 +292,7 @@ This is consistent with the ``knowledge activation valley'' from~\cite{p6}: cert
 \subsection{Connection to Reasoning Architecture}
 Our companion study~\cite{p21} showed that reasoning-trained models (Phi4-mini, DeepSeek-R1) achieve perfect compliance through internal format validation. Format Regularization via multi-task training is a weaker version of the same mechanism: rather than an explicit reasoning step, the structured output provides implicit constraints that partially suppress hallucination.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Anti-hallucination mechanisms across the research spectrum: from prompt engineering to architectural constraints}
 \label{tab:spectrum}
@@ -317,7 +309,7 @@ Reasoning architecture~\cite{p21} & Strong & Reasoning model \\
 
 \subsection{Deployment Comparison}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Operational deployment comparison: multi-task reduces model count from 3 to 1 while maintaining compliance}
 \label{tab:deploy}
@@ -388,7 +380,7 @@ Multi-task fine-tuning provides implicit regularization against label hallucinat
 Format Regularization has implications beyond SOC: any domain requiring multi-dimensional classification can benefit from structured multi-task output. The finding that output format affects hallucination rate suggests a low-cost intervention for improving LLM reliability: simply changing from free-form to structured output may reduce errors without any model modification or additional training data.
 
 \section*{Reproducibility}
-All experiments use Qwen3.5-0.8B, LlamaFactory v0.9.2, QLoRA rank 64, NVIDIA A100 80GB. Seeds: 42, 77, 999. Clean zero-overlap data splits. Code at \url{https://github.com/nutthakorn/soc-label-gap}.
+All experiments use Qwen3.5-0.8B, LlamaFactory v0.9.2, QLoRA rank 64, NVIDIA A100 80GB. Seeds: 42, 77, 999. Clean zero-overlap data splits. Code at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4 (data integrity), 10--12 (strict/norm per-task), 14--16 (3 seeds with CI), 17--18 (hallucination inventoried). Fails Item 24 (cost comparison incomplete). Overall: \textbf{25/30 pass}.
 
@@ -397,7 +389,7 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops
 
 
 \section*{Data Availability}
-The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.
+The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets.
 
 \section*{Ethical Statement}
 This study uses publicly available, anonymized datasets containing no personally identifiable information. No human subjects were involved. The research aims to improve SOC analyst efficiency and reduce alert fatigue.

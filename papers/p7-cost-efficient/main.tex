@@ -3,6 +3,7 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{textcomp}
+\usepackage{pifont}
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multirow}
@@ -91,7 +92,7 @@ All training on NVIDIA A100 80GB GPUs via the Lanta HPC system (NSTDA ThaiSC). W
 \subsection{Models}
 We evaluate 6 LLMs with QLoRA (rank 64, 4-bit NF4, bf16, 3 epochs, seed 42):
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training profiles for 7 LLMs: GPU time, VRAM usage, cost per run, and cost-per-F1-point efficiency}
 \label{tab:profiles}
@@ -170,7 +171,7 @@ The cost-performance landscape reveals a clear Pareto frontier: SVM (\$0, 90.9\%
 %% ===== ARCHITECTURE PARADOX =====
 \section{The Architecture Cost Paradox}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Architecture Cost Paradox: Why 0.8B $>$ 7B}
 \label{tab:paradox}
@@ -199,7 +200,7 @@ Qwen3.5-0.8B includes a Visual Transformer ($\sim$370M parameters) for multimoda
 
 \subsection{Architecture Decomposition}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cost Decomposition by Architecture Component}
 \label{tab:decomp}
@@ -242,7 +243,7 @@ The marginal value depends on the cost of classification errors. For a SOC proce
 %% ===== INFERENCE =====
 \section{Inference Cost and Throughput}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Inference Throughput (A100, batch=32)}
 \label{tab:inference}
@@ -265,7 +266,7 @@ Even the slowest LLM (DeepSeek-R1) processes 56K alerts per hour---sufficient fo
 %% ===== CASCADE =====
 \section{Hybrid Cascade Architecture}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{DT$\to$LLM Cascade: Cost Reduction}
 \label{tab:cascade}
@@ -302,7 +303,7 @@ where $C_\text{train}$ is one-time training cost, $C_\text{infer}$ is per-alert 
 
 \subsection{SOC Deployment Scenarios}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Annual TCO: Three SOC Sizes}
 \label{tab:tco}
@@ -332,7 +333,7 @@ For a SOC processing 100K alerts/day (36.5M/year): pure LLM deployment costs \$9
 
 \subsection{TCO Sensitivity Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{TCO Sensitivity to GPU Pricing (100K/day SOC)}
 \label{tab:sensitivity}
@@ -352,7 +353,7 @@ Even at the most expensive GPU pricing (\$3/hr AWS), the cascade costs only \$9/
 %% ===== DECISION GUIDE =====
 \section{Discussion: When to Use Each Approach}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Decision Guide by Scenario}
 \label{tab:decision}
@@ -376,7 +377,7 @@ GPT-4o API costs \$556 per 9,851-sample evaluation. Fine-tuning Phi4-mini costs 
 \subsection{Connection to Companion Studies}
 Our cost analysis integrates findings from across the research program:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cross-Study Economic Integration}
 \label{tab:cross}
@@ -439,7 +440,7 @@ The most cost-efficient path to perfect SOC alert classification is \textbf{Phi4
 Our cost analysis democratizes LLM deployment for cybersecurity: a SOC team with a \$1 GPU budget can achieve state-of-the-art classification. The cascade architecture reduces the environmental footprint of LLM inference by 193$\times$, processing 99.5\% of alerts via CPU-only Decision Tree. These findings apply to any alert triage system---network intrusion, fraud detection, medical emergency classification---where traditional ML handles the bulk and LLMs handle the tail.
 
 \section*{Reproducibility}
-All experiments use LlamaFactory v0.9.2 on NVIDIA A100 80GB. Pricing based on \$2/GPU-hr (AWS/GCP average). Code at \url{https://github.com/nutthakorn/soc-label-gap}.
+All experiments use LlamaFactory v0.9.2 on NVIDIA A100 80GB. Pricing based on \$2/GPU-hr (AWS/GCP average). Code at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4 (data integrity), 10--13 (metrics with baselines), 17--18 (zero hallucination for Phi4-mini), 23--24 (cost analysis is the paper's core). Fails Items 14--16 (single seed for most models). Overall: \textbf{26/30 pass}.
 

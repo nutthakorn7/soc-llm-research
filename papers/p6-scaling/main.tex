@@ -126,7 +126,7 @@ All training subsets are stratified by attack category to maintain class distrib
 
 \subsection{Model and Training Configuration}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training configuration shared across all scaling experiments: QLoRA, Qwen2.5-0.5B, rank 64, 3 epochs}
 \label{tab:config}
@@ -177,7 +177,7 @@ Normalized F1 = 100\% at all training sizes (1K, 5K, 10K, 20K). From a semantic 
 
 \subsection{The Non-Monotonic Strict Scaling Curve}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Non-Monotonic Scaling: Strict F1 vs.\ Training Size (Qwen3.5-9B, Seed 42)}
 \label{tab:scaling}
@@ -230,7 +230,7 @@ This evolution reveals three competing learning phases:
 
 \subsection{Seed Sensitivity at the Valley}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Seed Sensitivity at 5K: The Stochastic Valley}
 \label{tab:seed}
@@ -254,7 +254,7 @@ This has critical implications for reproducibility: a single-seed evaluation at 
 \subsection{Statistical Significance}
 To confirm that the non-monotonic pattern is statistically significant and not attributable to chance, we apply McNemar's test~\cite{mcnemar1947} for paired comparisons on 9,851 test samples.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{McNemar's Test: Pairwise Training Size Comparisons}
 \label{tab:mcnemar}
@@ -276,7 +276,7 @@ All strict F1 comparisons are significant at $p < 0.001$. The normalized F1 comp
 
 \subsection{Cross-Model Comparison at 5K}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{7-Model Comparison at 5K Training Samples}
 \label{tab:crossmodel}
@@ -301,7 +301,7 @@ The cross-model comparison reveals that model architecture---specifically, reaso
 
 \subsubsection{Rank Ablation on Clean Data}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{LoRA Rank vs.\ Strict F1 (Clean Data, 5K, LR=2e-4)}
 \label{tab:rank-clean}
@@ -319,7 +319,7 @@ The cross-model comparison reveals that model architecture---specifically, reaso
 
 \subsubsection{Rank Ablation on Noisy Data}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{LoRA Rank vs.\ Strict F1 (Noisy Data, 5K, LR=2e-4)}
 \label{tab:rank-noisy}
@@ -337,7 +337,7 @@ The cross-model comparison reveals that model architecture---specifically, reaso
 
 \subsubsection{Learning Rate Ablation}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Learning Rate vs.\ Strict F1 (Clean Data, 5K, Rank=64)}
 \label{tab:lr}
@@ -409,7 +409,7 @@ The LoRA ablation reveals a fundamental tradeoff between model capacity and labe
 
 \subsection{Practical Training Size Guidelines}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Decision Guide for Training Size Selection}
 \label{tab:recs}
@@ -451,7 +451,7 @@ We present the first evidence that semantic accuracy and label compliance are \e
 
 \subsection{Key Findings}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Summary of Key Findings}
 \label{tab:findings}
@@ -484,11 +484,11 @@ Practitioners should select training size based on compliance requirements: 1K f
 The two-process model of fine-tuning has implications beyond cybersecurity. Any domain where task labels overlap with pre-training vocabulary---medical coding (ICD-10 vs.\ clinical terms), legal classification (statutory vs.\ colloquial categories), financial reporting (GAAP vs.\ common descriptions)---is susceptible to the knowledge activation valley. Our formal definitions (Semantic Saturation, Knowledge Activation Valley) and the two-process framework provide domain-agnostic tools for predicting and mitigating this failure mode.
 
 \section*{Reproducibility Statement}
-All experiments use publicly available models from HuggingFace with fixed QLoRA configurations. The SALAD dataset will be released upon acceptance. Training scripts and evaluation code are available at \url{https://github.com/nutthakorn/soc-label-gap}. All results are reproducible with seeds 42, 123, and 2024 using LlamaFactory v0.9.2 on NVIDIA A100 GPUs.
+All experiments use publicly available models from HuggingFace with fixed QLoRA configurations. The SALAD dataset will be released upon acceptance. Training scripts and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. All results are reproducible with seeds 42, 123, and 2024 using LlamaFactory v0.9.2 on NVIDIA A100 GPUs.
 
 \subsection*{Cost per Training Size}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training cost breakdown by dataset size on A100 80GB at \$2/hr, showing linear cost scaling with samples}
 \label{tab:costscale}
@@ -511,7 +511,7 @@ Computing resources provided by the NSTDA Supercomputer Center (ThaiSC) on the L
 
 
 \section*{Data Availability}
-The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.
+The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets.
 
 \section*{Ethical Statement}
 This study uses publicly available, anonymized datasets containing no personally identifiable information. No human subjects were involved. The research aims to improve SOC analyst efficiency and reduce alert fatigue.

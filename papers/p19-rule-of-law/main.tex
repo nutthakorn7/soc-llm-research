@@ -103,7 +103,7 @@ Our companion studies provide the empirical foundation: label compliance follows
 
 We organize 30 items into 9 categories. Each item includes a pass criterion linked to $\geq$1 case study. Table~\ref{tab:overview} provides a summary.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Checklist category overview: 9 categories, 30 items, covering data integrity through deployment readiness}
 \label{tab:overview}
@@ -189,7 +189,7 @@ Public code/configs (GitHub/HuggingFace) and full environment specification (CUD
 \subsection{Category 9: Perfect Score Protocol (Items 29--30)}
 When any metric reports $\geq$99\%:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Perfect Score Suspicion Protocol: 15-step procedure triggered when any metric reports $\geq$99\% to detect artifacts}
 \label{tab:protocol}
@@ -271,7 +271,7 @@ If any condition fails, the score requires Level~3+ investigation before publica
 
 \subsection{Summary of Case Studies}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Case study summary showing error magnitude (up to 44.3\% inflation) and which checklist items detect each error}
 \label{tab:cases}
@@ -303,7 +303,7 @@ CS6: Wrong test set & Meaningless & 9,28 & Pipeline \\
 \subsection{Cost of Compliance}
 The full 30-item checklist adds 4--8 hours per paper. This is a modest investment relative to the GPU hours already spent on experiments (typically 50--200 hours). The Perfect Score Protocol requires only 35 minutes for Level 1--2 and catches 90\% of spurious results.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Checklist ROI: Cost of Detection vs.\ Cost of Error}
 \label{tab:roi}
@@ -324,7 +324,7 @@ Our recommendation: \textbf{strict F1 = primary metric}, normalized F1 = supplem
 
 \subsection{Comparison with Existing Checklists}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Comparison with Existing Evaluation Guidelines}
 \label{tab:comparison}
@@ -349,7 +349,7 @@ Our checklist adds 5 LLM-specific items (label vocab audit, strict/norm distinct
 \subsection{External Validation: Auditing Published Papers}
 To validate beyond our own studies, we retrospectively applied our checklist to six published LLM evaluation papers spanning cybersecurity, medical, legal, and general NLP domains:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{External audit of 6 published papers: LLM-specific checklist items (12, 17--20) are universally failed, confirming a systematic gap}
 \label{tab:audit}
@@ -379,7 +379,7 @@ Min~\cite{min2023factscore} & 21/30 & 9/30 & No label vocab audit (17--18), no c
 \subsection{Automated Checklist Tooling}
 To reduce adoption friction, we implement a Python tool (\texttt{llm\_eval\_audit.py}) that automates 12 of 30 items:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Classification of checklist items into automated (scriptable) vs.\ manual (requires expert judgment) categories}
 \label{tab:automation}
@@ -430,7 +430,7 @@ The automated tool runs in $<$30 seconds on a standard laptop and produces a str
 \subsection{Portfolio Self-Audit Validation}
 To validate practical utility, we applied the 30-item checklist to all 14 companion papers spanning 6 distinct experimental designs:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Self-Audit Scores Across 14 Companion Papers}
 \label{tab:selfaudit}
 \begin{tabular}{lcl}
@@ -476,7 +476,7 @@ We present the first evaluation checklist specifically designed for LLM experime
 
 \subsection{Tiered Adoption Guidelines}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Tiered Adoption: Bronze / Silver / Gold}
 \label{tab:tiers}
@@ -510,7 +510,7 @@ We present the first evaluation checklist specifically designed for LLM experime
 The checklist directly addresses the reproducibility crisis in applied LLM research. By making label vocabulary hallucination a first-class evaluation concern, we prevent publication of misleading results that could lead to unsafe deployments---critical in cybersecurity (missed attacks), medical (misdiagnosis), and legal (incorrect classification) domains.
 
 \section*{Reproducibility}
-The checklist itself, all case study data, and automated validation scripts are available at \url{https://github.com/nutthakorn/soc-label-gap}.
+The checklist itself, all case study data, and automated validation scripts are available at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
 \section*{Acknowledgments}
 Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops).
@@ -568,5 +568,4 @@ The author declares no conflict of interest.
 \bibitem{muennighoff2024} N.~Muennighoff et~al., ``OLMo: Accelerating the Science of Language Models,'' in \emph{Proc.\ ACL}, 2024.
 \end{thebibliography}
 
-\balance
 \end{document}

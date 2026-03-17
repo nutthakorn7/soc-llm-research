@@ -1,0 +1,5 @@
+paper,model,dataset,seed,strict_f1,accuracy,train_min,params,use_4bit,gpu,ts
+P6_7B,Qwen2.5-9B-Instruct,salad_5k,42,0.0,0.0,66.9,80740352,True,NVIDIA GeForce RTX 4090,2026-03-16T23:05:26.715727
+P6_7B,Qwen2.5-9B-Instruct,salad_5k,77,0.6661,0.99,67.0,80740352,True,NVIDIA GeForce RTX 4090,2026-03-17T00:26:26.628230
+P6_7B,Qwen2.5-9B-Instruct,salad_5k,123,0.85,0.998,66.9,80740352,True,NVIDIA GeForce RTX 4090,2026-03-17T01:47:04.359424
+P6_7B,Qwen2.5-9B-Instruct,salad_5k,456,1.0,1.0,67.0,80740352,True,NVIDIA GeForce RTX 4090,2026-03-17T03:07:50.353508

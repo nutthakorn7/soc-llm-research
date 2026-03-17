@@ -28,7 +28,7 @@ nutthakorn.ch@kmitl.ac.th}
 \maketitle
 
 \begin{abstract}
-Fine-tuning large language models (LLMs) for Security Operations Center (SOC) alert classification has become a promising approach for automating threat analysis. We present a thorough benchmark of 7 fine-tuned LLMs (0.8B--9B parameters) on the SALAD dataset for multi-dimensional SOC alert classification covering attack category, triage decision, classification, and priority scoring. Our key finding challenges the prevailing narrative of universal LLM superiority: while most models achieve perfect \emph{semantic} accuracy (normalized F1 = 100\%), \textbf{strict label compliance varies from 74.9\% to 100\%} depending on model architecture. Models with stronger reasoning capabilities (DeepSeek-R1, Phi4-mini) follow label schemas exactly, while others hallucinate MITRE ATT\&CK sub-category names from pre-training knowledge---predicting ``Port Scanning'' instead of ``Reconnaissance'' in up to 4,947 out of 9,851 test samples. We introduce the \emph{strict vs.\ normalized F1} dual-metric framework and show that (1) model size alone does not predict label compliance, (2) reasoning-oriented architectures avoid hallucination entirely, and (3) increasing training data from 1K to 20K eliminates hallucination by teaching label vocabulary. Training cost is remarkably low at \$3.72 per model, making fine-tuning 149--181$\times$ cheaper than commercial LLM APIs while achieving superior accuracy.
+Fine-tuning large language models (LLMs) for Security Operations Center (SOC) alert classification has become a promising approach for automating threat analysis. We present a thorough benchmark of 7 fine-tuned LLMs (0.8B--9B parameters) on the SALAD dataset for multi-dimensional SOC alert classification covering attack category, triage decision, classification, and priority scoring. Our key finding challenges the prevailing narrative of universal LLM superiority: while most models achieve perfect \emph{semantic} accuracy (normalized F1 = 100\%), \textbf{strict label compliance varies from 74.9\% to 100\%} depending on model architecture. Models with stronger reasoning capabilities (DeepSeek-R1, Phi4-mini) follow label schemas exactly, while others hallucinate MITRE ATT\&CK sub-category names from pre-training knowledge---predicting ``Port Scanning'' instead of ``Reconnaissance'' in up to 4,947 out of 9,851 test samples. We introduce the \emph{strict vs.\ normalized F1} dual-metric framework and show that (1) model size alone does not predict label compliance, (2) reasoning-oriented architectures avoid hallucination entirely, and (3) increasing training data from 1K to 20K eliminates hallucination by teaching label vocabulary. Training cost is only \$3.72 per model, making fine-tuning 149--181$\times$ cheaper than commercial LLM APIs while achieving superior accuracy.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -99,7 +99,7 @@ Rigorous LLM evaluation remains an open challenge~\cite{chang2024}. Chen et~al.~
 \subsection{Notation}
 Table~\ref{tab:notation} summarizes the key notation used throughout this paper.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Summary of notation used throughout this paper, including metrics, operators, and dataset-specific symbols}
 \label{tab:notation}
@@ -125,7 +125,7 @@ $\theta$ & DT confidence threshold \\
 \subsection{Dataset}
 We use the SALAD dataset (SOC Alert Labelled Annotated Dataset), derived from UNSW-NB15~\cite{moustafa2016}, containing cybersecurity network alerts with multi-dimensional labels. Each alert includes 47 network flow features (src/dst IP, port, protocol, duration, bytes transferred, etc.) and 4 classification dimensions:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{SALAD Classification Dimensions and Entropy Analysis}
 \label{tab:dimensions}
@@ -163,7 +163,7 @@ Verification: we computed pairwise Jaccard similarity between all train-test pai
 
 \subsection{Dataset Statistics}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{SALAD Dataset Feature Statistics (47 Features)}
 \label{tab:features}
@@ -188,7 +188,7 @@ The 47 features capture network flow characteristics at multiple granularities. 
 \subsection{Models}
 We evaluate 7 LLMs spanning two orders of magnitude in parameter count, selected to represent diverse architectures and training philosophies:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training configurations for all 7 LLMs and 2 baselines, including hardware, quantization, and hyperparameters}
 \label{tab:models}
@@ -277,7 +277,7 @@ where $F1$ is macro-averaged F1 score. $\Delta_\text{SC} \geq 0$ by construction
 \subsection{Evaluation Pipeline}
 Algorithm~\ref{alg:eval} formalizes the dual-metric evaluation procedure.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Evaluation pipeline (Algorithm~1): from raw model output through parsing, alias resolution, and dual-metric scoring}
 \label{alg:eval}
@@ -350,7 +350,7 @@ Fig.~\ref{fig:labelgap} and Table~\ref{tab:benchmark} reveal several unexpected 
 
 \subsection{Hallucination Taxonomy}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Label Hallucination Taxonomy (10,093 Errors Across All Models)}
 \label{tab:halluc}
@@ -425,7 +425,7 @@ The examples reveal important patterns:
 
 \subsection{Non-Monotonic Scaling}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training Size vs.\ Label Compliance (Qwen3.5-9B, Seed 42)}
 \label{tab:scaling}
@@ -461,7 +461,7 @@ The normalized F1 remains 1.000 at \emph{all scales}, confirming that the model 
 
 \subsection{Seed Sensitivity}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Seed Sensitivity (Qwen3.5-9B, 5K, Identical Configuration)}
 \label{tab:seed}
@@ -484,7 +484,7 @@ The 5K training point---the ``knowledge activation'' valley---is highly sensitiv
 
 To validate that the performance differences are not attributable to chance, we apply McNemar's test~\cite{mcnemar1947} for paired binary comparisons on the Attack Category dimension ($n=9{,}851$ test samples).
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{McNemar's Test: Pairwise Model Comparisons (Attack Category)}
 \label{tab:mcnemar}
@@ -507,7 +507,7 @@ All pairwise comparisons (except DeepSeek vs.\ Phi4-mini) are statistically sign
 
 Beyond label accuracy, we analyze how models structure their multi-dimensional responses, as format compliance is equally critical for production parsing.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Response format compliance across all models, measuring the fraction of outputs that follow the expected JSON structure}
 \label{tab:format}
@@ -532,7 +532,7 @@ This format analysis reinforces our core finding: reasoning-oriented training no
 
 \subsection{Per-Class Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Per-Class F1 Scores for Attack Category (Top 3 Models)}
 \label{tab:perclass}
@@ -558,7 +558,7 @@ Table~\ref{tab:perclass} reveals that Qwen3-8B's poor strict F1 is entirely conc
 
 \subsection{Cost Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Training and Inference Cost Comparison (A100 GPU, \$2/hr)}
 \label{tab:cost}
@@ -584,7 +584,7 @@ Fine-tuning Phi4-mini for \$0.60 achieves 100\% strict F1---outperforming GPT-4o
 
 \subsection{LoRA Hyperparameter Effects}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{LoRA Ablation on Clean Data (Qwen3.5-9B, 5K)}
 \label{tab:lora}
@@ -608,7 +608,7 @@ Lower LoRA ranks (16, 32) and lower learning rates ($1\times10^{-4}$) achieve pe
 
 \subsection{Latency and Throughput Benchmark}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Inference Latency and SOC Deployment Capacity (A100 80GB)}
 \label{tab:latency}
@@ -734,7 +734,7 @@ Table~\ref{tab:comparison} highlights our key differentiator: no prior study rep
 \subsection{Deployment Recommendation Framework}
 Based on our detailed analysis, we propose a decision framework for SOC deployment:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{SOC Deployment Decision Matrix}
 \label{tab:deploy}
@@ -801,7 +801,7 @@ We present the first systematic study of label compliance in fine-tuned LLMs for
 
 \subsection{Key Findings}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Summary of Key Findings and Their Implications}
 \label{tab:findings}
@@ -846,7 +846,7 @@ As LLMs are increasingly deployed in safety-critical classification systems, the
 Computing resources provided by the NSTDA Supercomputer Center (ThaiSC) on the Lanta HPC system (8.15 PFlops, HPE Cray EX). We thank the anonymous reviewers for their constructive feedback.
 
 \section*{Reproducibility Statement}
-All experiments use publicly available models from HuggingFace with fixed QLoRA configurations. The SALAD dataset will be released upon acceptance. Training scripts, evaluation code, and the clean data split generation pipeline are available at \url{https://github.com/nutthakorn/soc-label-gap}. All results are reproducible with seeds 42, 123, and 2024 using LlamaFactory v0.9.2 on NVIDIA A100 GPUs. The alias mapping table (Table~\ref{tab:halluc}) provides the complete normalization rules needed to reproduce our normalized F1 scores.
+All experiments use publicly available models from HuggingFace with fixed QLoRA configurations. The SALAD dataset will be released upon acceptance. Training scripts, evaluation code, and the clean data split generation pipeline are available at \url{https://github.com/nutthakorn7/soc-llm-research}. All results are reproducible with seeds 42, 123, and 2024 using LlamaFactory v0.9.2 on NVIDIA A100 GPUs. The alias mapping table (Table~\ref{tab:halluc}) provides the complete normalization rules needed to reproduce our normalized F1 scores.
 
 %% ===== REFERENCES =====
 
@@ -1006,7 +1006,7 @@ MITRE Corporation, ``MITRE ATT\&CK Framework v14,'' 2024. [Online]. Available: \
 
 Table~\ref{tab:aliasmap} provides the exhaustive alias mapping $\phi$ used for normalized F1 computation. Each mapping was validated by cross-referencing with the MITRE ATT\&CK framework v14.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Complete Alias Mapping Table ($\phi$)}
 \label{tab:aliasmap}
@@ -1030,7 +1030,7 @@ The mapping is intentionally conservative: we only normalize predictions that ha
 \section{Hyperparameter Configuration}
 \label{app:hyperparams}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Complete QLoRA Training Configuration}
 \label{tab:hyperparams}
@@ -1074,7 +1074,7 @@ The mapping is intentionally conservative: we only normalize predictions that ha
 \section{Per-Model Error Distribution}
 \label{app:errors}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Complete Error Distribution by Model and Attack Category}
 \label{tab:allerrors}

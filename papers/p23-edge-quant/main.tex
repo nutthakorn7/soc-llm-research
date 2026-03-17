@@ -34,25 +34,28 @@ Our contributions:
 \section{Related Work}
 
 \subsection{LLM Quantization}
-LLM.int8()~\cite{dettmers2022} preserves model quality at 8-bit through mixed-precision decomposition of outlier features. GPTQ~\cite{frantar2023} applies one-shot weight quantization based on second-order error approximation. AWQ~\cite{lin2024} identifies salient weights for activation-aware quantization. QLoRA~\cite{dettmers2023} trains LoRA adapters in full precision while keeping base weights in 4-bit NF4 format, enabling fine-tuning on consumer GPUs. GGUF~\cite{gguf2023} enables CPU-only inference with quantized models. SqueezeLLM~\cite{kim2024} introduced non-uniform quantization preserving outlier weights. SpQR~\cite{dettmers2024spqr} identified that $<$1\% of weights (sensitive outliers) account for most quantization error.
+LLM.int8()~\cite{dettmers2022} preserves model quality at 8-bit through mixed-precision decomposition of outlier features. GPTQ~\cite{frantar2023} applies one-shot weight quantization based on second-order error approximation. AWQ~\cite{lin2024} identifies salient weights for activation-aware quantization. QLoRA~\cite{dettmers2023} trains LoRA adapters in full precision while keeping base weights in 4-bit NF4 format, enabling fine-tuning on consumer GPUs. GGUF~\cite{gguf2023} enables CPU-only inference with quantized models. SqueezeLLM~\cite{kim2024} introduced non-uniform quantization preserving outlier weights. SpQR~\cite{dettmers2024spqr} identified that $<$1\% of weights (sensitive outliers) account for most quantization error. Biderman et~al.~\cite{biderman2024} compared LoRA to full fine-tuning across multiple tasks, showing that LoRA ``learns less and forgets less''---but did not study quantization's interaction with adapter training.
 
 All these works evaluate accuracy degradation; none examine label compliance---a fundamentally different question asking whether quantization changes \emph{which} label is predicted, not merely the prediction confidence.
 
 \subsection{Edge AI for Security}
-Chen et~al.~\cite{chen2023edge} deployed lightweight CNNs for intrusion detection on Jetson devices using UNSW-NB15~\cite{moustafa2016}. TinyML~\cite{banbury2021} targets sub-1MB models for microcontrollers. Phi-3~\cite{abdin2024} demonstrated GPT-3.5-level performance at 3.8B parameters, making edge LLM deployment realistic. Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity but did not evaluate edge deployment scenarios or quantization effects on domain-specific accuracy.
+Chen et~al.~\cite{chen2023edge} deployed lightweight CNNs for intrusion detection on Jetson devices using UNSW-NB15~\cite{moustafa2016}. TinyML~\cite{banbury2021} targets sub-1MB models for microcontrollers. Phi-3~\cite{abdin2024} demonstrated GPT-3.5-level performance at 3.8B parameters, making edge LLM deployment realistic. Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity but did not evaluate edge deployment scenarios or quantization effects on domain-specific accuracy. Arp et~al.~\cite{arp2022} catalogued critical pitfalls in ML-based security, including the importance of realistic evaluation settings.
 
 In the broader edge AI landscape, NVIDIA's Jetson platform has become the dominant deployment target for inference at the network edge, with the Orin NX series offering 8--16~GB VRAM sufficient for quantized LLMs. Our work bridges the gap between edge hardware capabilities and SOC classification requirements.
 
+\subsection{Federated and Privacy-Preserving Edge Inference}
+Edge deployment introduces unique data governance challenges. McMahan et~al.~\cite{mcmahan2017} proposed Federated Learning to keep sensitive security data on-premise while aggregating model updates centrally. Kairouz et~al.~\cite{kairouz2021} provided a comprehensive survey of federated learning challenges, including communication efficiency and heterogeneity---both addressed by our 4-bit approach which reduces model transfer size by $4\times$. Our compliance-neutral finding enables federated deployment: branch offices can run identical 4-bit models without worrying that quantization introduces inconsistent label schemas.
+
 \subsection{Quantization and Hallucination}
-Recent work demonstrates that quantization can increase hallucination in generative tasks by corrupting internal representations~\cite{huang2023}. Advanced quantization methods like AQLM~\cite{yao2024} attempt to preserve model quality. However, classification with constrained output vocabulary is fundamentally different from open-ended generation. Our task has only 8 valid labels; the relevant question is whether reduced precision changes the \emph{probability ranking} among these 8 labels, not whether it introduces novel tokens. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient adaptation, while our companion studies~\cite{p3,p7} document the label hallucination problem and its cost implications.
+Recent work demonstrates that quantization can increase hallucination in generative tasks by corrupting internal representations~\cite{huang2023}. Advanced quantization methods like AQLM~\cite{yao2024} attempt to preserve model quality. Gekhman et~al.~\cite{gekhman2024} showed that fine-tuning on new knowledge can itself introduce hallucinations, independent of quantization. However, classification with constrained output vocabulary is fundamentally different from open-ended generation. Our task has only 8 valid labels; the relevant question is whether reduced precision changes the \emph{probability ranking} among these 8 labels, not whether it introduces novel tokens. Parameter-efficient methods such as LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} reduce fine-tuning cost, while our companion studies~\cite{p3,p7} document the label hallucination problem and its cost implications.
 
 This distinction is critical: generative hallucination arises from accumulated quantization errors across autoregressive steps ($L$ tokens $\times$ per-step error), while classification hallucination depends on a single output decision. The error accumulation mechanism does not apply.
 
-\textbf{Novelty gap.} No prior work has (1)~measured quantization's effect on label compliance as distinct from accuracy, (2)~tested the capacity-compliance hypothesis for precision reduction, (3)~provided VRAM/latency/compliance benchmarks for edge SOC deployment, or (4)~demonstrated that quantization is compliance-neutral for schema-constrained tasks.
+\textbf{Novelty gap.} No prior work has (1)~measured quantization's effect on label compliance as distinct from accuracy, (2)~tested the capacity-compliance hypothesis for precision reduction, (3)~provided VRAM/latency/compliance benchmarks for edge SOC deployment, (4)~demonstrated that quantization is compliance-neutral for schema-constrained tasks, or (5)~formalized the structural vs.\ representational capacity decomposition (Definition~1).
 
 \section{Experimental Setup}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Quantization configurations for 4/8/16-bit experiments: method, VRAM usage, training time, cost, and inference latency}
 \label{tab:config}
 \begin{tabular}{ccccrr}
@@ -68,7 +71,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 \textbf{Model}: Qwen2.5-0.5B-Instruct with LoRA rank 64 (all conditions). \textbf{Dataset}: AG News, 5K train, 1K test. \textbf{Hardware}: Vast.ai RTX 4090. \textbf{Seeds}: 42, 77, 123, 456, 999 (5 seeds per quantization level). \textbf{Framework}: LlamaFactory v0.9.2.
 
 \subsection{Quantization Mechanics}
-\textbf{4-bit NF4}: QLoRA\cite{dettmers2023} uses NormalFloat4 data type optimized for normally-distributed weights. Base weights are stored in 4-bit; LoRA adapters train in full bf16 precision. The double quantization technique further compresses quantization constants.
+\textbf{4-bit NF4}: QLoRA~\cite{dettmers2023} uses NormalFloat4 data type optimized for normally-distributed weights. Base weights are stored in 4-bit; LoRA adapters train in full bf16 precision. The double quantization technique further compresses quantization constants.
 
 \textbf{8-bit LLM.int8()}: Mixed-precision decomposition identifies outlier features (dimensions with values $>6\sigma$) and processes them in fp16, while remaining weights use int8. This preserves model quality but introduces computational overhead from the decomposition step.
 
@@ -78,7 +81,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 
 \subsection{Label Compliance: No Difference}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Quantization vs.\ Label Compliance (5-Seed Mean $\pm$ Std)}
 \label{tab:results}
 \begin{tabular}{ccccc}
@@ -102,7 +105,7 @@ This distinction is critical: generative hallucination arises from accumulated q
 
 \subsection{The Capacity-Compliance Hypothesis: Refuted}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Capacity-compliance comparison: rank reduction (structural $\mathcal{C}_S$) affects compliance while quantization (representational $\mathcal{C}_R$) does not}
 \label{tab:hypothesis}
 \begin{tabular}{llcc}
@@ -131,7 +134,7 @@ Label compliance depends on $\mathcal{C}_S$ (which subspaces are accessible for 
 
 \subsection{Per-Class F1 by Quantization}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Per-Class Strict F1 by Quantization Level}
 \label{tab:perclass}
 \begin{tabular}{lcccc}
@@ -156,7 +159,7 @@ The maximum per-class range across quantization levels is \textbf{0.004}---negli
 
 \subsection{Operational Metrics}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Operational comparison across quantization levels: VRAM, latency, training time, cost, and throughput metrics}
 \label{tab:operational}
 \begin{tabular}{cccccc}
@@ -183,7 +186,7 @@ The maximum per-class range across quantization levels is \textbf{0.004}---negli
 
 \subsection{Total Cost of Ownership Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{1-Year TCO by Deployment Scenario}
 \label{tab:tco}
 \begin{tabular}{lcccc}
@@ -202,7 +205,7 @@ TCO includes hardware amortization (3-year), electricity (\$0.12/kWh), and month
 
 \section{Edge Deployment Guide}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Hardware Compatibility Matrix}
 \label{tab:hardware}
 \begin{tabular}{lcccc}
@@ -217,7 +220,7 @@ A10G & 24 GB & \checkmark & \checkmark & \$3,000 \\
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Throughput by Device and Quantization}
 \label{tab:throughput}
 \begin{tabular}{lccr}
@@ -255,7 +258,7 @@ This contrasts with generative tasks where quantization noise accumulates across
 
 \subsection{Connection to Companion Studies}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Capacity Reduction Effects Across Studies}
 \label{tab:cross}
 \begin{tabular}{llccc}
@@ -343,27 +346,33 @@ This study uses publicly available, anonymized datasets containing no personally
 \section*{Declaration of Competing Interest}
 The author declares no conflict of interest.
 
-\begin{thebibliography}{21}
+\begin{thebibliography}{30}
 \bibitem{abdin2024} M.~Abdin et~al., ``Phi-3 Technical Report,'' \emph{arXiv:2404.14219}, 2024.
+\bibitem{arp2022} D.~Arp et~al., ``Dos and Don'ts of Machine Learning in Computer Security,'' in \emph{Proc.\ USENIX Security}, 2022.
 \bibitem{banbury2021} C.~Banbury et~al., ``MLPerf Tiny Benchmark,'' in \emph{Proc.\ NeurIPS}, 2021.
+\bibitem{biderman2024} D.~Biderman et~al., ``LoRA Learns Less and Forgets Less,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{chen2023edge} Y.~Chen et~al., ``Lightweight Models for NIDS on Edge Devices,'' \emph{IEEE IoT J.}, 2023.
 \bibitem{dettmers2022} T.~Dettmers et~al., ``LLM.int8(): 8-bit Matrix Multiplication for Transformers,'' in \emph{Proc.\ NeurIPS}, 2022.
 \bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
 \bibitem{dettmers2024spqr} T.~Dettmers et~al., ``SpQR: A Sparse-Quantized Representation for Near-Lossless LLM Weight Compression,'' in \emph{Proc.\ ICLR}, 2024.
 \bibitem{ferrag2024} M.~A.~Ferrag et~al., ``LLMs for Cybersecurity: All Insights,'' \emph{IEEE COMST}, 2024.
 \bibitem{frantar2023} E.~Frantar et~al., ``GPTQ: Accurate Post-Training Quantization,'' in \emph{Proc.\ ICLR}, 2023.
+\bibitem{gekhman2024} Z.~Gekhman et~al., ``Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?'' in \emph{Proc.\ EMNLP}, 2024.
 \bibitem{gguf2023} G.~Gerganov, ``GGUF: GPT-Generated Unified Format,'' \emph{llama.cpp project}, 2023.
 \bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of LLMs,'' in \emph{Proc.\ ICLR}, 2022.
 \bibitem{huang2023} L.~Huang et~al., ``A Survey on Hallucination in LLMs,'' \emph{arXiv:2311.05232}, 2023.
+\bibitem{kairouz2021} P.~Kairouz et~al., ``Advances and Open Problems in Federated Learning,'' \emph{Foundations and Trends in Machine Learning}, vol.~14, no.~1--2, 2021.
 \bibitem{kim2024} S.~Kim et~al., ``SqueezeLLM: Dense-and-Sparse Quantization,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{lin2024} J.~Lin et~al., ``AWQ: Activation-aware Weight Quantization,'' in \emph{Proc.\ MLSys}, 2024.
+\bibitem{mcmahan2017} H.~B.~McMahan et~al., ``Communication-Efficient Learning of Deep Networks from Decentralized Data,'' in \emph{Proc.\ AISTATS}, 2017.
 \bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15: Dataset for NIDS,'' in \emph{Proc.\ MilCIS}, 2015.
 \bibitem{p3} N.~Chalaemwongwan, ``Mind the Label Gap,'' \emph{IEEE TDSC}, 2025.
 \bibitem{p5} N.~Chalaemwongwan, ``Entropy-Aware Cascade,'' \emph{FGCS}, 2025.
 \bibitem{p7} N.~Chalaemwongwan, ``\$0.60 Is All You Need,'' \emph{IEEE Access}, 2025.
 \bibitem{p14} N.~Chalaemwongwan, ``LoRA vs.\ OFT for Label Compliance,'' \emph{PR}, 2025.
+\bibitem{p19} N.~Chalaemwongwan, ``Beyond Accuracy: A Reproducibility Checklist,'' \emph{C\&S}, 2025.
 \bibitem{p21} N.~Chalaemwongwan, ``Bigger Models Follow Instructions Better,'' \emph{KBS}, 2025.
 \bibitem{p22} N.~Chalaemwongwan, ``Higher Rank, More Hallucination?'' \emph{Neurocomputing}, 2025.
 \bibitem{yao2024} Z.~Yao et~al., ``AQLM: Additive Quantization for LLMs,'' in \emph{Proc.\ ICML}, 2024.
 \end{thebibliography}
-\balance\end{document}
+\end{document}

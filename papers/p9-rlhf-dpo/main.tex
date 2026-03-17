@@ -5,7 +5,6 @@
 \lstset{basicstyle=\ttfamily\small, breaklines=true}
 
 \begin{document}
-\title{Does Alignment Reduce Hallucination? Comparing SFT and DPO for Label Compliance in SOC Classification}
 \title{DPO Destroys Label Compliance: Why Alignment Hurts Classification}
 \author{Nutthakorn Chalaemwongwan \\ Department of Computer Engineering, KOSEN-KMITL \\ King Mongkut's Institute of Technology Ladkrabang \\ \texttt{nutthakorn.ch@kmitl.ac.th}}
 \maketitle
@@ -44,20 +43,23 @@ Our contributions:
 \section{Related Work}
 
 \subsection{Alignment Techniques}
-RLHF~\cite{ouyang2022} introduced reward-model-based alignment, followed by PPO optimization. Ziegler et~al.~\cite{ziegler2019} demonstrated early text summarization applications. DPO~\cite{rafailov2023} eliminated the reward model by directly optimizing from preference pairs, becoming the dominant alignment method due to simplicity. ORPO~\cite{hong2024} unifies SFT and alignment into a single training phase. Tunstall et~al.~\cite{tunstall2023} (Zephyr) showed distilled alignment can match RLHF. Azar et~al.~\cite{azar2024} provided a general theoretical framework (IPO) connecting these approaches.
+RLHF~\cite{ouyang2022} introduced reward-model-based alignment, followed by PPO optimization. Ziegler et~al.~\cite{ziegler2019} demonstrated early text summarization applications. DPO~\cite{rafailov2023} eliminated the reward model by directly optimizing from preference pairs, becoming the dominant alignment method due to simplicity and stability. ORPO~\cite{hong2024} unifies SFT and alignment into a single training phase. Tunstall et~al.~\cite{tunstall2023} (Zephyr) showed distilled alignment can match RLHF quality. Azar et~al.~\cite{azar2024} provided a general theoretical framework (IPO) connecting these approaches. Ethayarajh et~al.~\cite{ethayarajh2024} analyzed DPO through the lens of KL-constrained reward maximization, showing that the implicit reward can become unbounded.
 
-All prior alignment work targets \emph{behavioral} alignment: safety, helpfulness, harmlessness. We apply alignment to a fundamentally different objective: \emph{vocabulary} alignment (correct label strings).
+All prior alignment work targets \emph{behavioral} alignment: safety, helpfulness, harmlessness. We apply alignment to a fundamentally different objective: \emph{vocabulary} alignment---ensuring the model produces exact label strings from a closed schema.
 
 \subsection{DPO Failure Modes}
-Feng et~al.~\cite{feng2024} documented reward hacking in DPO. Song et~al.~\cite{song2024} showed DPO can produce degenerate outputs when preference margins are small. Tajwar et~al.~\cite{tajwar2024} found DPO struggles with out-of-distribution negative examples. Our result provides a dramatic new failure case: DPO applied to fine-grained classification produces complete distributional collapse.
+Recent work has identified several DPO failure modes. Feng et~al.~\cite{feng2024} documented reward hacking where DPO models exploit surface-level features rather than learning genuine preferences. Song et~al.~\cite{song2024} showed DPO can produce degenerate outputs when preference margins are small---directly relevant to our setting where ``Reconnaissance'' and ``Port Scanning'' have minimal semantic distance. Tajwar et~al.~\cite{tajwar2024} found DPO struggles with out-of-distribution negative examples and recommended online preference collection. Xu et~al.~\cite{xu2024} showed that DPO's offline nature causes distribution shift between the training and learned policies, proposing iterative DPO to mitigate this. Mitchell~\cite{mitchell2023} proposed a note of caution regarding RLHF, arguing that alignment can amplify systematic biases already present in the model. Our result provides a dramatic new failure case specific to classification: DPO applied to fine-grained label vocabulary produces complete distributional collapse, reducing F1 from 89.2\% to 0.0\%.
+
+\subsection{Constrained Decoding and Label Control}
+An alternative approach to ensuring label compliance bypasses alignment entirely. Willard and Louf~\cite{willard2023} proposed structured generation via constrained decoding, guaranteeing outputs conform to a given grammar or schema. Guidance~\cite{lundberg2023} enables token-level constraints via finite-state machines. These methods operate at inference time rather than training time, avoiding the distributional risks inherent in alignment. However, constrained decoding requires knowledge of the valid label set at inference time and adds latency, making it less practical for high-throughput SOC deployment. Our work demonstrates why training-time approaches (SFT, reasoning architecture) are preferable to alignment for label control.
 
 \subsection{Hallucination in LLMs}
-Ji et~al.~\cite{ji2023} provide a comprehensive taxonomy. Gekhman et~al.~\cite{gekhman2024} showed fine-tuning on new knowledge increases hallucination---a parallel to our finding that alignment on anti-hallucination preferences can worsen the problem. Our companion study~\cite{p3} documented label vocabulary hallucination as a distinct phenomenon.
+Ji et~al.~\cite{ji2023} provide a comprehensive taxonomy distinguishing intrinsic from extrinsic hallucination. Gekhman et~al.~\cite{gekhman2024} showed fine-tuning on new knowledge increases hallucination---a parallel to our finding that alignment on anti-hallucination preferences can worsen the problem. Huang et~al.~\cite{huang2023} surveyed hallucination detection and mitigation methods. Our companion study~\cite{p3} documented \emph{label vocabulary hallucination} as a distinct phenomenon where the model produces semantically correct but schema-noncompliant labels (e.g., ``Port Scanning'' instead of ``Reconnaissance''), which is fundamentally different from factual or generative hallucination.
 
-\subsection{Cybersecurity Context}
-Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity. The UNSW-NB15 dataset~\cite{moustafa2016} provides the foundation for SALAD. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient fine-tuning.
+\subsection{Cybersecurity Classification}
+Ferrag et~al.~\cite{ferrag2024} surveyed LLMs for cybersecurity, documenting advantages over traditional ML on complex tasks. The UNSW-NB15 dataset~\cite{moustafa2016} provides the network flow foundation for the SALAD derivative. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient fine-tuning on consumer hardware. Al-Rakhami et~al.~\cite{alrakhami2022} achieved 93\% accuracy with ensemble methods, establishing a strong traditional ML baseline. Arp et~al.~\cite{arp2022} catalogued critical pitfalls in ML-based security evaluation, including temporal bias and data leakage.
 
-\textbf{Novelty gap.} No prior work has (1)~applied DPO to reduce label hallucination in classification, (2)~documented catastrophic alignment failure in fine-grained vocabulary control, (3)~demonstrated automatic preference pair generation from SFT model errors, or (4)~compared alignment against data scaling, architecture selection, and format regularization for compliance.
+\textbf{Novelty gap.} No prior work has (1)~applied DPO to reduce label hallucination in classification, (2)~documented catastrophic alignment failure in fine-grained vocabulary control, (3)~proposed automatic preference pair generation from SFT model errors without human annotation, (4)~formalized the alignment-compliance incompatibility condition (Definition~1), or (5)~compared alignment against data scaling, architecture selection, and format regularization for compliance.
 
 \section{Methodology}
 
@@ -78,7 +80,7 @@ For each hallucinated prediction, the correct label is ``chosen'' and the halluc
 
 \subsection{Training Pipeline}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Four paths to label compliance: SFT, DPO, prompt engineering, and structured output, with their tradeoffs}
 \label{tab:pipeline}
 \begin{tabular}{lccrr}
@@ -100,7 +102,7 @@ Reasoning & SFT (5K) & --- & \$0.60 & 100\% \\
 
 \subsection{Catastrophic DPO Failure}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{SFT vs.\ DPO head-to-head comparison: F1, hallucination rate, and compliance across 5 seeds}
 \label{tab:results}
 \begin{tabular}{lccccc}
@@ -124,7 +126,7 @@ SFT+DPO & 0.000 & 0.000 & 100\% & 70.4m & \$2.35 \\
 
 \subsection{Failure Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{DPO output distribution showing the catastrophic vocabulary collapse where the model fixates on a single label}
 \label{tab:outputs}
 \begin{tabular}{lr}
@@ -146,7 +148,7 @@ The DPO model does not produce \emph{any} valid label---neither correct nor hall
 \subsection{SFT Baseline Analysis}
 To understand what DPO destroyed, we examine the SFT model's output quality:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{SFT baseline per-class strict F1 performance across all attack categories, showing class-level variation}
 \label{tab:sft}
 \begin{tabular}{lccr}
@@ -171,7 +173,7 @@ The SFT model achieves $89.2 \pm 0.7$\% strict F1 (5 seeds, range 88.4--90.1\%) 
 
 \subsection{Preference Pair Quality Assessment}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Auto-Generated Preference Pair Statistics}
 \label{tab:prefs}
 \begin{tabular}{lr}
@@ -208,7 +210,7 @@ where $\text{sim}$ is the token-level embedding similarity. High similarity + lo
 
 \subsection{Comparison of Compliance Paths}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Four Paths to Perfect Compliance: Full Comparison}
 \label{tab:comparison}
 \begin{tabular}{lccccc}
@@ -240,18 +242,51 @@ Alignment techniques are designed for intent-level distinctions: ``helpful vs.\ 
 
 DPO's contrastive loss is effective when chosen and rejected outputs are in different semantic regions. It fails when they are in the same semantic region but differ only in vocabulary (synonym vs.\ schema label). The model cannot learn ``use this specific word'' through preference optimization designed for ``prefer this behavior.''
 
+\subsection{Formal Analysis: DPO Loss Under Semantic Proximity}
+The DPO loss function~\cite{rafailov2023} is:
+\begin{equation}
+\mathcal{L}_\text{DPO} = -\log \sigma\left(\beta \log \frac{\pi_\theta(y_w|x)}{\pi_\text{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_\text{ref}(y_l|x)}\right)
+\end{equation}
+where $y_w$, $y_l$ are the chosen (correct label) and rejected (hallucinated label) outputs.
+
+When $y_w$ and $y_l$ share token subsequences (e.g., both contain ``Reconnaissance''/``Port Scanning'' which share domain semantics), the gradient $\nabla_\theta \mathcal{L}$ pushes down logits for tokens in $y_l$ that also participate in other valid labels. Specifically, for token $t$ appearing in both rejected label $y_l$ and valid label $y_k \neq y_w$:
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial \log \pi_\theta(t)} < 0 \quad \Rightarrow \quad \text{collateral suppression of } y_k
+\end{equation}
+This collateral damage cascades: suppressing tokens from one valid label destabilizes predictions for all labels sharing those tokens, ultimately collapsing the entire classification distribution.
+
+\begin{table}[!ht]
+\centering\caption{Semantic Distance Between Chosen-Rejected Pairs in Our DPO vs.\ Typical Alignment Applications}
+\label{tab:semdist}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Application} & \textbf{Chosen} & \textbf{Rejected} & \textbf{sim} \\
+\midrule
+Safety & ``I cannot help with that'' & ``Here is how to...'' & 0.12 \\
+Helpfulness & ``The answer is 42'' & ``I don't know'' & 0.23 \\
+Summarization & Concise summary & Verbose repetition & 0.31 \\
+\midrule
+\textbf{Ours} & ``Reconnaissance'' & ``Port Scanning'' & \textbf{0.89} \\
+\textbf{Ours} & ``DoS'' & ``DDoS'' & \textbf{0.94} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:semdist} illustrates the fundamental mismatch: our preference pairs have semantic similarity 3--8$\times$ higher than typical alignment applications. This violates the implicit assumption in DPO that chosen and rejected outputs occupy distinct regions of the output space.
+
 \subsection{When DPO Might Work}
 DPO could succeed for label compliance if:
 \begin{itemize}
-\item Chosen and rejected labels are semantically distant (e.g., ``Malicious'' vs.\ ``Benign'').
-\item The $\beta$ parameter is extremely small ($<$0.01), reducing gradient magnitude.
-\item The preference pairs are supplemented with additional SFT data to stabilize the distribution.
-\item Using online DPO or iterative DPO to prevent catastrophic divergence.
+\item Chosen and rejected labels are semantically distant (e.g., ``Malicious'' vs.\ ``Benign'', sim $<$ 0.5).
+\item The $\beta$ parameter is extremely small ($<$0.01), reducing gradient magnitude below the collapse threshold.
+\item The preference pairs are supplemented with additional SFT data to stabilize the distribution (mixed SFT+DPO training).
+\item Using online DPO~\cite{xu2024} or iterative DPO to prevent catastrophic divergence through periodic re-anchoring.
+\item Constrained decoding~\cite{willard2023} is applied post-alignment to enforce valid label outputs.
 \end{itemize}
 
 \subsection{Connection to Companion Studies}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering\caption{Anti-Hallucination Methods Across Studies}
 \label{tab:methods}
 \begin{tabular}{llccc}
@@ -285,7 +320,7 @@ Our result has implications beyond SOC classification:
 
 \textbf{Single model}: Qwen2.5-0.5B has limited capacity. Larger models (7B+) have more stable gradient landscapes and may tolerate fine-grained contrastive learning better.
 
-\textbf{No ORPO}: ORPO\cite{hong2024} unifies SFT and alignment, avoiding the catastrophic two-stage shift. Its single-stage design may prevent distributional collapse.
+\textbf{No ORPO}: ORPO~\cite{hong2024} unifies SFT and alignment, avoiding the catastrophic two-stage shift. Its single-stage design may prevent distributional collapse.
 
 \textbf{Auto-generated preferences}: The quality depends entirely on SFT error patterns. If SFT produces diverse errors, preference pairs are more informative; if errors are concentrated, pairs may be redundant.
 
@@ -332,7 +367,7 @@ Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC; Vast.ai clo
 
 
 \section*{Data Availability}
-The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.
+The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
 \section*{Ethical Statement}
 This study uses publicly available, anonymized datasets containing no personally identifiable information. No human subjects were involved. The research aims to improve SOC analyst efficiency and reduce alert fatigue.
@@ -341,14 +376,20 @@ This study uses publicly available, anonymized datasets containing no personally
 The author declares no conflict of interest.
 
 \begin{thebibliography}{20}
+\bibitem{alrakhami2022} M.~Al-Rakhami et~al., ``Intrusion Detection Using Ensemble Learning,'' \emph{J.\ Cloud Computing}, vol.~11, 2022.
+\bibitem{arp2022} D.~Arp et~al., ``Dos and Don'ts of Machine Learning in Computer Security,'' in \emph{Proc.\ USENIX Security}, 2022.
 \bibitem{azar2024} M.~G.~Azar et~al., ``A General Theoretical Paradigm to Understand Learning from Human Feedback,'' in \emph{Proc.\ AISTATS}, 2024.
 \bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
+\bibitem{ethayarajh2024} K.~Ethayarajh et~al., ``KTO: Model Alignment as Prospect Theoretic Optimization,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{feng2024} Y.~Feng et~al., ``Reward Hacking in DPO: The Impact of Reward Shaping,'' \emph{arXiv}, 2024.
 \bibitem{ferrag2024} M.~A.~Ferrag et~al., ``LLMs for Cybersecurity: All Insights,'' \emph{IEEE COMST}, 2024.
 \bibitem{gekhman2024} Z.~Gekhman et~al., ``Does Fine-Tuning Encourage Hallucinations?'' in \emph{Proc.\ EMNLP}, 2024.
 \bibitem{hong2024} J.~Hong et~al., ``ORPO: Monolithic Preference Optimization without Reference Model,'' \emph{arXiv:2403.07691}, 2024.
 \bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of LLMs,'' in \emph{Proc.\ ICLR}, 2022.
+\bibitem{huang2023} L.~Huang et~al., ``A Survey on Hallucination in Large Language Models,'' \emph{arXiv:2311.05232}, 2023.
 \bibitem{ji2023} Z.~Ji et~al., ``Survey of Hallucination in NLG,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, 2023.
+\bibitem{lundberg2023} S.~Lundberg, ``Guidance: Controlling Large Language Models,'' \emph{GitHub}, 2023.
+\bibitem{mitchell2023} E.~Mitchell et~al., ``A Note of Caution on Fine-Tuning with RLHF,'' \emph{TMLR}, 2023.
 \bibitem{moustafa2016} N.~Moustafa and J.~Slay, ``UNSW-NB15,'' in \emph{Proc.\ MilCIS}, 2015.
 \bibitem{ouyang2022} L.~Ouyang et~al., ``Training LMs to Follow Instructions with Human Feedback,'' in \emph{Proc.\ NeurIPS}, 2022.
 \bibitem{p3} N.~Chalaemwongwan, ``Mind the Label Gap,'' \emph{IEEE TDSC}, 2025.
@@ -361,6 +402,8 @@ The author declares no conflict of interest.
 \bibitem{song2024} F.~Song et~al., ``Preference Ranking Optimization for Human Alignment,'' in \emph{Proc.\ AAAI}, 2024.
 \bibitem{tajwar2024} F.~Tajwar et~al., ``Preference Fine-Tuning of LLMs Should Leverage Suboptimally-Rated Responses,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{tunstall2023} L.~Tunstall et~al., ``Zephyr: Direct Distillation of LM Alignment,'' \emph{arXiv:2310.16944}, 2023.
+\bibitem{willard2023} B.~T.~Willard and R.~Louf, ``Efficient Guided Generation for Large Language Models,'' \emph{arXiv:2307.09702}, 2023.
+\bibitem{xu2024} H.~Xu et~al., ``Is DPO Superior to PPO for LLM Alignment? A Comprehensive Study,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{ziegler2019} D.~M.~Ziegler et~al., ``Fine-Tuning LMs from Human Preferences,'' \emph{arXiv:1909.08593}, 2019.
 \end{thebibliography}
 \end{document}

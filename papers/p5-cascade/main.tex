@@ -12,16 +12,7 @@
 \cortext[cor1]{Corresponding author}
 \ead{nutthakorn.ch@kmitl.ac.th}
 \address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
-}
 \begin{frontmatter}
-
-\begin{highlights}
-\item Entropy-aware cascade reduces LLM calls by up to 80\% on low-entropy tasks.
-\item Decision Tree filters trivial classifications; LLM handles only high-entropy cases.
-\item Cost drops from \$4.48 to \$0.89 with no loss in classification accuracy.
-\item Framework generalizes across cybersecurity, news, emotion, and legal domains.
-\item Task entropy $H(Y)$ is the sole routing criterion --- computable in 30 seconds.
-\end{highlights}
 
 \begin{highlights}
 \item Entropy-aware cascade reduces LLM calls by up to 80\% on low-entropy tasks.
@@ -98,7 +89,7 @@ where $\alpha$ is the DT filter rate (fraction handled by DT with sufficient con
 \subsection{Confidence Calibration}
 Decision Trees produce calibrated probability estimates via leaf-node class frequencies. We verify calibration by binning predictions into 10 confidence brackets and comparing predicted vs.\ observed accuracy (reliability diagram).
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Decision Tree confidence calibration on SALAD, showing the relationship between predicted confidence and actual accuracy}
 \label{tab:calibration}
@@ -128,7 +119,7 @@ Optimal $\theta$ depends on: (1)~the cost ratio $C_\text{LLM}/C_\text{DT}$, (2)~
 %% ===== SALAD RESULTS =====
 \section{SALAD Results ($H=1.24$ bits)}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cascade results on SALAD: the Decision Tree alone achieves perfect accuracy, making the LLM stage unnecessary}
 \label{tab:salad}
@@ -161,7 +152,7 @@ At every threshold, cascade F1 = 100\%. The DT handles 84--99.9\% of traffic wit
 \subsection{Diagnostic Analysis}
 To understand why the cascade is unnecessary, we analyze the DT's internal behavior:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Decision Tree diagnostic analysis explaining why SALAD's low entropy ($H=0.083$) makes it trivially separable}
 \label{tab:diagnostic}
@@ -190,18 +181,18 @@ The DT uses only 4 of 44 features to achieve near-perfect classification, with a
 
 To validate that entropy predicts cascade utility, we analyze 4 domains spanning $H=1.24$--6.16 bits:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
-\caption{Cascade Utility Across Entropy Levels}
+\caption{Cascade Utility Across Entropy Levels (DT F1 = mean$\pm$SD, $n$=4--5 seeds)}
 \label{tab:entropy}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Domain} & $\mathbf{H(Y)}$ & \textbf{DT F1} & \textbf{Uncertain\%} & \textbf{Cascade?} \\
 \midrule
 SALAD & 1.24 & .874 & $<$1\% & No \\
-AG News & 2. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.00 & .581 & $\sim$15\% & Yes ($\theta$=0.90) \\
-GoEmotions & 3.75 & .173 & $\sim$60\% & Yes ($\theta$=0.70) \\
-LedGAR & 6.16 & .183 & $\sim$50\% & No (LLM only) \\
+AG News & 2.00 & .526$\pm$.023 & $\sim$15\% & Yes ($\theta$=0.90) \\
+GoEmotions & 3.89 & .181$\pm$.011 & $\sim$60\% & Yes ($\theta$=0.70) \\
+LedGAR & 6.19 & .198$\pm$.011 & $\sim$50\% & No (LLM only) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -232,7 +223,7 @@ DT performance is near-random (18.3\% F1 with 100 classes). The DT's uncertain r
 \subsection{Entropy-Utility Relationship}
 We observe a consistent pattern: DT filter rate ($\alpha$) decreases monotonically with entropy. This follows from information theory: higher-entropy label distributions require more bits to encode, which means feature-based rules (DT) capture less of the total information, leaving more for the LLM.
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Relationship between task entropy and Decision Tree filter rate: lower entropy enables higher DT coverage}
 \label{tab:filter}
@@ -253,7 +244,7 @@ LedGAR & 6.16 & 0.150 & 15.0\% \\
 
 Based on our cross-domain analysis, we propose a quantitative cascade policy:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Entropy-based cascade decision framework: when to use DT-only, cascade, or LLM-only based on $H(Y)$}
 \label{tab:policy}
@@ -290,7 +281,7 @@ This theorem provides a \emph{worst-case} bound. In practice, savings may exceed
 
 \subsection{SOC Alert Volume Scenarios}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Annual Cost by Alert Volume and Strategy}
 \label{tab:annual}
@@ -331,7 +322,7 @@ Since DT training is free, the cascade is cost-dominant from the first sample.
 \subsection{Multi-Stage Cascades}
 Our DT$\to$LLM cascade is binary. Multi-stage cascades (DT$\to$SVM$\to$LLM-0.8B$\to$LLM-9B) could provide finer granularity:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Hypothetical Multi-Stage Cascade (Medium Entropy)}
 \label{tab:multistage}
@@ -421,9 +412,9 @@ We present an entropy-aware cascade framework for SOC alert classification, demo
 The entropy-aware cascade reduces both cost and environmental impact: routing 99.9\% of alerts through CPU-only Decision Trees eliminates GPU inference for low-entropy tasks. For a 100K-alert/day SOC, this saves 164$\times$ in annual cost (\$987 $\to$ \$6) and proportionally reduces energy consumption. The entropy-first policy also saves engineering effort: teams can determine cascade viability in 30 seconds rather than investing weeks in LLM fine-tuning and cascade optimization.
 
 \section*{Reproducibility}
-DT via scikit-learn (max\_depth=10). LLM via LlamaFactory v0.9.2, QLoRA rank 64, NVIDIA A100 80GB. Code at \url{https://github.com/nutthakorn/soc-label-gap}.
+DT via scikit-learn (max\_depth=20, seeds 77/123/456/999). LLM via LlamaFactory v0.9.2, QLoRA rank 64, NVIDIA A100 80GB. All cross-domain baselines (AG News, GoEmotions, LedGAR) report mean$\pm$SD across 4--5 seeds. Code at \url{https://github.com/nutthakorn7/soc-llm-research}.
 
-\noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4, 10--12, 17--18, 23. Fails Items 14--16 (single seed). Overall: \textbf{25/30 pass}.
+\noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4, 10--12, 14--16 (multi-seed), 17--18, 23. Overall: \textbf{28/30 pass}.
 
 \section*{Acknowledgments}
 Computing resources: NSTDA Supercomputer Center (ThaiSC), Lanta HPC (8.15 PFlops).

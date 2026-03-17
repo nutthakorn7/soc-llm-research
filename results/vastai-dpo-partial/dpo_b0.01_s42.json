@@ -1,0 +1,11 @@
+{
+  "experiment": "P9_DPO",
+  "beta": 0.01,
+  "seed": 42,
+  "strict_f1": 0.75,
+  "accuracy": 0.99,
+  "errors": 5,
+  "train_min": 0.9,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ts": "2026-03-16T03:12:38.366128"
+}

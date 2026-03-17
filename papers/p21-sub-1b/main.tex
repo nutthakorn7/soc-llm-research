@@ -11,7 +11,7 @@
 \author[kmitl]{Nutthakorn Chalaemwongwan\corref{cor1}}
 \cortext[cor1]{Corresponding author}
 \ead{nutthakorn.ch@kmitl.ac.th}
-\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}}
+\address[kmitl]{Department of Computer Engineering, KOSEN-KMITL, King Mongkut's Institute of Technology Ladkrabang, Bangkok, Thailand}
 \begin{frontmatter}
 
 \begin{highlights}
@@ -22,13 +22,7 @@
 \item Training cost under \$1.00 makes sub-1B models practical for resource-constrained teams.
 \end{highlights}
 
-\begin{highlights}
-\item Sub-1B parameter models follow the same scaling and compliance patterns as larger models.
-\item Qwen2.5-0.5B achieves 88.8\% strict F1 --- competitive with 7B+ models on SOC tasks.
-\item Label compliance patterns are architecture-invariant below 1B parameters.
-\item Edge-deployable models enable on-premise SOC classification without cloud dependency.
-\item Training cost under \$1.00 makes sub-1B models practical for resource-constrained teams.
-\end{highlights}
+
 
 \begin{abstract}
 The conventional wisdom that larger language models produce better results motivates organizations to deploy the biggest model their hardware can support. We challenge this assumption for schema-constrained classification by evaluating 7 models spanning 0.8B--9B parameters on SOC alert classification with strict label compliance as the primary metric. Our central finding: \textbf{model size has near-zero correlation with label compliance} ($R^2 \approx 0.15$). While all models achieve perfect semantic accuracy (normalized F1 $\geq$ 99.9\%), strict F1 varies wildly from 46.1\% (Mistral-7B) to 100\% (DeepSeek-R1-7B, Phi4-mini-3.8B). The critical predictor is reasoning architecture, not parameter count: Phi4-mini (3.8B) achieves perfect compliance while Qwen3-8B (8B) scores only 60.2\%. We identify a \emph{negative knowledge effect} where pre-training on MITRE ATT\&CK taxonomy \emph{hurts} compliance by introducing competing label vocabularies. We formalize a compliance predictor hierarchy (Definition~1) showing $f(\text{Reasoning}) \gg f(\text{Size}) \gg f(\text{Domain Knowledge})$, provide edge deployment guidelines mapping model choice to hardware constraints, and demonstrate that architecture selection saves 2.4$\times$ the parameters compared to brute-force scaling. For practitioners: deploy Phi4-mini (3.8B, 24GB VRAM) for perfect compliance at minimal cost, or SmolLM2 (1.7B, 16GB) with post-processing for sub-24GB devices.
@@ -98,7 +92,7 @@ Chen et~al.~\cite{chen2023edge} deployed lightweight ML models for network intru
 \subsection{Models}
 We evaluate 7 LLMs spanning 0.8B--9B parameters, representing 4 model families and 2 architecture types (standard and reasoning):
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Seven-model evaluation suite spanning 0.5B--9B parameters: architectures, sizes, and reasoning capabilities}
 \label{tab:models}
@@ -123,7 +117,7 @@ The selection deliberately spans: (a) parameter count from sub-1B to 9B, (b) two
 \subsection{Training Configuration}
 All models are fine-tuned with identical hyperparameters to isolate model architecture effects:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Unified training configuration ensuring fair comparison: identical QLoRA settings, data splits, and evaluation pipeline}
 \label{tab:config}
@@ -199,7 +193,7 @@ The results reveal three striking patterns:
 
 \subsection{Error Type Analysis}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Error taxonomy by model: hallucination types (sub-technique, plural, cross-category) vary by architecture family}
 \label{tab:errors}
@@ -237,7 +231,7 @@ Error analysis reveals qualitatively different failure modes:
 
 \subsection{The Negative Knowledge Effect}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Negative Knowledge Effect: MITRE Pre-training Hurts Compliance}
 \label{tab:negknow}
@@ -263,7 +257,7 @@ We term this the \emph{negative knowledge effect}: domain pre-training knowledge
 \subsection{Within-Family Scaling}
 The Qwen family provides a controlled comparison across scales:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Within-Family Scaling: Qwen Models}
 \label{tab:qwen}
@@ -283,7 +277,7 @@ Within the Qwen family, scaling from 0.8B to 8B \emph{decreases} compliance (55.
 \subsection{Statistical Significance}
 We apply McNemar's test~\cite{mcnemar1947} to confirm that compliance differences are statistically significant:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{McNemar's Test: Key Model Comparisons}
 \label{tab:stat}
@@ -337,7 +331,7 @@ where:
 
 \subsection{Two Paths to Perfect Compliance}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Two architectural paths to perfect label compliance: instruction-tuned (Phi4-mini) and reasoning-capable (DeepSeek-R1)}
 \label{tab:paths}
@@ -363,7 +357,7 @@ Path~1 (reasoning at 3.8B) is 2.4$\times$ more parameter-efficient and 3.1$\time
 
 \subsection{Edge Deployment Guidelines}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Hardware-Specific Edge Deployment Recommendations}
 \label{tab:edge}
@@ -394,7 +388,7 @@ Our results are validated on SALAD ($H = 1.24$ bits, 8 classes). For higher-entr
 \subsection{Cross-Domain Validation}
 To verify that sub-1B model performance generalizes beyond SALAD, we evaluate Qwen2.5-0.5B on AG News (4-class news classification, $H = 2.0$ bits) with 4 seeds:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cross-domain validation: Qwen2.5-0.5B on AG News (4 seeds)}
 \label{tab:agnews}
@@ -407,7 +401,7 @@ To verify that sub-1B model performance generalizes beyond SALAD, we evaluate Qw
 456 & 0.9207 & 0.921 & 0 \\
 999 & 0.9044 & 0.905 & 0 \\
 \midrule
-\textbf{Mean} & $\mathbf{0.907 \pm 0.011}$ & $\mathbf{0.907 \pm 0.010}$ & \textbf{0.0} \\
+\textbf{Mean} & $\mathbf{0.907 \pm 0.011}$ & $\mathbf{0.908 \pm 0.010}$ & \textbf{0.0} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -457,7 +451,7 @@ We present the first systematic study of model size vs.\ label compliance across
 The finding that ``bigger is not always better'' for label compliance democratizes high-quality SOC deployment. A 3.8B reasoning model on a single 24GB GPU achieves what practitioners might assume requires a 70B+ model or expensive API access. This has direct implications for resource-constrained SOCs in developing nations, small enterprises, and edge deployments: \textbf{architecture selection, not hardware budget, determines classification quality}.
 
 \section*{Reproducibility Statement}
-All experiments use publicly available models from HuggingFace with LlamaFactory v0.9.2, QLoRA rank 64, on NVIDIA A100 80GB GPUs. Clean data splits and evaluation code available at \url{https://github.com/nutthakorn/soc-label-gap}. All results are reproducible with seed 42.
+All experiments use publicly available models from HuggingFace with LlamaFactory v0.9.2, QLoRA rank 64, on NVIDIA A100 80GB GPUs. Clean data splits and evaluation code available at \url{https://github.com/nutthakorn7/soc-llm-research}. All results are reproducible with seed 42.
 
 \noindent\textbf{P19 Checklist Self-Audit}: Passes Items 1--4 (data integrity), 10--13 (metrics with per-model breakdown), 17--18 (hallucination inventoried per model), 21 (model cards). Fails Items 14--16 (single seed for most models), 24 (cost comparison partial). Overall: \textbf{24/30 pass}.
 
@@ -466,7 +460,7 @@ Computing resources provided by the NSTDA Supercomputer Center (ThaiSC) on the L
 
 
 \section*{Data Availability}
-The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets. We use AG News (4-class news, $H = 2.0$ bits) as a controlled proxy to isolate the target phenomenon from domain-specific confounds. Its balanced distribution and established benchmark status enable clean ablation.
+The SALAD dataset, training scripts, and evaluation code are available at \url{https://github.com/nutthakorn7/soc-llm-research}. AG News and GoEmotions are publicly available via Hugging Face Datasets.
 
 \section*{Ethical Statement}
 This study uses publicly available, anonymized datasets containing no personally identifiable information. No human subjects were involved. The research aims to improve SOC analyst efficiency and reduce alert fatigue.

@@ -14,7 +14,7 @@ nutthakorn.ch@kmitl.ac.th}
 \maketitle
 
 \begin{abstract}
-Fine-tuned LLMs achieve impressive in-domain performance, but practical deployment requires understanding cross-domain generalization. We train Qwen2.5-0.5B and Qwen2.5-7B on AG News (4-class news classification) and evaluate both in-domain and cross-domain transfer to GoEmotions (28-class emotion detection). Iin-domain, both models achieve strong performance: 0.5B reaches $90.7 \pm 1.1$\% macro-F1 (4 seeds) and 7B reaches 91.06\% F1 on AG News. Cross-domain, transfer is \textbf{absolute zero}: the AG News-trained 0.5B model produces 0.0\% F1 on GoEmotions, generating news category labels (``Sports'': 39.8\%, ``Sci/Tech'': 5.0\%) for emotion-laden text. More intriguingly, the model also generates \emph{emotion-like labels not in its training data} (``Disgusted'': 9.4\%, ``Anger'': 5.6\%, ``Sad'': 5.2\%), revealing partial pre-training vocabulary leakage during cross-domain inference---a phenomenon absent during in-domain evaluation. We formalize this as \emph{domain-locked classification}: fine-tuning creates models that can only meaningfully classify inputs matching the training distribution. Task entropy $H(Y)$ predicts in-domain ML performance: DT drops from 87.4\% ($H=1.24$) to 17.3\% ($H=3.75$) across 4 domains, validating the entropy-based decision framework from P8. Our results establish that fine-tuned LLMs require separate models per domain.
+Fine-tuned LLMs achieve impressive in-domain performance, but practical deployment requires understanding cross-domain generalization. We train Qwen2.5-0.5B and Qwen2.5-7B on AG News (4-class news classification) and evaluate both in-domain and cross-domain transfer to GoEmotions (28-class emotion detection). In-domain, both models achieve strong performance: 0.5B reaches $90.7 \pm 1.1$\% macro-F1 (4 seeds) and 7B reaches 91.1\% F1 on AG News. Cross-domain, transfer is \textbf{absolute zero}: the AG News-trained 0.5B model produces 0.0\% F1 on GoEmotions, generating news category labels (``Sports'': 39.8\%, ``Sci/Tech'': 5.0\%) for emotion-laden text. Unexpectedly, the model also generates \emph{emotion-like labels not in its training data} (``Disgusted'': 9.4\%, ``Anger'': 5.6\%, ``Sad'': 5.2\%), revealing partial pre-training vocabulary leakage during cross-domain inference---a phenomenon absent during in-domain evaluation. We formalize this as \emph{domain-locked classification}: fine-tuning creates models that can only meaningfully classify inputs matching the training distribution. Task entropy $H(Y)$ predicts in-domain ML performance: DT drops from 87.4\% ($H=1.24$) to 17.3\% ($H=3.75$) across 4 domains, validating the entropy-based decision framework from P8. Our results establish that fine-tuned LLMs require separate models per domain.
 \end{abstract}
 \begin{IEEEkeywords}
 cross-domain transfer, domain lock-in, multi-domain evaluation, task entropy, LLM generalization
@@ -44,21 +44,27 @@ Our contributions:
 \section{Related Work}
 
 \subsection{Transfer Learning in NLP}
-BERT~\cite{devlin2019} demonstrated pre-training + fine-tuning transfers knowledge across tasks. T5~\cite{raffel2020} unified NLP as text-to-text, achieving cross-task transfer. Gururangan et~al.~\cite{gururangan2020} showed domain-specific pre-training improves downstream performance but did not evaluate cross-domain transfer \emph{after} fine-tuning. LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} enable efficient adaptation, but cross-domain properties remain unstudied.
+BERT~\cite{devlin2019} established the pre-training paradigm for learning transferable representations. T5~\cite{raffel2020} recast all NLP problems into a unified text-to-text format, demonstrating broad cross-task generalization. Gururangan et~al.~\cite{gururangan2020} found that continued pre-training on domain-specific corpora boosts in-domain accuracy, yet left the post-fine-tuning cross-domain question open. Parameter-efficient methods such as LoRA~\cite{hu2022} and QLoRA~\cite{dettmers2023} reduce adaptation cost, but whether the resulting adapters generalize beyond their training domain has not been evaluated.
+
+\subsection{Domain Adaptation}
+Ben-David et~al.~\cite{bendavid2010} provided foundational theory for domain adaptation, establishing that target domain error depends on source-target divergence. Wright and Augenstein~\cite{wright2020} showed transformer-based models struggle with distribution shift in sentiment tasks. Ramponi and Plank~\cite{ramponi2020} surveyed neural domain adaptation for NLP, identifying fine-tuning as the dominant approach but noting limited evaluation of cross-domain failure modes. Our work provides the first complete characterization of cross-domain \emph{collapse} (0\% F1) for fine-tuned generative LLMs.
 
 \subsection{Catastrophic Forgetting}
-McCloskey and Cohen~\cite{mccloskey1989} first documented catastrophic interference. Kirkpatrick et~al.~\cite{kirkpatrick2017} proposed EWC. Luo et~al.~\cite{luo2023} showed fine-tuning erases general LLM capabilities. Our work quantifies: fine-tuning on 5K news samples completely eliminates emotion classification ability in 0.5B models.
+The phenomenon of catastrophic interference, first identified by McCloskey and Cohen~\cite{mccloskey1989}, describes how new learning can overwrite prior knowledge. Kirkpatrick et~al.~\cite{kirkpatrick2017} proposed Elastic Weight Consolidation to mitigate this effect. Biderman et~al.~\cite{biderman2024} showed that LoRA fine-tuning ``learns less and forgets less'' than full fine-tuning, yet our results demonstrate that even LoRA produces complete domain lock-in. Luo et~al.~\cite{luo2023} demonstrated that instruction fine-tuning degrades general-purpose abilities. We extend these observations: 5K training samples on news classification obliterate a 0.5B model's capacity for emotion recognition.
+
+\subsection{Out-of-Distribution Detection}
+Hendrycks and Gimpel~\cite{hendrycks2017} proposed maximum softmax probability as a baseline OOD detector. Liang et~al.~\cite{liang2018} introduced ODIN, improving OOD detection via temperature scaling. Our vocabulary leakage phenomenon provides a natural OOD signal: when pre-training labels appear in predictions, the input is likely out-of-distribution.
 
 \subsection{Multi-Domain NLP}
-Sun et~al.~\cite{sun2023} compared GPT-4 vs.\ fine-tuned models but not cross-domain. HELM~\cite{liang2022} evaluates diverse tasks with base models. Ferrag et~al.~\cite{ferrag2024} surveyed cybersecurity LLMs. Aghajanyan et~al.~\cite{aghajanyan2021} showed fine-tuning operates in low-dimensional subspaces, explaining why cross-domain transfer fails. Muennighoff et~al.~\cite{muennighoff2023} and Sanh et~al.~\cite{sanh2022} showed multitask training enables zero-shot generalization---but only for base models, not fine-tuned ones. Our companion studies~\cite{p3,p21} document label hallucination and model size effects. We provide the first systematic \emph{fine-tuned} cross-domain evaluation on UNSW-NB15~\cite{moustafa2016} and general NLP datasets.
+Sun et~al.~\cite{sun2023} compared GPT-4 vs.\ fine-tuned models but not cross-domain. HELM~\cite{liang2022} evaluates diverse tasks with base models. Ferrag et~al.~\cite{ferrag2024} surveyed cybersecurity LLMs. Aghajanyan et~al.~\cite{aghajanyan2021} showed fine-tuning operates in low-dimensional subspaces, explaining why cross-domain transfer fails. Muennighoff et~al.~\cite{muennighoff2023} and Sanh et~al.~\cite{sanh2022} showed multitask training enables zero-shot generalization---but only for base models, not fine-tuned ones. Arp et~al.~\cite{arp2022} catalogued critical pitfalls in ML-based security evaluation. Our companion studies~\cite{p3,p21} document label hallucination and model size effects. We provide the first systematic \emph{fine-tuned} cross-domain evaluation on UNSW-NB15~\cite{moustafa2016} and general NLP datasets.
 
-\textbf{Novelty gap.} No prior work has (1)~quantified cross-domain transfer loss for fine-tuned LLMs on classification, (2)~discovered vocabulary leakage during out-of-distribution inference, (3)~compared model scale effects on domain lock-in, or (4)~validated entropy-based decision frameworks across 4 domains.
+\textbf{Novelty gap.} No prior work has (1)~quantified cross-domain transfer loss for fine-tuned LLMs on classification, (2)~discovered vocabulary leakage during out-of-distribution inference, (3)~compared model scale effects on domain lock-in, (4)~validated entropy-based decision frameworks across 4 domains, or (5)~formalized domain lock-in as a testable property (Definition~2).
 
 \section{Experimental Setup}
 
 \subsection{Domains and Datasets}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Cross-domain evaluation suite: AG News and GoEmotions with their class counts, entropy, and domain characteristics}
 \label{tab:domains}
@@ -94,7 +100,7 @@ Legal & LedGAR & 100 & 6.21 & .243 & .654 \\
 
 \subsection{In-Domain Performance}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{In-domain AG News results: Qwen2.5-0.5B achieves strong multi-seed F1 when training and test domains match}
 \label{tab:indomain}
@@ -102,14 +108,14 @@ Legal & LedGAR & 100 & 6.21 & .243 & .654 \\
 \toprule
 \textbf{Model} & \textbf{Seeds} & \textbf{F1} & \textbf{Acc} & \textbf{Time} & \textbf{Cost} \\
 \midrule
-Qwen2.5-0.5B & 4 & $0.907{\pm}0.011$ & $0.907{\pm}0.011$ & 86m$^\dagger$ & \$0.37 \\
+Qwen2.5-0.5B & 4 & $0.907{\pm}0.011$ & $0.908{\pm}0.010$ & 86m$^\dagger$ & \$0.37 \\
 Qwen2.5-7B & 1 & 0.911 & 0.911 & 92.3m & \$3.08 \\
 \bottomrule
-\multicolumn{6}{l}{\scriptsize $^\dagger$Mean of 86m across Kaggle T4GPUs.}
+\multicolumn{6}{l}{\scriptsize $^\dagger$Mean of 86m across Kaggle T4 GPUs.}
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Per-seed breakdown for Qwen2.5-0.5B on AG News}
 \label{tab:seeds}
@@ -135,11 +141,11 @@ Qwen2.5-7B & 1 & 0.911 & 0.911 & 92.3m & \$3.08 \\
 \label{fig:indomain}
 \end{figure}
 
-With 4 seeds, the 0.5B model achieves $90.7 \pm 1.1$\% F1---\emph{highly competitive with} the 7B single-seed result (91.1\%) and surpassing the SVM baseline (88.2\%). The low standard deviation ($\pm 1.1$\%) confirms robustness across random initializations. Zero hallucinated labels were observed across all 4,000 test predictions, indicating perfect label compliance on AG News.
+With 4 seeds, the 0.5B model achieves $90.7 \pm 1.1$\% F1---\emph{comparable to} the 7B single-seed result (91.1\%) and surpassing the SVM baseline (88.2\%). The low standard deviation ($\pm 1.1$\%) confirms robustness across random initializations. Zero hallucinated labels were observed across all 4,000 test predictions, indicating perfect label compliance on AG News.
 
 \subsection{Cross-Domain Transfer: Absolute Zero}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Full Cross-Domain Transfer Matrix (Qwen2.5-0.5B)}
 \label{tab:cross}
@@ -147,7 +153,7 @@ With 4 seeds, the 0.5B model achieves $90.7 \pm 1.1$\% F1---\emph{highly competi
 \toprule
 \textbf{Train} & \textbf{Test} & \textbf{F1} & \textbf{Acc} & \textbf{Type} \\
 \midrule
-AG News & AG News & $0.920{\pm}.009$ & $0.920{\pm}.009$ & In-domain \\
+AG News & AG News & $0.907{\pm}.011$ & $0.908{\pm}.010$ & In-domain \\
 AG News & GoEmotions & \textbf{0.000} & \textbf{0.000} & Cross \\
 GoEmotions & GoEmotions & 0.453 & 0.522 & In-domain \\
 GoEmotions & AG News & \textbf{0.000} & \textbf{0.000} & Cross \\
@@ -166,7 +172,7 @@ The AG News-trained model produces \textbf{0.0\% F1} on GoEmotions across all 28
 
 \subsection{Vocabulary Leakage: A Surprising Phenomenon}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Predicted Vocabulary on GoEmotions (Trained on AG News)}
 \label{tab:vocab}
@@ -207,7 +213,7 @@ This is distinct from P18's vocabulary collapse (held-out labels have zero proba
 
 \subsection{Leakage Taxonomy}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Vocabulary leakage classification: categorizing cross-domain errors by whether leaked labels come from source or pre-training}
 \label{tab:leakage}
@@ -234,7 +240,7 @@ The leaked labels cluster into two types: (1)~training labels (Sports, Sci/Tech,
 
 \subsection{Entropy Predicts ML Performance}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Traditional ML performance by task entropy: SVM and DT effectiveness degrades as entropy increases}
 \label{tab:entropy}
@@ -270,7 +276,7 @@ This is a novel hallucination type: \emph{domain-aware but schema-unaware vocabu
 
 \subsection{Scale and Lock-In}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Model Scale and Domain Lock-In}
 \label{tab:scale}
@@ -289,7 +295,7 @@ At 0.5B, LoRA rank 64 adapts 6.7\% of total parameters---sufficient to completel
 \subsection{Domain Routing Architecture}
 Since fine-tuned models are domain-locked, multi-domain deployment requires a routing architecture:
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Domain routing decision matrix: in-domain fine-tuning, few-shot, or traditional ML based on available resources}
 \label{tab:routing}
@@ -308,7 +314,7 @@ The router approach uses a lightweight classifier (TF-IDF + logistic regression)
 
 \subsection{Cross-Study Generalization Failures}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{Generalization Failures Across Studies}
 \label{tab:failures}
@@ -328,7 +334,7 @@ Fine-tuned LLMs fail at every type of generalization test: novel classes (P18), 
 
 \subsection{Practical Decision Framework}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \caption{When to Fine-Tune: Entropy-Based Decision}
 \label{tab:decision}
@@ -363,7 +369,7 @@ $> 3$ & $<$25\% & TBD & Fine-tune required \\
 \begin{equation}
 F1(\theta_\text{ft}, \mathcal{D}_\text{source}) > 0 \;\wedge\; F1(\theta_\text{ft}, \mathcal{D}_\text{target}) = 0 \quad \forall\, \mathcal{D}_\text{target} \neq \mathcal{D}_\text{source}
 \end{equation}
-For Qwen2.5-0.5B: $F1(\text{AG}, \text{AG}) = 0.920 \pm 0.009$ (4 seeds) and $F1(\text{AG}, \text{GoEmo}) = 0.000$ --- complete domain lock-in.
+For Qwen2.5-0.5B: $F1(\text{AG}, \text{AG}) = 0.907 \pm 0.011$ (4 seeds) and $F1(\text{AG}, \text{GoEmo}) = 0.000$ --- complete domain lock-in.
 
 \noindent\textbf{P19 Checklist Self-Audit}: This paper passes Items 1--4 (data integrity), 10--12 (strict/norm F1), 14--16 (multi-seed for 0.5B in-domain), 17--18 (vocab audited with leakage inventory), 24 (costs reported). Fails Items 14--16 partially (7B and cross-domain remain single-seed). Overall: \textbf{26/30 pass}.
 
@@ -408,14 +414,19 @@ This study uses publicly available, anonymized datasets containing no personally
 \section*{Declaration of Competing Interest}
 The author declares no conflict of interest.
 
-\begin{thebibliography}{21}
+\begin{thebibliography}{30}
 \bibitem{aghajanyan2021} A.~Aghajanyan et~al., ``Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning,'' in \emph{Proc.\ ACL}, 2021.
+\bibitem{arp2022} D.~Arp et~al., ``Dos and Don'ts of Machine Learning in Computer Security,'' in \emph{Proc.\ USENIX Security}, 2022.
+\bibitem{bendavid2010} S.~Ben-David et~al., ``A Theory of Learning from Different Domains,'' \emph{Machine Learning}, vol.~79, no.~1--2, 2010.
+\bibitem{biderman2024} D.~Biderman et~al., ``LoRA Learns Less and Forgets Less,'' in \emph{Proc.\ ICML}, 2024.
 \bibitem{devlin2019} J.~Devlin et~al., ``BERT: Pre-Training of Deep Bidirectional Transformers,'' in \emph{Proc.\ NAACL}, 2019.
 \bibitem{dettmers2023} T.~Dettmers et~al., ``QLoRA: Efficient Finetuning of Quantized Language Models,'' in \emph{Proc.\ NeurIPS}, 2023.
 \bibitem{ferrag2024} M.~A.~Ferrag et~al., ``LLMs for Cybersecurity,'' \emph{IEEE COMST}, 2024.
 \bibitem{gururangan2020} S.~Gururangan et~al., ``Don't Stop Pretraining,'' in \emph{Proc.\ ACL}, 2020.
+\bibitem{hendrycks2017} D.~Hendrycks and K.~Gimpel, ``A Baseline for Detecting Misclassified and OOD Examples,'' in \emph{Proc.\ ICLR}, 2017.
 \bibitem{hu2022} E.~Hu et~al., ``LoRA: Low-Rank Adaptation of LLMs,'' in \emph{Proc.\ ICLR}, 2022.
 \bibitem{kirkpatrick2017} J.~Kirkpatrick et~al., ``Overcoming Catastrophic Forgetting,'' \emph{PNAS}, vol.~114, no.~13, 2017.
+\bibitem{liang2018} S.~Liang et~al., ``Enhancing the Reliability of OOD Image Detection,'' in \emph{Proc.\ ICLR}, 2018.
 \bibitem{liang2022} P.~Liang et~al., ``Holistic Evaluation of Language Models,'' \emph{arXiv:2211.09110}, 2022.
 \bibitem{luo2023} Y.~Luo et~al., ``Catastrophic Forgetting in LLMs During Fine-Tuning,'' \emph{arXiv}, 2023.
 \bibitem{mccloskey1989} M.~McCloskey and N.~Cohen, ``Catastrophic Interference in Connectionist Networks,'' in \emph{Psychology of Learning and Motivation}, vol.~24, 1989.
@@ -428,7 +439,9 @@ The author declares no conflict of interest.
 \bibitem{p18} N.~Chalaemwongwan, ``Can Fine-Tuned LLMs Classify What They've Never Seen?'' \emph{TKDD}, 2025.
 \bibitem{p21} N.~Chalaemwongwan, ``Bigger Models Follow Instructions Better,'' \emph{KBS}, 2025.
 \bibitem{raffel2020} C.~Raffel et~al., ``Exploring the Limits of Transfer Learning with T5,'' \emph{JMLR}, vol.~21, 2020.
+\bibitem{ramponi2020} A.~Ramponi and B.~Plank, ``Neural Unsupervised Domain Adaptation in NLP,'' in \emph{Proc.\ COLING}, 2020.
 \bibitem{sanh2022} V.~Sanh et~al., ``Multitask Prompted Training Enables Zero-Shot Task Generalization,'' in \emph{Proc.\ ICLR}, 2022.
 \bibitem{sun2023} T.~Sun et~al., ``GPT vs.\ Fine-Tuned Models,'' \emph{arXiv}, 2023.
+\bibitem{wright2020} D.~Wright and I.~Augenstein, ``Transformer Based Multi-Source Domain Adaptation,'' in \emph{Proc.\ EMNLP}, 2020.
 \end{thebibliography}
-\balance\end{document}
+\end{document}
