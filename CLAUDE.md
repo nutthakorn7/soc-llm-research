@@ -42,7 +42,7 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 │   ├── generate_all_figures.py # All 42 paper figure PDFs (matplotlib)
 │   ├── training_cost.py        # GPU hours, cost, CO₂
 │   └── train_*.sh              # Per-model training scripts
-├── papers/                     # 15 LaTeX papers (all ≥6 pages)
+├── papers/                     # 16 LaTeX papers (all ≥6 pages)
 │   ├── p3-soc-ft/              # Flagship: 20p, 23T, 40R ⭐⭐⭐
 │   ├── p5-cascade/             # 7p, 8T, 22R ⭐⭐
 │   ├── p6-scaling/             # 9p, 11T, 33R ⭐⭐⭐
@@ -58,15 +58,17 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 │   ├── p22-lora-rank/          # 7p, 8T, 28R ⭐⭐⭐
 │   ├── p23-edge-quant/         # 7p, 9T, 21R ⭐⭐
 │   └── p24-cyber-datasets/     # 10p, 9T, 29R ⭐⭐
-└── results/                    # ⭐ 156+ files (see results/README.md)
-    ├── master_results.csv      # ALL results consolidated (99 exps)
+└── results/                    # ⭐ 200+ files (see results/README.md)
+    ├── master_results.csv      # ALL results consolidated
     ├── kaggle-mar16/            # P8 AG News/GoEmotions, P20/P21
     ├── vastai-priority1/        # P14 LoRA ×10
     ├── vastai-priority2/        # P15, P22, P23
     ├── vastai-mar16-live/       # P9 DPO, P18 LOO, P15
     ├── vastai-v2-final/         # P14 OFT ×10, P9 7B ×3
     ├── vastai-remaining/        # P8 LedGAR, P6 0.5B
-    ├── vastai-orpo/             # P9 ORPO λ sweep
+    ├── vastai-dpo-partial/      # P9 DPO 4β ×3 seeds (12 runs)
+    ├── vastai-orpo-partial/     # P9 ORPO 3λ ×5 seeds (15 runs)
+    ├── vastai-p6-7b-partial/    # P6 7B 5 seeds
     └── README.md                # Folder guide + summary table
 ```
 
@@ -136,25 +138,26 @@ Key findings: SALAD has **870 unique alert patterns** (7 benign, 863 malicious) 
 - **Epochs**: 3
 - **Key flag**: `--quantization_method bnb` (NOT `bitsandbytes`)
 
-## Paper Portfolio (Mar 17, 2026 — Q1 DATA COLLECTION COMPLETE)
+## Paper Portfolio (Mar 17, 2026 — ALL EXPERIMENTS COMPLETE ✅)
 
-| # | Paper | Mean F1 | Q1 Status |
+| # | Title | Key Result | Status |
 |---|---|---|---|
-| **P3** | Mind the Label Gap (IEEE TDSC) | — | ⭐⭐⭐ Ready |
-| **P5** | Entropy-Aware Cascade (FGCS) | — | ⭐⭐ |
-| **P6** | 1K Labels Is All You Need (ESWA) | 0.918 (0.5B) | ✅ 0.5B done, 7B running |
-| **P7** | $0.60 Is All You Need (IEEE Access) | — | ⭐⭐ |
-| **P8** | Entropy Predicts LLM (IS) | 0.91/0.42/0.62 | ✅ 3 datasets ×5 seeds |
-| **P9** | DPO Destroys Classification (TMLR) | SFT 0.75→DPO 0.87 | ✅ β sweep + ORPO running |
-| **P14** | LoRA vs. OFT (PR) | LoRA 0.91/OFT 0.86 | ✅ 20 exps (LoRA>>OFT) |
-| **P15** | One Model, Three Tasks (ASC) | **0.906±0.017** | ✅ 5 seeds done |
-| **P18** | Zero-Shot Generalization (TKDD) | 0.000 (all folds) | ✅ Domain Lock-In proven |
-| **P19** | Reproducibility Checklist (C&S) | — | ⭐⭐⭐ |
-| **P20** | Cross-Domain Transfer (TKDE) | 0.91/0.55 | ✅ |
-| **P21** | Sub-1B Models Follow (KBS) | 0.910 | ⭐⭐ |
-| **P22** | Higher Rank, More Hallucination (NC) | 0.881 | ✅ r=4→128 done |
-| **P23** | Quantize and Deploy (IoT J.) | **0.909** (4=16bit) | ✅ No quant loss |
-| **P24** | Cyber Dataset Analysis | — | ⭐⭐ |
+| **P3** | Mind the Label Gap: Semantic Hallucination in Fine-Tuned LLMs for SOC | — | ✅ Ready |
+| **P5** | Entropy-Driven Cascade Routing | — | ✅ Ready |
+| **P6** | Non-Monotonic Scaling of Label Compliance | 0.5B: 0.918, 7B: 0.817±0.144 | ✅ 7B 5 seeds |
+| **P7** | $0.60 per Model: Cost of Label-Compliant LLM Fine-Tuning | — | ✅ Ready |
+| **P8** | Label Entropy as a Predictor of LLM Necessity | AG 0.91/GoEmo 0.42/LedGAR 0.62 | ✅ 3 datasets ×5 seeds |
+| **P9** | Does DPO Help Classification? | β≤0.1: no effect, β=0.5: +11.8% | ✅ 4β×3 + 3λ×5 = 27 runs |
+| **P14** | LoRA vs. OFT: A Task-Dependent Comparison | LoRA 0.91/OFT 0.86 | ✅ 20 exps |
+| **P15** | Multi-Task Fine-Tuning as Implicit Regularization | 0.906±0.017 | ✅ 5 seeds |
+| **P18** | Vocabulary Collapse in Fine-Tuned LLMs | 0.000 (20 folds, 5 seeds) | ✅ Domain Lock-In |
+| **P19** | A 30-Item Reproducibility Checklist | — | ✅ Ready |
+| **P20** | Cross-Domain Transferability of Fine-Tuned LLMs | AG 0.91/GoEmo 0.55 | ✅ |
+| **P21** | Model Scale and Label Compliance | 0.910 | ✅ |
+| **P22** | LoRA Rank, Data Quality, and Label Compliance | 0.881 | ✅ r=4→128 |
+| **P23** | Post-Training Quantization Effects on Label Compliance | 0.909 (4=16bit) | ✅ No quant loss |
+| **P24** | A Difficulty Grading Framework for Cybersecurity NLP Datasets | LLM value at H≈3-5 bits | ✅ |
+| **P13** | SALAD-v2 (dataset paper) | — | ❌ Waiting P3 publish |
 
 ### P19 Self-Audit Results (14 papers audited)
 - Mean score: **25.7/30** (85.7%)
