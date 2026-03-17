@@ -286,6 +286,7 @@ All strict F1 comparisons are significant at $p < 0.001$. The normalized F1 comp
 \midrule
 \textbf{DeepSeek-R1} & 7B & \textbf{1.000} & 0 & Reasoning \\
 \textbf{Phi4-mini} & 3.8B & \textbf{1.000} & 0 & Reasoning \\
+Qwen2.5-7B & 7B & $0.817 \pm 0.144$ & varies & Base (4 seeds) \\
 Qwen3.5-0.8B & 0.8B & 0.875 & 51 & Base \\
 SmolLM2-1.7B & 1.7B & 0.875 & 51 & Base \\
 Qwen3.5-9B & 9B & 0.836 & 4,925 & Base \\
@@ -295,7 +296,7 @@ Mistral-7B & 7B & 0.749 & 119 & Base \\
 \end{tabular}
 \end{table}
 
-The cross-model comparison reveals that model architecture---specifically, reasoning-oriented training---completely eliminates the scaling requirement for label compliance. DeepSeek-R1 and Phi4-mini achieve perfect strict F1 at 5K, while all base models exhibit some degree of label hallucination. model size does not predict compliance: the 0.8B model (87.5\%) outperforms the 9B (83.6\%) and 8B (75.3\%) models.
+The cross-model comparison reveals that model architecture---specifically, reasoning-oriented training---completely eliminates the scaling requirement for label compliance. DeepSeek-R1 and Phi4-mini achieve perfect strict F1 at 5K, while all base models exhibit some degree of label hallucination. Model size does not predict compliance: the 0.8B model (87.5\%) outperforms the 9B (83.6\%) and 8B (75.3\%) models. The 7B model ($0.817 \pm 0.144$, 4 seeds, 1 excluded due to format collapse) exhibits the highest variance of any configuration, with individual seeds ranging from 0.666 to 1.000---further confirming that larger base models amplify the stochastic nature of the knowledge activation valley.
 
 \subsection{LoRA Hyperparameter Effects}
 
